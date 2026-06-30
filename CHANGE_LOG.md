@@ -36,5 +36,5 @@ completion and GitHub issue comments.
   root returned `200` with FreshForge and Phase 1 content.
 - Reconciled the Phase 1 roadmap closeout checklist so P1.5 reflects the merged
   PR and pushed closeout commits on `main`.
-- Corrected the Phase 1 current-next-step note to point at the final closeout
-  commit `11b37d1`.
+- Reconciled the Phase 1 current-next-step note after the final closeout commits
+  on `main`.

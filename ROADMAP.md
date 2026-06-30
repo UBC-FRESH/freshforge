@@ -130,5 +130,5 @@ the first public alpha release.
 
 ## Current Next Steps
 
-Phase 1 is merged and closed on `main`; the latest closeout commit is `11b37d1`.
-The next bounded lane is Phase 2 core workflow records and validation contracts.
+Phase 1 is merged and closed on `main`. The next bounded lane is Phase 2 core
+workflow records and validation contracts.
