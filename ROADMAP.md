@@ -303,8 +303,8 @@ the first public alpha release.
 - [ ] P5.5 Phase closeout, tag, release, and verification (#40)
   - [x] Run local acceptance commands.
   - [x] Update roadmap and changelog closeout notes.
-  - [ ] Open and merge PR after green CI/docs.
-  - [ ] Verify live docs root, examples page, and release checklist page.
+  - [x] Open and merge PR after green CI/docs.
+  - [x] Verify live docs root, examples page, and release checklist page.
   - [ ] Create and push tag `v0.1.0a1`.
   - [ ] Verify release workflow passes.
   - [ ] Create GitHub prerelease `FreshForge 0.1.0a1` with checked artifacts.
@@ -328,11 +328,15 @@ Phase 5 artifact and CLI smoke verification also passed:
 - `freshforge plan examples/ecosystem_adapter_workflow.yaml --json` produced a
   provider-aware non-executing plan using both providers.
 
+Phase 5 merged to `main` through PR #41 at `d3ee05f`. GitHub CI passed on
+Python 3.11 and 3.12, the Docs workflow deployed successfully, and the live docs
+root, examples page, and release checklist page returned `200` with Phase 5
+alpha-release content.
+
 ## Current Next Steps
 
 Phase 5 docs/API status polish, examples documentation, release-artifact
-contract tests, release notes, GitHub release checklist, and local verification
-are complete on `feature/p5-public-alpha-hardening`. The next bounded lane is
-P5.5 GitHub closeout: reconcile issues, open a PR, merge after green CI/docs,
-verify live docs, tag `v0.1.0a1`, verify release artifacts, and create the
-GitHub prerelease.
+contract tests, release notes, GitHub release checklist, local verification, PR
+merge, CI, Docs deployment, and live docs verification are complete. The next
+bounded lane is P5.5 release closeout: tag `v0.1.0a1`, verify release artifacts,
+and create the GitHub prerelease.

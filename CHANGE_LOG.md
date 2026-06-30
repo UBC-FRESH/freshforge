@@ -125,3 +125,7 @@ completion and GitHub issue comments.
   generated artifacts. Also inspected the sdist for tracked examples, inspected
   the wheel for `freshforge.providers` entry-point metadata, and smoke tested
   installed CLI provider listing and multi-provider planning.
+- Merged Phase 5 to `main` through PR #41 at `d3ee05f` after CI passed on
+  Python 3.11 and 3.12; the Docs workflow deployed successfully, and live docs
+  verification returned `200` for the docs root, examples page, and release
+  checklist page with Phase 5 alpha-release content present.
