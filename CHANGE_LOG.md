@@ -57,3 +57,21 @@ completion and GitHub issue comments.
   final GitHub Actions and live-docs verification were performed on `main`.
 - Added a Phase 2 status signal to the docs index so the public docs root
   clearly advertises the workflow-records milestone.
+- Opened Phase 3 on `feature/p3-provider-api-planning` with parent issue #21
+  and child issues #22 through #26 for provider metadata/registry,
+  provider-aware validation/planning, CLI surfaces, docs/tests, and closeout.
+- Implemented the Phase 3 provider API with stdlib metadata records, provider
+  reference parsing, an explicit in-process registry, a public-safe built-in
+  example provider, provider-aware diagnostics, provider-aware run-plan records,
+  and user-facing `freshforge providers` / `freshforge inspect` commands.
+- Updated `freshforge validate` and `freshforge plan` to use provider-aware
+  diagnostics through the default registry while keeping workflow planning
+  non-executing and deferring `freshforge run`, entry-point discovery, provider
+  auto-import, caching, checkpoints, run records, artifact materialization, and
+  ecosystem adapters.
+- Added Phase 3 provider documentation, an explicit-registry-first planning
+  note, README status updates, and tests for provider metadata, registry lookup,
+  provider-aware validation, provider-aware planning, and CLI JSON output.
+- Verified Phase 3 locally with editable install, `ruff check`, `pytest`,
+  warning-clean Sphinx HTML build, package build, and `twine check` for the
+  generated artifacts.

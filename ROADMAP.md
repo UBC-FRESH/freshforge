@@ -182,11 +182,20 @@ explain what would run without executing domain tools.
   - [x] Keep example workflow resolving against the built-in example provider.
   - [x] Add provider, validation, planning, and CLI test coverage.
 - [ ] P3.5 Phase closeout and verification (#26)
-  - [ ] Run local acceptance commands.
-  - [ ] Update roadmap and changelog closeout notes.
+  - [x] Run local acceptance commands.
+  - [x] Update roadmap and changelog closeout notes.
   - [ ] Comment on child issues and parent issue with verification result.
   - [ ] Open PR to `main`.
   - [ ] Merge after green CI and verify live docs.
+
+Phase 3 local verification passed with:
+
+- `python -m pip install -e .[dev]`
+- `python -m ruff check .`
+- `python -m pytest`
+- `sphinx-build -b html docs _build/html -W`
+- `python -m build`
+- `twine check dist/*`
 
 ## Phase 4: Ecosystem Adapter Prototypes
 
@@ -206,7 +215,7 @@ the first public alpha release.
 ## Current Next Steps
 
 Phase 3 provider API, provider-aware validation/planning, providers CLI,
-workflow inspection, docs, examples, and tests are implemented on
-`feature/p3-provider-api-planning`. The next bounded lane is P3.5 closeout:
-run full local acceptance checks, reconcile changelog and GitHub issues, open a
-PR, merge after green CI/docs, and verify live docs.
+workflow inspection, docs, examples, and tests are implemented and locally
+verified on `feature/p3-provider-api-planning`. The next bounded lane is P3.5
+GitHub closeout: reconcile issue comments, open a PR, merge after green CI/docs,
+and verify live docs.
