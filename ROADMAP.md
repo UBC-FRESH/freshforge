@@ -8,7 +8,8 @@ synchronized with GitHub issues, planning notes, pull requests, and
 
 | Phase | Parent issue | Branch | Status |
 | --- | --- | --- | --- |
-| P0 Bootstrap scaffold | #1 | `feature/p0-bootstrap-scaffold` | Active |
+| P0 Bootstrap scaffold | #1 | `feature/p0-bootstrap-scaffold` | Complete |
+| P1 Architecture and workflow-language research | #7 | `feature/p1-architecture-contracts` | Active |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -54,18 +55,49 @@ Phase 0 local verification passed with:
 
 ## Phase 1: Architecture And Workflow-Language Research
 
-Status: backlog
+Parent issue: #7
+
+Branch: `feature/p1-architecture-contracts`
+
+Status: active
 
 Goal: define the first durable FreshForge architecture contracts without
 over-specifying the implementation before evidence exists.
 
-Candidate tasks:
+- [x] P1.1 Workflow-as-code pattern survey (#8)
+  - [x] Record relevant workflow patterns.
+  - [x] Identify accepted FreshForge principles.
+  - [x] Identify anti-patterns and deferred features.
+  - [x] Tie findings to Phase 2 implementation needs.
+- [x] P1.2 Minimum workflow vocabulary and schema direction (#9)
+  - [x] Define the core vocabulary.
+  - [x] Record schema-format direction.
+  - [x] Record minimum Phase 2 implementation target.
+  - [x] Record explicit non-goals.
+- [x] P1.3 Provider boundary and ecosystem dependency contract (#10)
+  - [x] Record dependency direction.
+  - [x] Define core vs domain responsibilities.
+  - [x] Define adapter packaging options.
+  - [x] Record Phase 2/3 implications.
+- [x] P1.4 CLI and Python API boundary contract (#11)
+  - [x] Define future command groups.
+  - [x] Define Python API layering principles.
+  - [x] Record IO and output-format principles.
+  - [x] Record Phase 2/3 implementation implications.
+- [x] P1.5 Docs, roadmap, changelog, and verification closeout (#12)
+  - [x] Update docs with Phase 1 decisions.
+  - [x] Update roadmap and changelog.
+  - [x] Run local acceptance commands.
+  - [ ] Commit and push branch.
+  - [ ] Open PR to `main`.
 
-- Evaluate workflow-as-code patterns relevant to forest modelling.
-- Define the minimum workflow spec vocabulary and schema format.
-- Decide how node providers should be registered without forcing FreshForge to
-  import FEMIC, FHOPS, ws3, Modelwright, Nemora, or other domain packages.
-- Record CLI and Python API boundaries for validation, planning, and inspection.
+Phase 1 local verification passed with:
+
+- `python -m ruff check .`
+- `python -m pytest`
+- `sphinx-build -b html docs _build/html -W`
+- `python -m build`
+- `twine check dist/*`
 
 ## Phase 2: Core Workflow Records And Validation Contracts
 
@@ -98,6 +130,6 @@ the first public alpha release.
 
 ## Current Next Steps
 
-Phase 0 is implemented on `feature/p0-bootstrap-scaffold` and awaiting PR review
-and merge. After merge, the next bounded lane is Phase 1 architecture and
-workflow-language research.
+Complete Phase 1 verification on `feature/p1-architecture-contracts`, open the
+PR to `main`, then move to Phase 2 core workflow records and validation
+contracts after merge.

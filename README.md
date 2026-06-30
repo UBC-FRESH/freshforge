@@ -36,6 +36,8 @@ Supported in `0.1.0a1`:
 - Python package skeleton using `src/` layout;
 - minimal `freshforge` command-line interface;
 - strict roadmap, issue, changelog, and planning workflow;
+- Phase 1 architecture contracts for workflow vocabulary, provider boundaries,
+  and CLI/API direction;
 - Sphinx documentation skeleton;
 - CI, documentation, and release-artifact workflow scaffolding.
 
