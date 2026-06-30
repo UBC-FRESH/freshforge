@@ -129,3 +129,9 @@ completion and GitHub issue comments.
   Python 3.11 and 3.12; the Docs workflow deployed successfully, and live docs
   verification returned `200` for the docs root, examples page, and release
   checklist page with Phase 5 alpha-release content present.
+- Completed Phase 5 release closeout by tagging `v0.1.0a1` at `43ed413`,
+  verifying the Release Artifacts workflow, downloading and checking the
+  workflow-built sdist and wheel, confirming the sdist includes both tracked
+  examples, confirming the wheel metadata includes the `freshforge.providers`
+  fixture entry point, and creating the GitHub prerelease
+  `FreshForge 0.1.0a1` with the checked artifacts attached.

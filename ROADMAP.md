@@ -13,7 +13,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P2 Core workflow records and validation contracts | #14 | `feature/p2-core-workflow-records` | Complete |
 | P3 Node provider API and execution-planning prototype | #21 | `feature/p3-provider-api-planning` | Complete |
 | P4 Ecosystem adapter prototype | #28 | `feature/p4-ecosystem-adapter-prototype` | Complete |
-| P5 Documentation, examples, and public alpha hardening | #35 | `feature/p5-public-alpha-hardening` | Active |
+| P5 Documentation, examples, and public alpha hardening | #35 | `feature/p5-public-alpha-hardening` | Complete |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -273,7 +273,7 @@ Parent issue: #35
 
 Branch: `feature/p5-public-alpha-hardening`
 
-Status: active
+Status: complete
 
 Goal: harden docs, examples, tests, CI, and release workflows enough to support
 the first public alpha release.
@@ -300,14 +300,14 @@ the first public alpha release.
         GitHub release.
   - [x] Keep PyPI publication explicitly deferred.
   - [x] Ensure release title and tag target are documented.
-- [ ] P5.5 Phase closeout, tag, release, and verification (#40)
+- [x] P5.5 Phase closeout, tag, release, and verification (#40)
   - [x] Run local acceptance commands.
   - [x] Update roadmap and changelog closeout notes.
   - [x] Open and merge PR after green CI/docs.
   - [x] Verify live docs root, examples page, and release checklist page.
-  - [ ] Create and push tag `v0.1.0a1`.
-  - [ ] Verify release workflow passes.
-  - [ ] Create GitHub prerelease `FreshForge 0.1.0a1` with checked artifacts.
+  - [x] Create and push tag `v0.1.0a1`.
+  - [x] Verify release workflow passes.
+  - [x] Create GitHub prerelease `FreshForge 0.1.0a1` with checked artifacts.
 
 Phase 5 local verification passed with:
 
@@ -333,10 +333,15 @@ Python 3.11 and 3.12, the Docs workflow deployed successfully, and the live docs
 root, examples page, and release checklist page returned `200` with Phase 5
 alpha-release content.
 
+Phase 5 release closeout tagged `v0.1.0a1` at `43ed413`. The Release Artifacts
+workflow passed, the downloaded workflow artifacts passed `twine check`, the
+sdist included both tracked example workflows, and the wheel metadata included
+the `freshforge.providers` fixture entry point. GitHub prerelease
+`FreshForge 0.1.0a1` was created with the checked wheel and sdist artifacts.
+
 ## Current Next Steps
 
-Phase 5 docs/API status polish, examples documentation, release-artifact
-contract tests, release notes, GitHub release checklist, local verification, PR
-merge, CI, Docs deployment, and live docs verification are complete. The next
-bounded lane is P5.5 release closeout: tag `v0.1.0a1`, verify release artifacts,
-and create the GitHub prerelease.
+Phase 5 is complete on `main`: the public alpha docs, examples, release
+checklist, CI/docs verification, `v0.1.0a1` tag, artifact-only release workflow,
+artifact inspection, and GitHub prerelease are closed. The next bounded lane is
+post-alpha triage and Phase 6 planning.
