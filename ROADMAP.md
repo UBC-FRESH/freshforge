@@ -10,7 +10,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | --- | --- | --- | --- |
 | P0 Bootstrap scaffold | #1 | `feature/p0-bootstrap-scaffold` | Complete |
 | P1 Architecture and workflow-language research | #7 | `feature/p1-architecture-contracts` | Complete |
-| P2 Core workflow records and validation contracts | #14 | `feature/p2-core-workflow-records` | Active |
+| P2 Core workflow records and validation contracts | #14 | `feature/p2-core-workflow-records` | Complete |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -106,7 +106,7 @@ Parent issue: #14
 
 Branch: `feature/p2-core-workflow-records`
 
-Status: active
+Status: complete
 
 Goal: implement the smallest useful set of typed records for workflow
 definitions, nodes, inputs, outputs, dependencies, diagnostics, and provenance.
@@ -134,10 +134,10 @@ definitions, nodes, inputs, outputs, dependencies, diagnostics, and provenance.
 - [x] P2.5 Phase closeout and verification (#19)
   - [x] Run local acceptance commands.
   - [x] Update roadmap and changelog closeout notes.
-  - [ ] Comment on child issues and parent issue with verification result.
-  - [ ] Commit and push branch.
-  - [ ] Open PR to `main`.
-  - [ ] Merge after green CI and verify live docs.
+  - [x] Comment on child issues and parent issue with verification result.
+  - [x] Commit and push branch.
+  - [x] Open PR to `main`.
+  - [x] Merge after green CI and verify live docs.
 
 Phase 2 local verification passed with:
 
@@ -172,6 +172,5 @@ the first public alpha release.
 
 ## Current Next Steps
 
-Phase 2 is active on `feature/p2-core-workflow-records` and ready for PR
-review. After merge and live-docs verification, the next bounded lane is Phase 3
+Phase 2 is merged and closed on `main`. The next bounded lane is Phase 3
 provider API and execution-planning prototype work.

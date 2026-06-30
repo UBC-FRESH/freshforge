@@ -51,3 +51,7 @@ completion and GitHub issue comments.
 - Verified Phase 2 locally with editable install, `ruff check`, `pytest`,
   warning-clean Sphinx HTML build, package build, and `twine check` for the
   generated artifacts.
+- Merged Phase 2 to `main` through PR #20 at `42200b6` after CI passed on Python
+  3.11 and 3.12.
+- Completed Phase 2 closeout by reconciling roadmap and issue state after merge;
+  final GitHub Actions and live-docs verification were performed on `main`.
