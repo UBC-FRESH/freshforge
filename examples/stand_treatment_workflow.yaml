@@ -1,0 +1,31 @@
+workflow:
+  id: stand_treatment_demo
+  name: Stand treatment demonstration workflow
+  description: Public-safe placeholder workflow for Phase 2 validation and planning.
+nodes:
+  - id: load_inventory
+    provider: freshforge.example.load_inventory
+    outputs:
+      inventory: stand_inventory
+    provenance:
+      source: synthetic
+  - id: classify_fuel
+    provider: freshforge.example.classify_fuel
+    needs:
+      - load_inventory
+    inputs:
+      inventory: load_inventory.inventory
+    outputs:
+      fuel_class: fuel_class
+    parameters:
+      classification: placeholder
+  - id: choose_treatment
+    provider: freshforge.example.choose_treatment
+    needs:
+      - classify_fuel
+    inputs:
+      fuel_class: classify_fuel.fuel_class
+    outputs:
+      prescription: treatment_prescription
+    artifacts:
+      report: outputs/stand_treatment_summary.json

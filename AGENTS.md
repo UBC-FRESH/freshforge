@@ -20,23 +20,29 @@ domain packages unless a future roadmap phase explicitly changes that boundary.
 
 ## Current Repo State
 
-This repository is in Phase 0 bootstrap. It contains:
+This repository has completed the Phase 2 core workflow-records milestone. It
+contains:
 
 - `README.md`: concise public overview and current status.
 - `ROADMAP.md`: phase/task roadmap and issue tracker map.
 - `CHANGE_LOG.md`: append-only project narrative.
 - `planning/`: focused design notes and research records.
 - `pyproject.toml`: package metadata and optional dependency groups.
-- `src/freshforge/`: importable package code.
-- `tests/`: package-backed tests.
+- `src/freshforge/`: importable package code for CLI, records, loading,
+  validation, and non-executing planning.
+- `tests/`: package-backed tests for package metadata, CLI behavior, docs,
+  records, loading, validation, and planning.
 - `docs/`: Sphinx documentation skeleton.
+- `examples/`: public-safe example workflow specs.
 - `.github/workflows/`: CI, docs, and release-artifact checks.
 - `tmp/`: ignored local working area for notes, experiments, and generated
   artifacts.
 
-Do not claim that FreshForge implements a workflow language, execution engine,
-provider registry, or FRESH ecosystem adapters until the relevant roadmap phase
-records that evidence.
+FreshForge implements provisional YAML/JSON workflow loading, structural
+validation diagnostics, and non-executing run planning. Do not claim that
+FreshForge implements node execution, provider discovery, provider protocols,
+cache/checkpoint behavior, or FRESH ecosystem adapters until the relevant
+roadmap phase records that evidence.
 
 ## Workflow Specs And Generated Outputs
 

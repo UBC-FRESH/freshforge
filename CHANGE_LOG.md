@@ -38,3 +38,16 @@ completion and GitHub issue comments.
   PR and pushed closeout commits on `main`.
 - Reconciled the Phase 1 current-next-step note after the final closeout commits
   on `main`.
+- Opened Phase 2 on `feature/p2-core-workflow-records` with parent issue #14
+  and child issues #15 through #19 for workflow records, loading/validation,
+  non-executing planning and CLI, examples/docs/tests, and closeout.
+- Implemented Phase 2 core workflow records using stdlib dataclasses and enums,
+  YAML/JSON loading with `PyYAML`, structured validation diagnostics,
+  deterministic non-executing run planning, and user-facing `freshforge validate`
+  / `freshforge plan` commands with human-readable and JSON output.
+- Added the public-safe `examples/stand_treatment_workflow.yaml`, Phase 2
+  workflow-record documentation, and tests for records, loading, validation,
+  planning, CLI behavior, and JSON output.
+- Verified Phase 2 locally with editable install, `ruff check`, `pytest`,
+  warning-clean Sphinx HTML build, package build, and `twine check` for the
+  generated artifacts.

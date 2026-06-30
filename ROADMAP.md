@@ -10,6 +10,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | --- | --- | --- | --- |
 | P0 Bootstrap scaffold | #1 | `feature/p0-bootstrap-scaffold` | Complete |
 | P1 Architecture and workflow-language research | #7 | `feature/p1-architecture-contracts` | Complete |
+| P2 Core workflow records and validation contracts | #14 | `feature/p2-core-workflow-records` | Active |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -101,10 +102,51 @@ Phase 1 local verification passed with:
 
 ## Phase 2: Core Workflow Records And Validation Contracts
 
-Status: backlog
+Parent issue: #14
+
+Branch: `feature/p2-core-workflow-records`
+
+Status: active
 
 Goal: implement the smallest useful set of typed records for workflow
 definitions, nodes, inputs, outputs, dependencies, diagnostics, and provenance.
+
+- [x] P2.1 Workflow record dataclasses and serialization helpers (#15)
+  - [x] Add record dataclasses and severity enum.
+  - [x] Add serialization helpers.
+  - [x] Export public record types from the package.
+  - [x] Add unit tests for construction and serialization.
+- [x] P2.2 YAML/JSON loading and validation diagnostics (#16)
+  - [x] Add YAML/JSON loader.
+  - [x] Add validation diagnostics.
+  - [x] Add tests for valid, malformed, unsupported, missing, duplicate, unknown
+        dependency, cycle, and invalid field-shape cases.
+- [x] P2.3 Non-executing run planning and CLI commands (#17)
+  - [x] Add planning API.
+  - [x] Add validate CLI command.
+  - [x] Add plan CLI command.
+  - [x] Add CLI and planning tests.
+- [x] P2.4 Example workflow, docs, and tests (#18)
+  - [x] Add public-safe example workflow.
+  - [x] Add or update docs for workflow records and CLI examples.
+  - [x] Add tests using the tracked example.
+  - [x] Keep docs warning-clean.
+- [x] P2.5 Phase closeout and verification (#19)
+  - [x] Run local acceptance commands.
+  - [x] Update roadmap and changelog closeout notes.
+  - [ ] Comment on child issues and parent issue with verification result.
+  - [ ] Commit and push branch.
+  - [ ] Open PR to `main`.
+  - [ ] Merge after green CI and verify live docs.
+
+Phase 2 local verification passed with:
+
+- `python -m pip install -e .[dev]`
+- `python -m ruff check .`
+- `python -m pytest`
+- `sphinx-build -b html docs _build/html -W`
+- `python -m build`
+- `twine check dist/*`
 
 ## Phase 3: Node Provider API And Execution-Planning Prototype
 
@@ -130,5 +172,6 @@ the first public alpha release.
 
 ## Current Next Steps
 
-Phase 1 is merged and closed on `main`. The next bounded lane is Phase 2 core
-workflow records and validation contracts.
+Phase 2 is active on `feature/p2-core-workflow-records` and ready for PR
+review. After merge and live-docs verification, the next bounded lane is Phase 3
+provider API and execution-planning prototype work.
