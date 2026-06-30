@@ -12,7 +12,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P1 Architecture and workflow-language research | #7 | `feature/p1-architecture-contracts` | Complete |
 | P2 Core workflow records and validation contracts | #14 | `feature/p2-core-workflow-records` | Complete |
 | P3 Node provider API and execution-planning prototype | #21 | `feature/p3-provider-api-planning` | Complete |
-| P4 Ecosystem adapter prototype | #28 | `feature/p4-ecosystem-adapter-prototype` | Active |
+| P4 Ecosystem adapter prototype | #28 | `feature/p4-ecosystem-adapter-prototype` | Complete |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -208,7 +208,7 @@ Parent issue: #28
 
 Branch: `feature/p4-ecosystem-adapter-prototype`
 
-Status: active
+Status: complete
 
 Goal: prove FreshForge can compose a small public-safe workflow using adapters
 from one or more FRESH ecosystem tools without turning FreshForge into a
@@ -237,12 +237,12 @@ domain-package dependency hub.
         changelog.
   - [x] Add entry-point-discovery planning note.
   - [x] Add provider discovery, fixture adapter, CLI, and workflow tests.
-- [ ] P4.5 Phase closeout and verification (#33)
+- [x] P4.5 Phase closeout and verification (#33)
   - [x] Run local acceptance commands.
   - [x] Update roadmap and changelog closeout notes.
-  - [ ] Comment on child issues and parent issue with verification result.
-  - [ ] Open PR to `main`.
-  - [ ] Merge after green CI and verify live docs.
+  - [x] Comment on child issues and parent issue with verification result.
+  - [x] Open PR to `main`.
+  - [x] Merge after green CI and verify live docs.
 
 Phase 4 local verification passed with:
 
@@ -262,6 +262,10 @@ Phase 4 entry-point artifact and CLI smoke verification also passed:
 - `freshforge plan examples/ecosystem_adapter_workflow.yaml --json` produced a
   provider-aware non-executing plan using both providers.
 
+Phase 4 merged to `main` through PR #34 at `8d049ef`. GitHub CI passed on
+Python 3.11 and 3.12, the Docs workflow deployed successfully, and the live docs
+root and adapter discovery page returned `200` with Phase 4 adapter content.
+
 ## Phase 5: Documentation, Examples, And Public Alpha Hardening
 
 Status: backlog
@@ -271,8 +275,5 @@ the first public alpha release.
 
 ## Current Next Steps
 
-Phase 4 entry-point provider discovery, public-safe fixture adapter,
-multi-provider example workflow, CLI behavior, docs, planning note, tests, and
-local verification are complete on `feature/p4-ecosystem-adapter-prototype`. The
-next bounded lane is P4.5 GitHub closeout: reconcile issue comments, open a PR,
-merge after green CI/docs, and verify live docs.
+Phase 4 is merged and closed on `main`. The next bounded lane is Phase 5
+documentation, examples, and public alpha hardening planning.

@@ -102,3 +102,7 @@ completion and GitHub issue comments.
   warning-clean Sphinx HTML build, package build, and `twine check` for the
   generated artifacts. Also inspected the sdist entry-point metadata and smoke
   tested installed CLI provider listing and multi-provider planning.
+- Merged Phase 4 to `main` through PR #34 at `8d049ef` after CI passed on
+  Python 3.11 and 3.12; the Docs workflow deployed successfully, and live docs
+  verification returned `200` for both the docs root and adapter discovery page
+  with Phase 4 adapter content present.
