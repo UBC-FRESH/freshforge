@@ -17,7 +17,6 @@ Near-Term Phases
 Current Edge
 ------------
 
-Phase 2 implements the minimum workflow records and validation APIs from the
-Phase 1 contracts without adding execution behavior or domain adapters. Phase 3
-should add the provider API and execution-planning prototype on top of this
-non-executing record layer.
+Phase 3 implements the provider API and provider-aware planning prototype on top
+of the non-executing Phase 2 record layer. It still defers execution behavior,
+automatic plugin discovery, and domain adapters.

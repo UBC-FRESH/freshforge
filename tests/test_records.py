@@ -51,7 +51,16 @@ def test_run_plan_to_dict_includes_diagnostics() -> None:
 
     assert plan.to_dict() == {
         "workflow_id": "demo",
-        "nodes": [{"id": "load", "provider": "example.load", "needs": []}],
+        "nodes": [
+            {
+                "id": "load",
+                "provider": "example.load",
+                "provider_id": None,
+                "node_type": None,
+                "provider_available": False,
+                "needs": [],
+            }
+        ],
         "diagnostics": [
             {
                 "severity": "warning",

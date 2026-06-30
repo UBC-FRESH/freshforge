@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from freshforge.loading import load_workflow
-from freshforge.validation import validate_workflow_document
+from freshforge.validation import validate_workflow_document, validate_workflow_with_providers
 
 EXAMPLE_WORKFLOW = Path("examples/stand_treatment_workflow.yaml")
 
@@ -122,3 +122,70 @@ def test_validation_detects_cycles() -> None:
     }
 
     assert "workflow.cycle" in diagnostic_codes(document)
+
+
+def test_provider_aware_validation_accepts_example_workflow() -> None:
+    spec, diagnostics = load_workflow(EXAMPLE_WORKFLOW)
+    assert spec is not None
+
+    provider_diagnostics = validate_workflow_with_providers(
+        spec,
+        structural_diagnostics=diagnostics,
+    )
+
+    assert provider_diagnostics == []
+
+
+def test_provider_aware_validation_reports_missing_provider() -> None:
+    spec, diagnostics = validate_workflow_document(
+        {
+            "workflow": {"id": "demo"},
+            "nodes": [{"id": "load", "provider": "freshforge.missing.load"}],
+        }
+    )
+    assert spec is not None
+
+    provider_diagnostics = validate_workflow_with_providers(
+        spec,
+        structural_diagnostics=diagnostics,
+    )
+
+    assert "node.provider.unavailable" in {
+        diagnostic.code for diagnostic in provider_diagnostics
+    }
+
+
+def test_provider_aware_validation_reports_unknown_node_type() -> None:
+    spec, diagnostics = validate_workflow_document(
+        {
+            "workflow": {"id": "demo"},
+            "nodes": [{"id": "load", "provider": "freshforge.example.unknown"}],
+        }
+    )
+    assert spec is not None
+
+    provider_diagnostics = validate_workflow_with_providers(
+        spec,
+        structural_diagnostics=diagnostics,
+    )
+
+    assert "node.provider.node_type.unknown" in {
+        diagnostic.code for diagnostic in provider_diagnostics
+    }
+
+
+def test_provider_aware_validation_reports_provider_specific_diagnostics() -> None:
+    spec, diagnostics = validate_workflow_document(
+        {
+            "workflow": {"id": "demo"},
+            "nodes": [{"id": "load", "provider": "freshforge.example.load_inventory"}],
+        }
+    )
+    assert spec is not None
+
+    provider_diagnostics = validate_workflow_with_providers(
+        spec,
+        structural_diagnostics=diagnostics,
+    )
+
+    assert "node.outputs.missing" in {diagnostic.code for diagnostic in provider_diagnostics}

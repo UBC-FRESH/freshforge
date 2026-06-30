@@ -11,6 +11,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P0 Bootstrap scaffold | #1 | `feature/p0-bootstrap-scaffold` | Complete |
 | P1 Architecture and workflow-language research | #7 | `feature/p1-architecture-contracts` | Complete |
 | P2 Core workflow records and validation contracts | #14 | `feature/p2-core-workflow-records` | Complete |
+| P3 Node provider API and execution-planning prototype | #21 | `feature/p3-provider-api-planning` | Active |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -150,10 +151,51 @@ Phase 2 local verification passed with:
 
 ## Phase 3: Node Provider API And Execution-Planning Prototype
 
-Status: backlog
+Parent issue: #21
+
+Branch: `feature/p3-provider-api-planning`
+
+Status: active
 
 Goal: create a provider API and planner that can validate a workflow graph and
 explain what would run without executing domain tools.
+
+- [x] P3.1 Provider protocol, metadata, and registry (#22)
+  - [x] Define provider and node-type metadata records.
+  - [x] Define provider reference parsing for provider namespace plus node type.
+  - [x] Add explicit registry registration and lookup behavior.
+  - [x] Add default built-in example provider registry.
+- [x] P3.2 Provider-aware validation and planning records (#23)
+  - [x] Preserve structural validation APIs.
+  - [x] Add registry-backed provider diagnostics.
+  - [x] Extend planned nodes with provider id, node type, and availability.
+  - [x] Keep planning deterministic and non-executing.
+- [x] P3.3 Providers and inspect CLI surfaces (#24)
+  - [x] Add `freshforge providers [--json]`.
+  - [x] Add `freshforge inspect PATH [--json]`.
+  - [x] Keep `freshforge validate` and `freshforge plan` deterministic and
+        provider-aware.
+  - [x] Do not add `freshforge run`.
+- [x] P3.4 Docs, examples, and tests (#25)
+  - [x] Update public docs and README status.
+  - [x] Add public planning note for explicit-registry-first design.
+  - [x] Keep example workflow resolving against the built-in example provider.
+  - [x] Add provider, validation, planning, and CLI test coverage.
+- [ ] P3.5 Phase closeout and verification (#26)
+  - [x] Run local acceptance commands.
+  - [x] Update roadmap and changelog closeout notes.
+  - [ ] Comment on child issues and parent issue with verification result.
+  - [ ] Open PR to `main`.
+  - [ ] Merge after green CI and verify live docs.
+
+Phase 3 local verification passed with:
+
+- `python -m pip install -e .[dev]`
+- `python -m ruff check .`
+- `python -m pytest`
+- `sphinx-build -b html docs _build/html -W`
+- `python -m build`
+- `twine check dist/*`
 
 ## Phase 4: Ecosystem Adapter Prototypes
 
@@ -172,5 +214,8 @@ the first public alpha release.
 
 ## Current Next Steps
 
-Phase 2 is merged and closed on `main`. The next bounded lane is Phase 3
-provider API and execution-planning prototype work.
+Phase 3 provider API, provider-aware validation/planning, providers CLI,
+workflow inspection, docs, examples, and tests are implemented and locally
+verified on `feature/p3-provider-api-planning`. The next bounded lane is P3.5
+GitHub closeout: reconcile issue comments, open a PR, merge after green CI/docs,
+and verify live docs.

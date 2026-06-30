@@ -1,9 +1,9 @@
 Workflow Records
 ================
 
-Phase 2 introduces FreshForge's first provisional workflow records. These records
-support loading, validation, and non-executing planning only. They do not execute
-nodes, discover providers, inspect artifacts, or call external tools.
+Phase 2 introduces FreshForge's first provisional workflow records. Phase 3 adds
+provider-aware validation and planning while keeping the records non-executing.
+FreshForge does not execute nodes, inspect artifacts, or call external tools.
 
 Minimal Shape
 -------------
@@ -59,15 +59,20 @@ Validation checks broad structural correctness:
 * the dependency graph is acyclic;
 * structured fields have the expected broad shape.
 
-Diagnostics include severity, code, message, and optional location. Provider
-availability is not checked in Phase 2.
+Diagnostics include severity, code, message, and optional location.
+
+Phase 3 also checks provider references against the explicit default registry
+when callers use provider-aware validation. Provider-aware diagnostics cover
+invalid reference syntax, unavailable providers, unknown node types, and
+provider-declared missing input or output keys.
 
 Planning
 --------
 
-Planning produces a deterministic topological order for validated nodes. It does
-not execute nodes, inspect artifacts, create files, discover providers, or call
-external runtimes.
+Planning produces a deterministic topological order for validated nodes. Phase 3
+run plans include provider ID, node type, declared dependencies, and provider
+availability. Planning does not execute nodes, inspect artifacts, create files,
+auto-discover providers, or call external runtimes.
 
 CLI Examples
 ------------
@@ -76,11 +81,13 @@ CLI Examples
 
    freshforge validate examples/stand_treatment_workflow.yaml
    freshforge validate examples/stand_treatment_workflow.yaml --json
+   freshforge inspect examples/stand_treatment_workflow.yaml
+   freshforge inspect examples/stand_treatment_workflow.yaml --json
    freshforge plan examples/stand_treatment_workflow.yaml
    freshforge plan examples/stand_treatment_workflow.yaml --json
 
 Syntax Status
 -------------
 
-The Phase 2 workflow shape is alpha and provisional. Future phases may refine
-the syntax after provider protocols, planning, provenance, and examples mature.
+The workflow shape is alpha and provisional. Future phases may refine the syntax
+after provider protocols, planning, provenance, and examples mature.

@@ -6,6 +6,11 @@ import re
 from collections.abc import Mapping, Sequence
 from typing import Any
 
+from freshforge.providers import (
+    ProviderRegistry,
+    default_provider_registry,
+    parse_provider_reference,
+)
 from freshforge.records import Diagnostic, DiagnosticSeverity, WorkflowNode, WorkflowSpec
 
 _SLUG_RE = re.compile(r"^[a-z][a-z0-9_-]*$")
@@ -194,6 +199,72 @@ def validate_workflow_spec(spec: WorkflowSpec) -> list[Diagnostic]:
     return validate_workflow_document(spec.to_dict(), source_path=spec.source_path)[1]
 
 
+def validate_workflow_with_providers(
+    spec: WorkflowSpec,
+    *,
+    registry: ProviderRegistry | None = None,
+    structural_diagnostics: Sequence[Diagnostic] | None = None,
+) -> list[Diagnostic]:
+    """Validate a workflow spec with provider registry diagnostics."""
+    diagnostics = (
+        list(structural_diagnostics)
+        if structural_diagnostics is not None
+        else validate_workflow_spec(spec)
+    )
+    provider_registry = registry if registry is not None else default_provider_registry()
+
+    for index, node in enumerate(spec.nodes):
+        if not node.provider:
+            continue
+        location = f"nodes[{index}]"
+        parsed_reference = parse_provider_reference(node.provider)
+        if parsed_reference is None:
+            diagnostics.append(
+                Diagnostic(
+                    severity=DiagnosticSeverity.ERROR,
+                    code="node.provider.reference.invalid",
+                    message=(
+                        "Node provider must use '<provider namespace>.<node type>' syntax."
+                    ),
+                    location=f"{location}.provider",
+                )
+            )
+            continue
+
+        provider = provider_registry.get(parsed_reference.provider_id)
+        if provider is None:
+            diagnostics.append(
+                Diagnostic(
+                    severity=DiagnosticSeverity.ERROR,
+                    code="node.provider.unavailable",
+                    message=(
+                        f"Provider '{parsed_reference.provider_id}' is not registered."
+                    ),
+                    location=f"{location}.provider",
+                )
+            )
+            continue
+
+        node_type = _provider_node_type(provider.metadata(), parsed_reference.node_type)
+        if node_type is None:
+            diagnostics.append(
+                Diagnostic(
+                    severity=DiagnosticSeverity.ERROR,
+                    code="node.provider.node_type.unknown",
+                    message=(
+                        f"Provider '{parsed_reference.provider_id}' does not define "
+                        f"node type '{parsed_reference.node_type}'."
+                    ),
+                    location=f"{location}.provider",
+                )
+            )
+            continue
+
+        diagnostics.extend(provider.validate_node(node, node_type, location=location))
+
+    return diagnostics
+
+
 def _optional_string(value: Any) -> str | None:
     if isinstance(value, str) and value.strip():
         return value.strip()
@@ -202,6 +273,13 @@ def _optional_string(value: Any) -> str | None:
 
 def _is_slug(value: str) -> bool:
     return bool(_SLUG_RE.fullmatch(value))
+
+
+def _provider_node_type(metadata: Any, node_type_id: str) -> Any | None:
+    for node_type in metadata.node_types:
+        if node_type.id == node_type_id:
+            return node_type
+    return None
 
 
 def _parse_needs(value: Any, location: str, diagnostics: list[Diagnostic]) -> list[str]:
