@@ -12,8 +12,10 @@ ws3, Modelwright, Nemora, and future FRESH packages.
 FreshForge is pre-release alpha software. It implements provisional workflow
 records, YAML/JSON loading, structural and provider-aware validation, explicit
 provider registry support, Python entry-point provider discovery, workflow
-inspection, and non-executing run planning. It does not yet implement a stable
-workflow DSL, graph executor, node execution, or real domain adapters.
+inspection, and non-executing run planning. The `0.1.0a1` release is a GitHub
+alpha release with checked artifacts, not a PyPI publication. FreshForge does
+not yet implement a stable workflow DSL, graph executor, node execution, or real
+domain adapters.
 
 Documentation: https://ubc-fresh.github.io/freshforge/
 
@@ -47,8 +49,9 @@ Supported in `0.1.0a1`:
   metadata, provider-aware diagnostics, and workflow inspection;
 - Phase 4 Python entry-point provider discovery and a public-safe fixture
   adapter that proves the adapter packaging path;
-- Sphinx documentation skeleton;
-- CI, documentation, and release-artifact workflow scaffolding.
+- public-safe example workflow specs;
+- Sphinx documentation;
+- CI, documentation, and release-artifact workflows.
 
 Not supported yet:
 
@@ -57,6 +60,9 @@ Not supported yet:
 - execution, caching, or checkpointing;
 - direct integration with FEMIC, FHOPS, ws3, Modelwright, Nemora, or GIS tools;
 - PyPI publication.
+
+Release artifacts are distributed through GitHub for this alpha. PyPI
+publication is deferred to a later release phase.
 
 ## Install For Development
 

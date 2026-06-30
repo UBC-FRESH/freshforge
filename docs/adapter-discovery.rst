@@ -67,4 +67,5 @@ Deferred Work
 
 Phase 4 does not add real FEMIC, FHOPS, ws3, Modelwright, or Nemora adapters. It
 also does not add node execution, ``freshforge run``, artifact materialization,
-caching, checkpoints, or run records.
+caching, checkpoints, or run records. FreshForge ``0.1.0a1`` keeps these
+boundaries for the GitHub alpha release.

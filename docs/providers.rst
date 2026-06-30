@@ -69,4 +69,6 @@ Syntax Status
 -------------
 
 Provider syntax is alpha and provisional. Entry-point discovery is intended to
-stabilize adapter packaging before FreshForge adds real domain adapters.
+stabilize adapter packaging before FreshForge adds real domain adapters. CLI
+JSON output is deterministic enough for the test suite, but it remains part of
+the alpha API surface.

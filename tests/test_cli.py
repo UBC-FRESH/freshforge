@@ -30,7 +30,7 @@ def test_cli_info() -> None:
 
     assert result.exit_code == 0
     assert "FreshForge" in result.stdout
-    assert "Phase 4 entry-point provider discovery" in result.stdout
+    assert "0.1.0a1 public alpha" in result.stdout
 
 
 def test_cli_providers() -> None:

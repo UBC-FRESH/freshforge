@@ -17,6 +17,7 @@ Near-Term Phases
 Current Edge
 ------------
 
-Phase 4 implements Python entry-point provider discovery and a public-safe
-fixture adapter on top of the non-executing Phase 3 provider layer. It still
-defers execution behavior and real domain adapters.
+Phase 5 hardens documentation, examples, tests, release notes, and release
+artifact checks for the ``0.1.0a1`` GitHub alpha release. It still defers PyPI
+publication, execution behavior, stable workflow syntax, and real domain
+adapters.
