@@ -79,3 +79,26 @@ completion and GitHub issue comments.
   Python 3.11 and 3.12; the Docs workflow deployed successfully, and live docs
   verification returned `200` for both the docs root and providers page with
   Phase 3 provider content present.
+- Opened Phase 4 on `feature/p4-ecosystem-adapter-prototype` with parent issue
+  #28 and child issues #29 through #33 for entry-point discovery, fixture
+  adapter, multi-provider CLI behavior, docs/tests, and closeout.
+- Implemented Python entry-point provider discovery through the
+  `freshforge.providers` group, with provider-factory loading, explicit registry
+  preservation, and diagnostics for load failures, factory failures, invalid
+  provider objects, invalid metadata, and duplicate provider IDs.
+- Added the public-safe `freshforge.fixture` adapter as a FreshForge-shipped
+  entry-point provider, plus `examples/ecosystem_adapter_workflow.yaml` to prove
+  a multi-provider graph using both built-in and discovered providers without
+  execution or real FRESH ecosystem imports.
+- Updated CLI/default registry behavior so `freshforge providers`,
+  `freshforge validate`, `freshforge inspect`, and `freshforge plan` use
+  entry-point discovery by default while keeping explicit registration available
+  for tests and controlled applications.
+- Added adapter discovery documentation, updated README/architecture/provider
+  docs, recorded the Phase 4 entry-point discovery planning note, and expanded
+  tests for discovery diagnostics, fixture metadata, fixture validation,
+  multi-provider validation, inspection, and planning.
+- Verified Phase 4 locally with editable install, `ruff check`, `pytest`,
+  warning-clean Sphinx HTML build, package build, and `twine check` for the
+  generated artifacts. Also inspected the sdist entry-point metadata and smoke
+  tested installed CLI provider listing and multi-provider planning.

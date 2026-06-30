@@ -4,8 +4,8 @@ Architecture
 FreshForge is intended to become a neutral workflow core rather than a domain
 package that imports every FRESH modelling tool. Phase 1 records the first
 architecture contracts for that direction. Phase 2 adds provisional workflow
-records, and Phase 3 adds provider-aware validation and planning without
-execution.
+records, Phase 3 adds provider-aware validation and planning, and Phase 4 adds
+entry-point adapter discovery without execution.
 
 Intended Dependency Direction
 -----------------------------
@@ -75,6 +75,10 @@ Acceptable future provider locations include native modules inside domain
 packages, thin companion packages such as ``freshforge-femic``, and local project
 providers for one-off research workflows.
 
+Phase 4 proves the packaging path with Python entry points under the
+``freshforge.providers`` group. FreshForge discovers provider factories from
+installed packages, but it still does not import domain packages directly.
+
 CLI And API Direction
 ---------------------
 
@@ -101,13 +105,13 @@ Future CLI command groups should be thin wrappers over Python APIs:
 Current Boundary
 ----------------
 
-Phase 3 implements provisional workflow records, YAML/JSON loading, structural
-and provider-aware validation, explicit provider registry support, workflow
-inspection, and provider-aware non-executing planning.
+Phase 4 implements provisional workflow records, YAML/JSON loading, structural
+and provider-aware validation, explicit provider registry support, entry-point
+provider discovery, workflow inspection, and provider-aware non-executing
+planning.
 
-FreshForge still does not implement node execution, Python entry-point provider
-discovery, provider package auto-import, cache or checkpoint semantics, run
-records, artifact materialization, or ecosystem adapters.
+FreshForge still does not implement node execution, cache or checkpoint
+semantics, run records, artifact materialization, or real ecosystem adapters.
 
 Phase 1 Planning Records
 ------------------------

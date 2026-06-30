@@ -211,7 +211,11 @@ def validate_workflow_with_providers(
         if structural_diagnostics is not None
         else validate_workflow_spec(spec)
     )
-    provider_registry = registry if registry is not None else default_provider_registry()
+    if registry is None:
+        provider_registry, discovery_diagnostics = default_provider_registry()
+        diagnostics.extend(discovery_diagnostics)
+    else:
+        provider_registry = registry
 
     for index, node in enumerate(spec.nodes):
         if not node.provider:

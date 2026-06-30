@@ -64,3 +64,23 @@ def test_create_run_plan_refuses_specs_with_provider_error_diagnostics() -> None
     assert "node.provider.node_type.unknown" in {
         diagnostic.code for diagnostic in plan.diagnostics
     }
+
+
+def test_create_run_plan_resolves_multi_provider_example() -> None:
+    spec, diagnostics = load_workflow("examples/ecosystem_adapter_workflow.yaml")
+    assert spec is not None
+    assert diagnostics == []
+
+    plan = create_run_plan(spec, diagnostics=diagnostics)
+
+    assert not plan.has_errors
+    assert [node.id for node in plan.nodes] == [
+        "load_inventory",
+        "summarize_inventory",
+        "check_yields",
+        "declare_scenario_report",
+    ]
+    assert {node.provider_id for node in plan.nodes} == {
+        "freshforge.example",
+        "freshforge.fixture",
+    }

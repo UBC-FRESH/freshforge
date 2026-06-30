@@ -12,6 +12,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P1 Architecture and workflow-language research | #7 | `feature/p1-architecture-contracts` | Complete |
 | P2 Core workflow records and validation contracts | #14 | `feature/p2-core-workflow-records` | Complete |
 | P3 Node provider API and execution-planning prototype | #21 | `feature/p3-provider-api-planning` | Complete |
+| P4 Ecosystem adapter prototype | #28 | `feature/p4-ecosystem-adapter-prototype` | Active |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -203,11 +204,63 @@ root and providers page returned `200` with Phase 3 provider content.
 
 ## Phase 4: Ecosystem Adapter Prototypes
 
-Status: backlog
+Parent issue: #28
+
+Branch: `feature/p4-ecosystem-adapter-prototype`
+
+Status: active
 
 Goal: prove FreshForge can compose a small public-safe workflow using adapters
 from one or more FRESH ecosystem tools without turning FreshForge into a
 domain-package dependency hub.
+
+- [x] P4.1 Entry-point provider discovery (#29)
+  - [x] Add entry-point discovery API.
+  - [x] Support provider factories returning `Provider` instances.
+  - [x] Return diagnostics for load failures, invalid objects, duplicate
+        provider IDs, and metadata errors.
+  - [x] Keep explicit registry registration working unchanged.
+- [x] P4.2 Public-safe fixture adapter (#30)
+  - [x] Add provider id `freshforge.fixture`.
+  - [x] Register fixture provider through FreshForge package entry points.
+  - [x] Add FRESH-flavoured non-executing node types.
+  - [x] Validate only declared broad keys and simple parameters.
+- [x] P4.3 Multi-provider example and CLI behavior (#31)
+  - [x] Add multi-provider public-safe example workflow.
+  - [x] Ensure `freshforge providers [--json]` lists fixture provider.
+  - [x] Ensure validate, inspect, and plan resolve fixture references by
+        default.
+  - [x] Keep `freshforge run` absent.
+- [x] P4.4 Docs, planning note, and tests (#32)
+  - [x] Add adapter/discovery docs page.
+  - [x] Update README, architecture, providers, roadmap docs, roadmap, and
+        changelog.
+  - [x] Add entry-point-discovery planning note.
+  - [x] Add provider discovery, fixture adapter, CLI, and workflow tests.
+- [ ] P4.5 Phase closeout and verification (#33)
+  - [x] Run local acceptance commands.
+  - [x] Update roadmap and changelog closeout notes.
+  - [ ] Comment on child issues and parent issue with verification result.
+  - [ ] Open PR to `main`.
+  - [ ] Merge after green CI and verify live docs.
+
+Phase 4 local verification passed with:
+
+- `python -m pip install -e .[dev]`
+- `python -m ruff check .`
+- `python -m pytest`
+- `sphinx-build -b html docs _build/html -W`
+- `python -m build`
+- `twine check dist/*`
+
+Phase 4 entry-point artifact and CLI smoke verification also passed:
+
+- inspected the sdist `entry_points.txt` and confirmed the
+  `freshforge.providers` fixture entry point;
+- `freshforge providers --json` listed `freshforge.example` and
+  `freshforge.fixture` with no diagnostics;
+- `freshforge plan examples/ecosystem_adapter_workflow.yaml --json` produced a
+  provider-aware non-executing plan using both providers.
 
 ## Phase 5: Documentation, Examples, And Public Alpha Hardening
 
@@ -218,5 +271,8 @@ the first public alpha release.
 
 ## Current Next Steps
 
-Phase 3 is merged and closed on `main`. The next bounded lane is Phase 4
-ecosystem adapter prototype planning.
+Phase 4 entry-point provider discovery, public-safe fixture adapter,
+multi-provider example workflow, CLI behavior, docs, planning note, tests, and
+local verification are complete on `feature/p4-ecosystem-adapter-prototype`. The
+next bounded lane is P4.5 GitHub closeout: reconcile issue comments, open a PR,
+merge after green CI/docs, and verify live docs.

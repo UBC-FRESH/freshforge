@@ -17,6 +17,6 @@ Near-Term Phases
 Current Edge
 ------------
 
-Phase 3 implements the provider API and provider-aware planning prototype on top
-of the non-executing Phase 2 record layer. It still defers execution behavior,
-automatic plugin discovery, and domain adapters.
+Phase 4 implements Python entry-point provider discovery and a public-safe
+fixture adapter on top of the non-executing Phase 3 provider layer. It still
+defers execution behavior and real domain adapters.

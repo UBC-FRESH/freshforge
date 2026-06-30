@@ -5,8 +5,8 @@ FreshForge is workflow-as-code for open forest resources and ecosystem services
 modelling.
 
 FreshForge is currently a public-alpha package. It does not yet implement a
-stable workflow language, graph executor, automatic provider discovery, or
-ecosystem adapters.
+stable workflow language, graph executor, real ecosystem adapters, or workflow
+execution.
 
 Phase 2 adds provisional workflow records, YAML/JSON loading, structural
 validation diagnostics, and non-executing run planning.
@@ -14,6 +14,10 @@ validation diagnostics, and non-executing run planning.
 Phase 3 adds an explicit provider registry, built-in example provider metadata,
 provider-aware diagnostics, workflow inspection, and provider-aware run plans
 without executing nodes.
+
+Phase 4 adds Python entry-point provider discovery and a public-safe fixture
+adapter that proves the adapter packaging path without importing real FRESH
+ecosystem tools.
 
 .. toctree::
    :maxdepth: 2
@@ -25,4 +29,5 @@ without executing nodes.
    architecture
    workflow-records
    providers
+   adapter-discovery
    roadmap

@@ -48,7 +48,7 @@ def info() -> None:
     console.print("FreshForge")
     console.print(f"Version: {__version__}")
     console.print(
-        "Status: Phase 3 provider-aware validation and non-executing planning."
+        "Status: Phase 4 entry-point provider discovery and adapter prototype."
     )
 
 
@@ -60,18 +60,25 @@ def providers_command(
     ] = False,
 ) -> None:
     """List registered providers and node types."""
-    registry = default_provider_registry()
+    registry, diagnostics = default_provider_registry()
     provider_metadata = registry.list()
     if json_output:
-        payload = {"providers": [metadata.to_dict() for metadata in provider_metadata]}
+        payload = {
+            "ok": not _has_errors(diagnostics),
+            "providers": [metadata.to_dict() for metadata in provider_metadata],
+            "diagnostics": [diagnostic.to_dict() for diagnostic in diagnostics],
+        }
         console.out(json.dumps(payload, indent=2, sort_keys=True))
-        return
+    else:
+        console.print("Registered providers:")
+        for metadata in provider_metadata:
+            console.print(f"- {metadata.id} {metadata.version}")
+            for node_type in metadata.node_types:
+                console.print(f"  - {node_type.id}")
+        _print_diagnostics(diagnostics)
 
-    console.print("Registered providers:")
-    for metadata in provider_metadata:
-        console.print(f"- {metadata.id} {metadata.version}")
-        for node_type in metadata.node_types:
-            console.print(f"  - {node_type.id}")
+    if _has_errors(diagnostics):
+        raise typer.Exit(code=1)
 
 
 @app.command(name="validate")
@@ -166,7 +173,8 @@ def inspect_command(
 ) -> None:
     """Inspect a workflow spec and provider references without planning or executing."""
     spec, diagnostics = load_workflow(path)
-    registry = default_provider_registry()
+    registry, discovery_diagnostics = default_provider_registry()
+    diagnostics.extend(discovery_diagnostics)
     if spec is not None:
         diagnostics = validate_workflow_with_providers(
             spec,
@@ -200,7 +208,7 @@ def inspect_command(
         raise typer.Exit(code=1)
 
 
-def _has_errors(diagnostics: list[Diagnostic]) -> bool:
+def _has_errors(diagnostics: list[Diagnostic] | tuple[Diagnostic, ...]) -> bool:
     return any(diagnostic.severity is DiagnosticSeverity.ERROR for diagnostic in diagnostics)
 
 
