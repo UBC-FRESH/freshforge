@@ -30,7 +30,24 @@ def test_cli_info() -> None:
 
     assert result.exit_code == 0
     assert "FreshForge" in result.stdout
-    assert "Phase 2 provisional workflow records" in result.stdout
+    assert "Phase 3 provider-aware validation" in result.stdout
+
+
+def test_cli_providers() -> None:
+    result = runner.invoke(app, ["providers"])
+
+    assert result.exit_code == 0
+    assert "freshforge.example" in result.stdout
+    assert "load_inventory" in result.stdout
+
+
+def test_cli_providers_json_output() -> None:
+    result = runner.invoke(app, ["providers", "--json"])
+
+    assert result.exit_code == 0
+    payload = json.loads(result.stdout)
+    assert payload["providers"][0]["id"] == "freshforge.example"
+    assert payload["providers"][0]["node_types"][0]["id"] == "load_inventory"
 
 
 def test_cli_validate_example_success() -> None:
@@ -70,6 +87,24 @@ def test_cli_validate_json_output() -> None:
     assert payload["workflow"]["workflow"]["id"] == "stand_treatment_demo"
 
 
+def test_cli_inspect_example_success() -> None:
+    result = runner.invoke(app, ["inspect", "examples/stand_treatment_workflow.yaml"])
+
+    assert result.exit_code == 0
+    assert "Workflow: stand_treatment_demo" in result.stdout
+    assert "freshforge.example.load_inventory" in result.stdout
+
+
+def test_cli_inspect_json_output() -> None:
+    result = runner.invoke(app, ["inspect", "examples/stand_treatment_workflow.yaml", "--json"])
+
+    assert result.exit_code == 0
+    payload = json.loads(result.stdout)
+    assert payload["ok"] is True
+    assert payload["providers"][0]["provider_id"] == "freshforge.example"
+    assert payload["providers"][0]["node_type"] == "load_inventory"
+
+
 def test_cli_plan_example_success() -> None:
     result = runner.invoke(app, ["plan", "examples/stand_treatment_workflow.yaml"])
 
@@ -90,3 +125,6 @@ def test_cli_plan_json_output() -> None:
         "classify_fuel",
         "choose_treatment",
     ]
+    assert payload["plan"]["nodes"][0]["provider_id"] == "freshforge.example"
+    assert payload["plan"]["nodes"][0]["node_type"] == "load_inventory"
+    assert payload["plan"]["nodes"][0]["provider_available"] is True

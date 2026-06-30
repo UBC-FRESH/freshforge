@@ -5,18 +5,27 @@ from __future__ import annotations
 from collections import defaultdict
 from collections.abc import Sequence
 
+from freshforge.providers import ProviderRegistry, default_provider_registry
 from freshforge.records import Diagnostic, DiagnosticSeverity, PlannedNode, RunPlan, WorkflowSpec
-from freshforge.validation import has_error_diagnostics, validate_workflow_spec
+from freshforge.validation import has_error_diagnostics, validate_workflow_with_providers
 
 
 def create_run_plan(
     spec: WorkflowSpec,
     *,
     diagnostics: Sequence[Diagnostic] | None = None,
+    registry: ProviderRegistry | None = None,
 ) -> RunPlan:
     """Create a deterministic non-executing run plan."""
+    provider_registry = registry if registry is not None else default_provider_registry()
     validation_diagnostics = (
-        list(diagnostics) if diagnostics is not None else validate_workflow_spec(spec)
+        validate_workflow_with_providers(
+            spec,
+            registry=provider_registry,
+            structural_diagnostics=diagnostics,
+        )
+        if diagnostics is not None
+        else validate_workflow_with_providers(spec, registry=provider_registry)
     )
     if has_error_diagnostics(validation_diagnostics):
         return RunPlan(
@@ -38,7 +47,17 @@ def create_run_plan(
     while ready:
         node_id = ready.pop(0)
         node = nodes_by_id[node_id]
-        planned.append(PlannedNode(id=node.id, provider=node.provider, needs=node.needs))
+        provider_resolution = provider_registry.resolve(node.provider)
+        planned.append(
+            PlannedNode(
+                id=node.id,
+                provider=node.provider,
+                provider_id=provider_resolution.provider_id,
+                node_type=provider_resolution.node_type,
+                provider_available=provider_resolution.provider_available,
+                needs=node.needs,
+            )
+        )
         for dependent_id in sorted(dependents.get(node_id, [])):
             incoming_count[dependent_id] -= 1
             if incoming_count[dependent_id] == 0:

@@ -106,12 +106,18 @@ class PlannedNode:
 
     id: str
     provider: str
+    provider_id: str | None = None
+    node_type: str | None = None
+    provider_available: bool = False
     needs: tuple[str, ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "id": self.id,
             "provider": self.provider,
+            "provider_id": self.provider_id,
+            "node_type": self.node_type,
+            "provider_available": self.provider_available,
             "needs": list(self.needs),
         }
 

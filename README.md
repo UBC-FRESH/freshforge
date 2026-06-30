@@ -10,9 +10,10 @@ rerun, publish, and adapt across projects that use tools such as FEMIC, FHOPS,
 ws3, Modelwright, Nemora, and future FRESH packages.
 
 FreshForge is pre-release alpha software. It implements provisional workflow
-records, YAML/JSON loading, structural validation, and non-executing run
-planning. It does not yet implement a stable workflow DSL, node provider
-protocol, provider registry, graph executor, or domain adapters.
+records, YAML/JSON loading, structural and provider-aware validation, explicit
+provider registry support, workflow inspection, and non-executing run planning.
+It does not yet implement a stable workflow DSL, graph executor, automatic
+provider discovery, node execution, or domain adapters.
 
 Documentation: https://ubc-fresh.github.io/freshforge/
 
@@ -42,13 +43,15 @@ Supported in `0.1.0a1`:
   and CLI/API direction;
 - provisional Phase 2 YAML/JSON workflow loading, validation diagnostics, and
   non-executing run planning;
+- Phase 3 explicit provider registry support, built-in example provider
+  metadata, provider-aware diagnostics, and workflow inspection;
 - Sphinx documentation skeleton;
 - CI, documentation, and release-artifact workflow scaffolding.
 
 Not supported yet:
 
 - stable workflow YAML/TOML/JSON schema;
-- node provider APIs or plugin registration;
+- Python entry-point provider discovery or plugin auto-import;
 - execution, caching, or checkpointing;
 - direct integration with FEMIC, FHOPS, ws3, Modelwright, Nemora, or GIS tools;
 - PyPI publication.
@@ -86,10 +89,14 @@ twine check dist/*
 ```bash
 freshforge --version
 freshforge info
+freshforge providers
+freshforge inspect examples/stand_treatment_workflow.yaml
+freshforge validate examples/stand_treatment_workflow.yaml
+freshforge plan examples/stand_treatment_workflow.yaml
 ```
 
-The CLI is intentionally small in Phase 0. Future phases should keep CLI
-commands thin wrappers over package APIs.
+The CLI commands are thin wrappers over package APIs. They validate, inspect,
+and plan without executing workflow nodes.
 
 ## Roadmap
 

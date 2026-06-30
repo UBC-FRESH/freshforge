@@ -3,8 +3,9 @@ Architecture
 
 FreshForge is intended to become a neutral workflow core rather than a domain
 package that imports every FRESH modelling tool. Phase 1 records the first
-architecture contracts for that direction without implementing the workflow
-language or executor.
+architecture contracts for that direction. Phase 2 adds provisional workflow
+records, and Phase 3 adds provider-aware validation and planning without
+execution.
 
 Intended Dependency Direction
 -----------------------------
@@ -36,8 +37,8 @@ The Phase 1 vocabulary uses these terms:
    outputs, parameters, dependencies, and diagnostics.
 
 ``provider``
-   A package-owned implementation surface that can validate and eventually run a
-   node type.
+   A package-owned implementation surface that can describe and validate a node
+   type. Execution remains deferred.
 
 ``artifact``
    A materialized file, dataset, model package, report, or other durable output.
@@ -91,19 +92,22 @@ Future CLI command groups should be thin wrappers over Python APIs:
    or run records.
 
 ``providers``
-   List available providers and node types once provider discovery exists.
+   List registered providers and node types.
 
 ``run``
    Execute a validated run plan. This remains deferred until records,
    validation, planning, provenance, and artifact contracts are stable.
 
-Phase 0 Boundary
+Current Boundary
 ----------------
 
-Phase 2 implements provisional workflow records, YAML/JSON loading, validation,
-and non-executing planning. It still does not implement node execution, provider
-discovery, provider protocols, cache or checkpoint semantics, or ecosystem
-adapters.
+Phase 3 implements provisional workflow records, YAML/JSON loading, structural
+and provider-aware validation, explicit provider registry support, workflow
+inspection, and provider-aware non-executing planning.
+
+FreshForge still does not implement node execution, Python entry-point provider
+discovery, provider package auto-import, cache or checkpoint semantics, run
+records, artifact materialization, or ecosystem adapters.
 
 Phase 1 Planning Records
 ------------------------

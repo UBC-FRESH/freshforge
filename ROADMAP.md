@@ -160,27 +160,27 @@ Status: active
 Goal: create a provider API and planner that can validate a workflow graph and
 explain what would run without executing domain tools.
 
-- [ ] P3.1 Provider protocol, metadata, and registry (#22)
-  - [ ] Define provider and node-type metadata records.
-  - [ ] Define provider reference parsing for provider namespace plus node type.
-  - [ ] Add explicit registry registration and lookup behavior.
-  - [ ] Add default built-in example provider registry.
-- [ ] P3.2 Provider-aware validation and planning records (#23)
-  - [ ] Preserve structural validation APIs.
-  - [ ] Add registry-backed provider diagnostics.
-  - [ ] Extend planned nodes with provider id, node type, and availability.
-  - [ ] Keep planning deterministic and non-executing.
-- [ ] P3.3 Providers and inspect CLI surfaces (#24)
-  - [ ] Add `freshforge providers [--json]`.
-  - [ ] Add `freshforge inspect PATH [--json]`.
-  - [ ] Keep `freshforge validate` and `freshforge plan` deterministic and
+- [x] P3.1 Provider protocol, metadata, and registry (#22)
+  - [x] Define provider and node-type metadata records.
+  - [x] Define provider reference parsing for provider namespace plus node type.
+  - [x] Add explicit registry registration and lookup behavior.
+  - [x] Add default built-in example provider registry.
+- [x] P3.2 Provider-aware validation and planning records (#23)
+  - [x] Preserve structural validation APIs.
+  - [x] Add registry-backed provider diagnostics.
+  - [x] Extend planned nodes with provider id, node type, and availability.
+  - [x] Keep planning deterministic and non-executing.
+- [x] P3.3 Providers and inspect CLI surfaces (#24)
+  - [x] Add `freshforge providers [--json]`.
+  - [x] Add `freshforge inspect PATH [--json]`.
+  - [x] Keep `freshforge validate` and `freshforge plan` deterministic and
         provider-aware.
-  - [ ] Do not add `freshforge run`.
-- [ ] P3.4 Docs, examples, and tests (#25)
-  - [ ] Update public docs and README status.
-  - [ ] Add public planning note for explicit-registry-first design.
-  - [ ] Keep example workflow resolving against the built-in example provider.
-  - [ ] Add provider, validation, planning, and CLI test coverage.
+  - [x] Do not add `freshforge run`.
+- [x] P3.4 Docs, examples, and tests (#25)
+  - [x] Update public docs and README status.
+  - [x] Add public planning note for explicit-registry-first design.
+  - [x] Keep example workflow resolving against the built-in example provider.
+  - [x] Add provider, validation, planning, and CLI test coverage.
 - [ ] P3.5 Phase closeout and verification (#26)
   - [ ] Run local acceptance commands.
   - [ ] Update roadmap and changelog closeout notes.
@@ -205,6 +205,8 @@ the first public alpha release.
 
 ## Current Next Steps
 
-Phase 3 is active on `feature/p3-provider-api-planning`. The next bounded lane
-is P3.1 provider protocol, metadata, registry, and built-in example provider
-work.
+Phase 3 provider API, provider-aware validation/planning, providers CLI,
+workflow inspection, docs, examples, and tests are implemented on
+`feature/p3-provider-api-planning`. The next bounded lane is P3.5 closeout:
+run full local acceptance checks, reconcile changelog and GitHub issues, open a
+PR, merge after green CI/docs, and verify live docs.
