@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "freshforge"
+version = "0.1.0a1"
+description = "Workflow-as-code for open forest resources and ecosystem services modelling."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "UBC FRESH Lab"}]
+keywords = [
+    "forest-modelling",
+    "reproducible-workflows",
+    "scientific-computing",
+    "workflow-as-code",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "rich>=13",
+    "typer>=0.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/UBC-FRESH/freshforge"
+Documentation = "https://ubc-fresh.github.io/freshforge/"
+Repository = "https://github.com/UBC-FRESH/freshforge"
+Issues = "https://github.com/UBC-FRESH/freshforge/issues"
+Changelog = "https://github.com/UBC-FRESH/freshforge/blob/main/CHANGE_LOG.md"
+
+[project.optional-dependencies]
+docs = [
+    "sphinx>=7",
+    "sphinx-rtd-theme>=2",
+]
+dev = [
+    "build>=1.2",
+    "pytest>=8",
+    "ruff>=0.5",
+    "sphinx>=7",
+    "sphinx-rtd-theme>=2",
+    "twine>=5",
+]
+quality = [
+    "ruff>=0.5",
+]
+release = [
+    "build>=1.2",
+    "twine>=5",
+]
+test = [
+    "pytest>=8",
+]
+
+[project.scripts]
+freshforge = "freshforge.cli:app"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["tmp"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "W"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+pythonpath = ["src"]
+testpaths = ["tests"]

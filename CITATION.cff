@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use FreshForge, please cite the software repository."
+title: "FreshForge"
+abstract: "Workflow-as-code for open forest resources and ecosystem services modelling."
+authors:
+  - name: "UBC FRESH Lab"
+repository-code: "https://github.com/UBC-FRESH/freshforge"
+url: "https://github.com/UBC-FRESH/freshforge"
+license: "MIT"
+version: "0.1.0a1"
+date-released: "2026-06-29"
