@@ -1,5 +1,8 @@
 """CLI smoke tests."""
 
+import json
+from pathlib import Path
+
 from typer.testing import CliRunner
 
 from freshforge import __version__
@@ -27,4 +30,63 @@ def test_cli_info() -> None:
 
     assert result.exit_code == 0
     assert "FreshForge" in result.stdout
-    assert "workflow DSL not implemented yet" in result.stdout
+    assert "Phase 2 provisional workflow records" in result.stdout
+
+
+def test_cli_validate_example_success() -> None:
+    result = runner.invoke(app, ["validate", "examples/stand_treatment_workflow.yaml"])
+
+    assert result.exit_code == 0
+    assert "Validation passed" in result.stdout
+    assert "stand_treatment_demo" in result.stdout
+
+
+def test_cli_validate_failure_exit_code(tmp_path: Path) -> None:
+    path = tmp_path / "bad.yaml"
+    path.write_text(
+        """
+        workflow:
+          id: bad_demo
+        nodes:
+          - id: load
+            provider: example.load
+            needs: [missing]
+        """,
+        encoding="utf-8",
+    )
+
+    result = runner.invoke(app, ["validate", str(path)])
+
+    assert result.exit_code == 1
+    assert "node.needs.unknown" in result.stdout
+
+
+def test_cli_validate_json_output() -> None:
+    result = runner.invoke(app, ["validate", "examples/stand_treatment_workflow.yaml", "--json"])
+
+    assert result.exit_code == 0
+    payload = json.loads(result.stdout)
+    assert payload["ok"] is True
+    assert payload["workflow"]["workflow"]["id"] == "stand_treatment_demo"
+
+
+def test_cli_plan_example_success() -> None:
+    result = runner.invoke(app, ["plan", "examples/stand_treatment_workflow.yaml"])
+
+    assert result.exit_code == 0
+    assert "Run plan" in result.stdout
+    assert "1. load_inventory" in result.stdout
+    assert "3. choose_treatment" in result.stdout
+
+
+def test_cli_plan_json_output() -> None:
+    result = runner.invoke(app, ["plan", "examples/stand_treatment_workflow.yaml", "--json"])
+
+    assert result.exit_code == 0
+    payload = json.loads(result.stdout)
+    assert payload["ok"] is True
+    assert [node["id"] for node in payload["plan"]["nodes"]] == [
+        "load_inventory",
+        "classify_fuel",
+        "choose_treatment",
+    ]

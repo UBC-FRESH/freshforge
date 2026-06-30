@@ -100,8 +100,10 @@ Future CLI command groups should be thin wrappers over Python APIs:
 Phase 0 Boundary
 ----------------
 
-Phase 0 does not implement workflow schema, node protocol, provider registry,
-graph executor, cache or checkpoint semantics, or ecosystem adapters.
+Phase 2 implements provisional workflow records, YAML/JSON loading, validation,
+and non-executing planning. It still does not implement node execution, provider
+discovery, provider protocols, cache or checkpoint semantics, or ecosystem
+adapters.
 
 Phase 1 Planning Records
 ------------------------

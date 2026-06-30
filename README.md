@@ -9,8 +9,10 @@ long-term goal is to make forest modelling workflows easier to review, test,
 rerun, publish, and adapt across projects that use tools such as FEMIC, FHOPS,
 ws3, Modelwright, Nemora, and future FRESH packages.
 
-FreshForge is pre-release scaffolding. It does not yet implement a workflow DSL,
-node protocol, provider registry, graph executor, or domain adapters.
+FreshForge is pre-release alpha software. It implements provisional workflow
+records, YAML/JSON loading, structural validation, and non-executing run
+planning. It does not yet implement a stable workflow DSL, node provider
+protocol, provider registry, graph executor, or domain adapters.
 
 Documentation: https://ubc-fresh.github.io/freshforge/
 
@@ -38,14 +40,16 @@ Supported in `0.1.0a1`:
 - strict roadmap, issue, changelog, and planning workflow;
 - Phase 1 architecture contracts for workflow vocabulary, provider boundaries,
   and CLI/API direction;
+- provisional Phase 2 YAML/JSON workflow loading, validation diagnostics, and
+  non-executing run planning;
 - Sphinx documentation skeleton;
 - CI, documentation, and release-artifact workflow scaffolding.
 
 Not supported yet:
 
-- workflow YAML/TOML/JSON schema;
+- stable workflow YAML/TOML/JSON schema;
 - node provider APIs or plugin registration;
-- DAG validation, execution, caching, or checkpointing;
+- execution, caching, or checkpointing;
 - direct integration with FEMIC, FHOPS, ws3, Modelwright, Nemora, or GIS tools;
 - PyPI publication.
 

@@ -17,6 +17,7 @@ Near-Term Phases
 Current Edge
 ------------
 
-Phase 1 records the first architecture contracts. Phase 2 should implement the
-minimum workflow records and validation APIs from those contracts without adding
-execution behavior or domain adapters.
+Phase 2 implements the minimum workflow records and validation APIs from the
+Phase 1 contracts without adding execution behavior or domain adapters. Phase 3
+should add the provider API and execution-planning prototype on top of this
+non-executing record layer.
