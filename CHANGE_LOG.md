@@ -55,3 +55,5 @@ completion and GitHub issue comments.
   3.11 and 3.12.
 - Completed Phase 2 closeout by reconciling roadmap and issue state after merge;
   final GitHub Actions and live-docs verification were performed on `main`.
+- Added a Phase 2 status signal to the docs index so the public docs root
+  clearly advertises the workflow-records milestone.
