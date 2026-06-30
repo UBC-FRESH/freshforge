@@ -31,3 +31,6 @@ completion and GitHub issue comments.
   HTML build, package build, and `twine check` for the generated artifacts.
 - Merged Phase 1 to `main` through PR #13 at `146753c` after CI passed on Python
   3.11 and 3.12, then closed the Phase 1 parent issue #7.
+- Enabled GitHub Pages workflow deployments for the new FreshForge repository,
+  reran the docs workflow successfully on `main`, and verified the public docs
+  root returned `200` with FreshForge and Phase 1 content.
