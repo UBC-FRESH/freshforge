@@ -106,3 +106,17 @@ completion and GitHub issue comments.
   Python 3.11 and 3.12; the Docs workflow deployed successfully, and live docs
   verification returned `200` for both the docs root and adapter discovery page
   with Phase 4 adapter content present.
+- Opened Phase 5 on `feature/p5-public-alpha-hardening` with parent issue #35
+  and child issues #36 through #40 for docs/API polish, examples, CI and
+  release-artifact hardening, release notes, and closeout.
+- Hardened public alpha status docs for `0.1.0a1`, replacing stale scaffold-only
+  wording with the implemented Phase 0-4 scope and explicit limits: no workflow
+  execution, no stable workflow DSL, no real ecosystem adapters, and no PyPI
+  publication.
+- Added examples documentation for the single-provider and multi-provider
+  public-safe workflow specs, plus release-checklist documentation for the
+  GitHub prerelease, tag target, artifact checks, and deferred PyPI publication.
+- Updated `RELEASE_NOTES.md` for the implemented `0.1.0a1` alpha scope and added
+  release-contract tests covering version synchronization, manifest example
+  inclusion, fixture provider entry-point metadata, and documented alpha
+  boundaries.

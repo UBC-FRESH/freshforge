@@ -19,6 +19,9 @@ Phase 4 adds Python entry-point provider discovery and a public-safe fixture
 adapter that proves the adapter packaging path without importing real FRESH
 ecosystem tools.
 
+Phase 5 hardens public documentation, examples, release notes, and artifact
+checks for the ``0.1.0a1`` GitHub alpha release.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents
@@ -28,6 +31,8 @@ ecosystem tools.
    governance
    architecture
    workflow-records
+   examples
    providers
    adapter-discovery
+   release-checklist
    roadmap

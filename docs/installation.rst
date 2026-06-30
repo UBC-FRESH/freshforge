@@ -1,8 +1,9 @@
 Installation
 ============
 
-FreshForge is not yet published to PyPI. Install it from a local checkout during
-Phase 0 development.
+FreshForge ``0.1.0a1`` is available as a GitHub prerelease artifact. It is not
+yet published to PyPI. Install it from a local checkout or from a downloaded
+wheel artifact.
 
 Linux and macOS
 ---------------
@@ -31,3 +32,11 @@ Smoke Check
 
    freshforge --version
    freshforge info
+   freshforge providers
+
+Alpha Boundary
+--------------
+
+FreshForge ``0.1.0a1`` validates, inspects, and plans workflow specs without
+executing nodes. It does not install real FEMIC, FHOPS, ws3, Modelwright, Nemora,
+GIS, optimization, or spreadsheet runtimes.

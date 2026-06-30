@@ -47,9 +47,7 @@ def info() -> None:
     """Print a short package status summary."""
     console.print("FreshForge")
     console.print(f"Version: {__version__}")
-    console.print(
-        "Status: Phase 4 entry-point provider discovery and adapter prototype."
-    )
+    console.print("Status: 0.1.0a1 public alpha; non-executing workflow planning.")
 
 
 @app.command(name="providers")
