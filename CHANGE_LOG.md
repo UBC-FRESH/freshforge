@@ -34,3 +34,5 @@ completion and GitHub issue comments.
 - Enabled GitHub Pages workflow deployments for the new FreshForge repository,
   reran the docs workflow successfully on `main`, and verified the public docs
   root returned `200` with FreshForge and Phase 1 content.
+- Reconciled the Phase 1 roadmap closeout checklist so P1.5 reflects the merged
+  PR and pushed closeout commits on `main`.

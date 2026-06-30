@@ -88,8 +88,8 @@ over-specifying the implementation before evidence exists.
   - [x] Update docs with Phase 1 decisions.
   - [x] Update roadmap and changelog.
   - [x] Run local acceptance commands.
-  - [ ] Commit and push branch.
-  - [ ] Open PR to `main`.
+  - [x] Commit and push branch.
+  - [x] Open PR to `main`.
 
 Phase 1 local verification passed with:
 
@@ -130,5 +130,5 @@ the first public alpha release.
 
 ## Current Next Steps
 
-Phase 1 is merged to `main` at `146753c` and parent issue #7 is closed. The next
-bounded lane is Phase 2 core workflow records and validation contracts.
+Phase 1 is merged and closed on `main`; the latest closeout commit is `d6988cb`.
+The next bounded lane is Phase 2 core workflow records and validation contracts.
