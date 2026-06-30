@@ -9,7 +9,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | Phase | Parent issue | Branch | Status |
 | --- | --- | --- | --- |
 | P0 Bootstrap scaffold | #1 | `feature/p0-bootstrap-scaffold` | Complete |
-| P1 Architecture and workflow-language research | #7 | `feature/p1-architecture-contracts` | Active |
+| P1 Architecture and workflow-language research | #7 | `feature/p1-architecture-contracts` | Complete |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -59,7 +59,7 @@ Parent issue: #7
 
 Branch: `feature/p1-architecture-contracts`
 
-Status: active
+Status: complete
 
 Goal: define the first durable FreshForge architecture contracts without
 over-specifying the implementation before evidence exists.
@@ -130,6 +130,5 @@ the first public alpha release.
 
 ## Current Next Steps
 
-Complete Phase 1 verification on `feature/p1-architecture-contracts`, open the
-PR to `main`, then move to Phase 2 core workflow records and validation
-contracts after merge.
+Phase 1 is merged to `main` at `146753c` and parent issue #7 is closed. The next
+bounded lane is Phase 2 core workflow records and validation contracts.

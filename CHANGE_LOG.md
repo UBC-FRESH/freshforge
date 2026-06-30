@@ -29,3 +29,5 @@ completion and GitHub issue comments.
   phases.
 - Verified Phase 1 locally with `ruff check`, `pytest`, warning-clean Sphinx
   HTML build, package build, and `twine check` for the generated artifacts.
+- Merged Phase 1 to `main` through PR #13 at `146753c` after CI passed on Python
+  3.11 and 3.12, then closed the Phase 1 parent issue #7.
