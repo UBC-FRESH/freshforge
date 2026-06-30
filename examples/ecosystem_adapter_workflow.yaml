@@ -1,0 +1,43 @@
+workflow:
+  id: ecosystem_adapter_demo
+  name: Ecosystem adapter demonstration workflow
+  description: Public-safe multi-provider workflow for Phase 4 adapter discovery.
+nodes:
+  - id: load_inventory
+    provider: freshforge.example.load_inventory
+    outputs:
+      inventory: stand_inventory
+    provenance:
+      source: synthetic
+  - id: summarize_inventory
+    provider: freshforge.fixture.inventory_summary
+    needs:
+      - load_inventory
+    inputs:
+      inventory: load_inventory.inventory
+    outputs:
+      summary: inventory_summary
+    parameters:
+      units: hectares
+  - id: check_yields
+    provider: freshforge.fixture.yield_table_check
+    needs:
+      - summarize_inventory
+    inputs:
+      summary: summarize_inventory.summary
+    outputs:
+      check: yield_table_check
+    parameters:
+      species_group: public_demo
+  - id: declare_scenario_report
+    provider: freshforge.fixture.scenario_report
+    needs:
+      - summarize_inventory
+      - check_yields
+    inputs:
+      summary: summarize_inventory.summary
+      check: check_yields.check
+    outputs:
+      report: scenario_report
+    artifacts:
+      report: outputs/ecosystem_adapter_report.json

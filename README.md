@@ -11,9 +11,9 @@ ws3, Modelwright, Nemora, and future FRESH packages.
 
 FreshForge is pre-release alpha software. It implements provisional workflow
 records, YAML/JSON loading, structural and provider-aware validation, explicit
-provider registry support, workflow inspection, and non-executing run planning.
-It does not yet implement a stable workflow DSL, graph executor, automatic
-provider discovery, node execution, or domain adapters.
+provider registry support, Python entry-point provider discovery, workflow
+inspection, and non-executing run planning. It does not yet implement a stable
+workflow DSL, graph executor, node execution, or real domain adapters.
 
 Documentation: https://ubc-fresh.github.io/freshforge/
 
@@ -45,13 +45,15 @@ Supported in `0.1.0a1`:
   non-executing run planning;
 - Phase 3 explicit provider registry support, built-in example provider
   metadata, provider-aware diagnostics, and workflow inspection;
+- Phase 4 Python entry-point provider discovery and a public-safe fixture
+  adapter that proves the adapter packaging path;
 - Sphinx documentation skeleton;
 - CI, documentation, and release-artifact workflow scaffolding.
 
 Not supported yet:
 
 - stable workflow YAML/TOML/JSON schema;
-- Python entry-point provider discovery or plugin auto-import;
+- real FEMIC/FHOPS/ws3/Modelwright/Nemora provider adapters;
 - execution, caching, or checkpointing;
 - direct integration with FEMIC, FHOPS, ws3, Modelwright, Nemora, or GIS tools;
 - PyPI publication.
@@ -91,8 +93,11 @@ freshforge --version
 freshforge info
 freshforge providers
 freshforge inspect examples/stand_treatment_workflow.yaml
+freshforge inspect examples/ecosystem_adapter_workflow.yaml
 freshforge validate examples/stand_treatment_workflow.yaml
+freshforge validate examples/ecosystem_adapter_workflow.yaml
 freshforge plan examples/stand_treatment_workflow.yaml
+freshforge plan examples/ecosystem_adapter_workflow.yaml
 ```
 
 The CLI commands are thin wrappers over package APIs. They validate, inspect,

@@ -214,29 +214,29 @@ Goal: prove FreshForge can compose a small public-safe workflow using adapters
 from one or more FRESH ecosystem tools without turning FreshForge into a
 domain-package dependency hub.
 
-- [ ] P4.1 Entry-point provider discovery (#29)
-  - [ ] Add entry-point discovery API.
-  - [ ] Support provider factories returning `Provider` instances.
-  - [ ] Return diagnostics for load failures, invalid objects, duplicate
+- [x] P4.1 Entry-point provider discovery (#29)
+  - [x] Add entry-point discovery API.
+  - [x] Support provider factories returning `Provider` instances.
+  - [x] Return diagnostics for load failures, invalid objects, duplicate
         provider IDs, and metadata errors.
-  - [ ] Keep explicit registry registration working unchanged.
-- [ ] P4.2 Public-safe fixture adapter (#30)
-  - [ ] Add provider id `freshforge.fixture`.
-  - [ ] Register fixture provider through FreshForge package entry points.
-  - [ ] Add FRESH-flavoured non-executing node types.
-  - [ ] Validate only declared broad keys and simple parameters.
-- [ ] P4.3 Multi-provider example and CLI behavior (#31)
-  - [ ] Add multi-provider public-safe example workflow.
-  - [ ] Ensure `freshforge providers [--json]` lists fixture provider.
-  - [ ] Ensure validate, inspect, and plan resolve fixture references by
+  - [x] Keep explicit registry registration working unchanged.
+- [x] P4.2 Public-safe fixture adapter (#30)
+  - [x] Add provider id `freshforge.fixture`.
+  - [x] Register fixture provider through FreshForge package entry points.
+  - [x] Add FRESH-flavoured non-executing node types.
+  - [x] Validate only declared broad keys and simple parameters.
+- [x] P4.3 Multi-provider example and CLI behavior (#31)
+  - [x] Add multi-provider public-safe example workflow.
+  - [x] Ensure `freshforge providers [--json]` lists fixture provider.
+  - [x] Ensure validate, inspect, and plan resolve fixture references by
         default.
-  - [ ] Keep `freshforge run` absent.
-- [ ] P4.4 Docs, planning note, and tests (#32)
-  - [ ] Add adapter/discovery docs page.
-  - [ ] Update README, architecture, providers, roadmap docs, roadmap, and
+  - [x] Keep `freshforge run` absent.
+- [x] P4.4 Docs, planning note, and tests (#32)
+  - [x] Add adapter/discovery docs page.
+  - [x] Update README, architecture, providers, roadmap docs, roadmap, and
         changelog.
-  - [ ] Add entry-point-discovery planning note.
-  - [ ] Add provider discovery, fixture adapter, CLI, and workflow tests.
+  - [x] Add entry-point-discovery planning note.
+  - [x] Add provider discovery, fixture adapter, CLI, and workflow tests.
 - [ ] P4.5 Phase closeout and verification (#33)
   - [ ] Run local acceptance commands.
   - [ ] Update roadmap and changelog closeout notes.
@@ -253,5 +253,8 @@ the first public alpha release.
 
 ## Current Next Steps
 
-Phase 4 is active on `feature/p4-ecosystem-adapter-prototype`. The next bounded
-lane is P4.1 entry-point provider discovery.
+Phase 4 entry-point provider discovery, public-safe fixture adapter,
+multi-provider example workflow, CLI behavior, docs, planning note, and tests are
+implemented on `feature/p4-ecosystem-adapter-prototype`. The next bounded lane
+is P4.5 closeout: run full local acceptance checks, reconcile changelog and
+GitHub issues, open a PR, merge after green CI/docs, and verify live docs.

@@ -17,14 +17,20 @@ def create_run_plan(
     registry: ProviderRegistry | None = None,
 ) -> RunPlan:
     """Create a deterministic non-executing run plan."""
-    provider_registry = registry if registry is not None else default_provider_registry()
+    if registry is None:
+        provider_registry, discovery_diagnostics = default_provider_registry()
+        initial_diagnostics = list(diagnostics) if diagnostics is not None else []
+        initial_diagnostics.extend(discovery_diagnostics)
+    else:
+        provider_registry = registry
+        initial_diagnostics = list(diagnostics) if diagnostics is not None else []
     validation_diagnostics = (
         validate_workflow_with_providers(
             spec,
             registry=provider_registry,
-            structural_diagnostics=diagnostics,
+            structural_diagnostics=initial_diagnostics,
         )
-        if diagnostics is not None
+        if initial_diagnostics
         else validate_workflow_with_providers(spec, registry=provider_registry)
     )
     if has_error_diagnostics(validation_diagnostics):

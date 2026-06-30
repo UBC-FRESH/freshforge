@@ -4,9 +4,12 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass, field
+from importlib import metadata as importlib_metadata
 from typing import Protocol
 
 from freshforge.records import Diagnostic, DiagnosticSeverity, WorkflowNode
+
+PROVIDER_ENTRY_POINT_GROUP = "freshforge.providers"
 
 
 @dataclass(frozen=True)
@@ -124,6 +127,20 @@ class ProviderRegistry:
             raise ValueError(f"Provider '{provider_id}' is already registered.")
         self._providers[provider_id] = provider
 
+    def try_register(self, provider: Provider, *, location: str | None = None) -> Diagnostic | None:
+        """Register a provider and return a diagnostic instead of raising."""
+        try:
+            self.register(provider)
+        except Exception as exc:  # noqa: BLE001
+            provider_id = _safe_provider_id(provider)
+            return Diagnostic(
+                severity=DiagnosticSeverity.ERROR,
+                code="provider.registration.failed",
+                message=f"Could not register provider '{provider_id}': {exc}",
+                location=location,
+            )
+        return None
+
     def get(self, provider_id: str) -> Provider | None:
         """Return a provider by id when registered."""
         return self._providers.get(provider_id)
@@ -175,11 +192,70 @@ def parse_provider_reference(reference: str) -> ProviderReference | None:
     return ProviderReference(reference=reference, provider_id=provider_id, node_type=node_type)
 
 
-def default_provider_registry() -> ProviderRegistry:
+def default_provider_registry(
+    *,
+    include_entry_points: bool = True,
+) -> tuple[ProviderRegistry, tuple[Diagnostic, ...]]:
     """Return FreshForge's built-in public-safe provider registry."""
     registry = ProviderRegistry()
     registry.register(ExampleProvider())
-    return registry
+    diagnostics: list[Diagnostic] = []
+    if include_entry_points:
+        diagnostics.extend(discover_entry_point_providers(registry))
+    return registry, tuple(diagnostics)
+
+
+def discover_entry_point_providers(
+    registry: ProviderRegistry,
+    *,
+    group: str = PROVIDER_ENTRY_POINT_GROUP,
+) -> tuple[Diagnostic, ...]:
+    """Discover and register provider factories from Python entry points."""
+    diagnostics: list[Diagnostic] = []
+    for entry_point in _provider_entry_points(group):
+        location = f"entry_points.{group}.{entry_point.name}"
+        try:
+            factory = entry_point.load()
+        except Exception as exc:  # noqa: BLE001
+            diagnostics.append(
+                Diagnostic(
+                    severity=DiagnosticSeverity.ERROR,
+                    code="provider.discovery.load_failed",
+                    message=f"Could not load provider entry point '{entry_point.name}': {exc}",
+                    location=location,
+                )
+            )
+            continue
+
+        try:
+            provider = factory()
+        except Exception as exc:  # noqa: BLE001
+            diagnostics.append(
+                Diagnostic(
+                    severity=DiagnosticSeverity.ERROR,
+                    code="provider.discovery.factory_failed",
+                    message=f"Provider entry point '{entry_point.name}' failed: {exc}",
+                    location=location,
+                )
+            )
+            continue
+
+        invalid_diagnostic = _validate_provider_object(provider, location=location)
+        if invalid_diagnostic is not None:
+            diagnostics.append(invalid_diagnostic)
+            continue
+
+        duplicate_diagnostic = registry.try_register(provider, location=location)
+        if duplicate_diagnostic is not None:
+            duplicate_diagnostic = Diagnostic(
+                severity=DiagnosticSeverity.ERROR,
+                code="provider.discovery.duplicate",
+                message=duplicate_diagnostic.message,
+                location=location,
+            )
+            diagnostics.append(duplicate_diagnostic)
+
+    return tuple(diagnostics)
 
 
 class ExampleProvider:
@@ -244,6 +320,93 @@ class ExampleProvider:
         return diagnostics
 
 
+class FixtureProvider:
+    """Public-safe fixture provider that simulates an ecosystem adapter."""
+
+    def metadata(self) -> ProviderMetadata:
+        return ProviderMetadata(
+            id="freshforge.fixture",
+            version="0.1.0a1",
+            name="FreshForge fixture ecosystem adapter",
+            description=(
+                "Non-executing fixture provider for adapter discovery examples."
+            ),
+            node_types=(
+                NodeTypeMetadata(
+                    id="inventory_summary",
+                    name="Inventory summary declaration",
+                    description="Declare a public-safe inventory summary step.",
+                    inputs=("inventory",),
+                    outputs=("summary",),
+                    parameters=("units",),
+                ),
+                NodeTypeMetadata(
+                    id="yield_table_check",
+                    name="Yield table check declaration",
+                    description="Declare a public-safe yield table consistency check.",
+                    inputs=("summary",),
+                    outputs=("check",),
+                    parameters=("species_group",),
+                ),
+                NodeTypeMetadata(
+                    id="scenario_report",
+                    name="Scenario report declaration",
+                    description="Declare a public-safe scenario report artifact.",
+                    inputs=("summary", "check"),
+                    outputs=("report",),
+                    artifacts=("report",),
+                ),
+            ),
+        )
+
+    def validate_node(
+        self,
+        node: WorkflowNode,
+        node_type: NodeTypeMetadata,
+        *,
+        location: str,
+    ) -> Sequence[Diagnostic]:
+        diagnostics: list[Diagnostic] = []
+        diagnostics.extend(
+            _missing_key_diagnostics(
+                required=node_type.inputs,
+                actual=node.inputs,
+                field_name="inputs",
+                location=location,
+            )
+        )
+        diagnostics.extend(
+            _missing_key_diagnostics(
+                required=node_type.outputs,
+                actual=node.outputs,
+                field_name="outputs",
+                location=location,
+            )
+        )
+        diagnostics.extend(
+            _missing_key_diagnostics(
+                required=node_type.parameters,
+                actual=node.parameters,
+                field_name="parameters",
+                location=location,
+            )
+        )
+        diagnostics.extend(
+            _missing_key_diagnostics(
+                required=node_type.artifacts,
+                actual=node.artifacts if isinstance(node.artifacts, dict) else {},
+                field_name="artifacts",
+                location=location,
+            )
+        )
+        return diagnostics
+
+
+def fixture_provider_factory() -> Provider:
+    """Return the FreshForge fixture provider for entry-point discovery."""
+    return FixtureProvider()
+
+
 def _find_node_type(
     metadata: ProviderMetadata,
     node_type_id: str,
@@ -252,6 +415,60 @@ def _find_node_type(
         if node_type.id == node_type_id:
             return node_type
     return None
+
+
+def _provider_entry_points(group: str) -> tuple[importlib_metadata.EntryPoint, ...]:
+    entry_points = importlib_metadata.entry_points()
+    if hasattr(entry_points, "select"):
+        selected = entry_points.select(group=group)
+    else:
+        selected = entry_points.get(group, ())
+    return tuple(sorted(selected, key=lambda entry_point: entry_point.name))
+
+
+def _validate_provider_object(
+    provider: object,
+    *,
+    location: str,
+) -> Diagnostic | None:
+    if not hasattr(provider, "metadata") or not callable(provider.metadata):
+        return Diagnostic(
+            severity=DiagnosticSeverity.ERROR,
+            code="provider.discovery.invalid",
+            message="Provider entry point did not return an object with metadata().",
+            location=location,
+        )
+    if not hasattr(provider, "validate_node") or not callable(provider.validate_node):
+        return Diagnostic(
+            severity=DiagnosticSeverity.ERROR,
+            code="provider.discovery.invalid",
+            message="Provider entry point did not return an object with validate_node().",
+            location=location,
+        )
+    try:
+        metadata = provider.metadata()
+    except Exception as exc:  # noqa: BLE001
+        return Diagnostic(
+            severity=DiagnosticSeverity.ERROR,
+            code="provider.discovery.metadata_failed",
+            message=f"Provider metadata failed: {exc}",
+            location=location,
+        )
+    if not isinstance(metadata, ProviderMetadata) or not metadata.id:
+        return Diagnostic(
+            severity=DiagnosticSeverity.ERROR,
+            code="provider.discovery.metadata_invalid",
+            message="Provider metadata must be a ProviderMetadata record with a nonempty id.",
+            location=location,
+        )
+    return None
+
+
+def _safe_provider_id(provider: object) -> str:
+    try:
+        return provider.metadata().id
+    except Exception:  # noqa: BLE001
+        return "<unknown>"
 
 
 def _missing_key_diagnostics(

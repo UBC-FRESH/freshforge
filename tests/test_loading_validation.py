@@ -8,6 +8,7 @@ from freshforge.loading import load_workflow
 from freshforge.validation import validate_workflow_document, validate_workflow_with_providers
 
 EXAMPLE_WORKFLOW = Path("examples/stand_treatment_workflow.yaml")
+ECOSYSTEM_EXAMPLE_WORKFLOW = Path("examples/ecosystem_adapter_workflow.yaml")
 
 
 def diagnostic_codes(document: object) -> set[str]:
@@ -136,6 +137,18 @@ def test_provider_aware_validation_accepts_example_workflow() -> None:
     assert provider_diagnostics == []
 
 
+def test_provider_aware_validation_accepts_multi_provider_example_workflow() -> None:
+    spec, diagnostics = load_workflow(ECOSYSTEM_EXAMPLE_WORKFLOW)
+    assert spec is not None
+
+    provider_diagnostics = validate_workflow_with_providers(
+        spec,
+        structural_diagnostics=diagnostics,
+    )
+
+    assert provider_diagnostics == []
+
+
 def test_provider_aware_validation_reports_missing_provider() -> None:
     spec, diagnostics = validate_workflow_document(
         {
@@ -189,3 +202,29 @@ def test_provider_aware_validation_reports_provider_specific_diagnostics() -> No
     )
 
     assert "node.outputs.missing" in {diagnostic.code for diagnostic in provider_diagnostics}
+
+
+def test_fixture_provider_validation_reports_missing_declared_fields() -> None:
+    spec, diagnostics = validate_workflow_document(
+        {
+            "workflow": {"id": "demo"},
+            "nodes": [
+                {
+                    "id": "summary",
+                    "provider": "freshforge.fixture.inventory_summary",
+                }
+            ],
+        }
+    )
+    assert spec is not None
+
+    provider_diagnostics = validate_workflow_with_providers(
+        spec,
+        structural_diagnostics=diagnostics,
+    )
+
+    assert {
+        "node.inputs.missing",
+        "node.outputs.missing",
+        "node.parameters.missing",
+    } <= {diagnostic.code for diagnostic in provider_diagnostics}

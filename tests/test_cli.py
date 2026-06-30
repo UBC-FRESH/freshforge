@@ -30,7 +30,7 @@ def test_cli_info() -> None:
 
     assert result.exit_code == 0
     assert "FreshForge" in result.stdout
-    assert "Phase 3 provider-aware validation" in result.stdout
+    assert "Phase 4 entry-point provider discovery" in result.stdout
 
 
 def test_cli_providers() -> None:
@@ -38,6 +38,7 @@ def test_cli_providers() -> None:
 
     assert result.exit_code == 0
     assert "freshforge.example" in result.stdout
+    assert "freshforge.fixture" in result.stdout
     assert "load_inventory" in result.stdout
 
 
@@ -46,8 +47,10 @@ def test_cli_providers_json_output() -> None:
 
     assert result.exit_code == 0
     payload = json.loads(result.stdout)
-    assert payload["providers"][0]["id"] == "freshforge.example"
-    assert payload["providers"][0]["node_types"][0]["id"] == "load_inventory"
+    provider_ids = [provider["id"] for provider in payload["providers"]]
+    assert payload["ok"] is True
+    assert "freshforge.example" in provider_ids
+    assert "freshforge.fixture" in provider_ids
 
 
 def test_cli_validate_example_success() -> None:
@@ -87,6 +90,14 @@ def test_cli_validate_json_output() -> None:
     assert payload["workflow"]["workflow"]["id"] == "stand_treatment_demo"
 
 
+def test_cli_validate_multi_provider_example_success() -> None:
+    result = runner.invoke(app, ["validate", "examples/ecosystem_adapter_workflow.yaml"])
+
+    assert result.exit_code == 0
+    assert "Validation passed" in result.stdout
+    assert "ecosystem_adapter_demo" in result.stdout
+
+
 def test_cli_inspect_example_success() -> None:
     result = runner.invoke(app, ["inspect", "examples/stand_treatment_workflow.yaml"])
 
@@ -103,6 +114,16 @@ def test_cli_inspect_json_output() -> None:
     assert payload["ok"] is True
     assert payload["providers"][0]["provider_id"] == "freshforge.example"
     assert payload["providers"][0]["node_type"] == "load_inventory"
+
+
+def test_cli_inspect_multi_provider_json_output() -> None:
+    result = runner.invoke(app, ["inspect", "examples/ecosystem_adapter_workflow.yaml", "--json"])
+
+    assert result.exit_code == 0
+    payload = json.loads(result.stdout)
+    provider_ids = {provider["provider_id"] for provider in payload["providers"]}
+    assert payload["ok"] is True
+    assert provider_ids == {"freshforge.example", "freshforge.fixture"}
 
 
 def test_cli_plan_example_success() -> None:
@@ -128,3 +149,21 @@ def test_cli_plan_json_output() -> None:
     assert payload["plan"]["nodes"][0]["provider_id"] == "freshforge.example"
     assert payload["plan"]["nodes"][0]["node_type"] == "load_inventory"
     assert payload["plan"]["nodes"][0]["provider_available"] is True
+
+
+def test_cli_plan_multi_provider_json_output() -> None:
+    result = runner.invoke(app, ["plan", "examples/ecosystem_adapter_workflow.yaml", "--json"])
+
+    assert result.exit_code == 0
+    payload = json.loads(result.stdout)
+    assert payload["ok"] is True
+    assert [node["id"] for node in payload["plan"]["nodes"]] == [
+        "load_inventory",
+        "summarize_inventory",
+        "check_yields",
+        "declare_scenario_report",
+    ]
+    assert {node["provider_id"] for node in payload["plan"]["nodes"]} == {
+        "freshforge.example",
+        "freshforge.fixture",
+    }

@@ -67,6 +67,9 @@ test = [
 [project.scripts]
 freshforge = "freshforge.cli:app"
 
+[project.entry-points."freshforge.providers"]
+fixture = "freshforge.providers:fixture_provider_factory"
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 
