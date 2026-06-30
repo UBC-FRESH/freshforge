@@ -13,6 +13,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P2 Core workflow records and validation contracts | #14 | `feature/p2-core-workflow-records` | Complete |
 | P3 Node provider API and execution-planning prototype | #21 | `feature/p3-provider-api-planning` | Complete |
 | P4 Ecosystem adapter prototype | #28 | `feature/p4-ecosystem-adapter-prototype` | Complete |
+| P5 Documentation, examples, and public alpha hardening | #35 | `feature/p5-public-alpha-hardening` | Active |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -268,12 +269,47 @@ root and adapter discovery page returned `200` with Phase 4 adapter content.
 
 ## Phase 5: Documentation, Examples, And Public Alpha Hardening
 
-Status: backlog
+Parent issue: #35
+
+Branch: `feature/p5-public-alpha-hardening`
+
+Status: active
 
 Goal: harden docs, examples, tests, CI, and release workflows enough to support
 the first public alpha release.
 
+- [ ] P5.1 Docs and API status polish (#36)
+  - [ ] Update README alpha status.
+  - [ ] Update installation docs.
+  - [ ] Update provider and adapter discovery docs.
+  - [ ] Keep non-goals explicit: no execution, no stable DSL, no real ecosystem
+        adapters, no PyPI publication.
+- [ ] P5.2 Example workflow hardening (#37)
+  - [ ] Keep both tracked workflows public-safe.
+  - [ ] Add concise examples documentation page.
+  - [ ] Cover validate, inspect, and plan usage for both examples.
+  - [ ] Ensure examples remain included in package artifacts.
+- [ ] P5.3 CI and release-artifact hardening (#38)
+  - [ ] Keep release workflow artifact-only.
+  - [ ] Add artifact inspection tests or checks for sdist examples.
+  - [ ] Add artifact inspection tests or checks for wheel entry-point metadata.
+  - [ ] Preserve Python 3.11 and 3.12 CI coverage.
+- [ ] P5.4 Release notes and GitHub release preparation (#39)
+  - [ ] Update `RELEASE_NOTES.md` for Phase 0-4 implemented scope.
+  - [ ] Add documented release checklist for tag, workflow, artifacts, and
+        GitHub release.
+  - [ ] Keep PyPI publication explicitly deferred.
+  - [ ] Ensure release title and tag target are documented.
+- [ ] P5.5 Phase closeout, tag, release, and verification (#40)
+  - [ ] Run local acceptance commands.
+  - [ ] Update roadmap and changelog closeout notes.
+  - [ ] Open and merge PR after green CI/docs.
+  - [ ] Verify live docs root, examples page, and release checklist page.
+  - [ ] Create and push tag `v0.1.0a1`.
+  - [ ] Verify release workflow passes.
+  - [ ] Create GitHub prerelease `FreshForge 0.1.0a1` with checked artifacts.
+
 ## Current Next Steps
 
-Phase 4 is merged and closed on `main`. The next bounded lane is Phase 5
-documentation, examples, and public alpha hardening planning.
+Phase 5 is active on `feature/p5-public-alpha-hardening`. The next bounded lane
+is P5.1 docs and API status polish.
