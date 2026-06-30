@@ -13,3 +13,10 @@ Near-Term Phases
 * Phase 3: node provider API and execution-planning prototype.
 * Phase 4: ecosystem adapter prototypes.
 * Phase 5: documentation, examples, and public alpha hardening.
+
+Current Edge
+------------
+
+Phase 1 records the first architecture contracts. Phase 2 should implement the
+minimum workflow records and validation APIs from those contracts without adding
+execution behavior or domain adapters.
