@@ -11,7 +11,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P0 Bootstrap scaffold | #1 | `feature/p0-bootstrap-scaffold` | Complete |
 | P1 Architecture and workflow-language research | #7 | `feature/p1-architecture-contracts` | Complete |
 | P2 Core workflow records and validation contracts | #14 | `feature/p2-core-workflow-records` | Complete |
-| P3 Node provider API and execution-planning prototype | #21 | `feature/p3-provider-api-planning` | Active |
+| P3 Node provider API and execution-planning prototype | #21 | `feature/p3-provider-api-planning` | Complete |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -155,7 +155,7 @@ Parent issue: #21
 
 Branch: `feature/p3-provider-api-planning`
 
-Status: active
+Status: complete
 
 Goal: create a provider API and planner that can validate a workflow graph and
 explain what would run without executing domain tools.
@@ -181,12 +181,12 @@ explain what would run without executing domain tools.
   - [x] Add public planning note for explicit-registry-first design.
   - [x] Keep example workflow resolving against the built-in example provider.
   - [x] Add provider, validation, planning, and CLI test coverage.
-- [ ] P3.5 Phase closeout and verification (#26)
+- [x] P3.5 Phase closeout and verification (#26)
   - [x] Run local acceptance commands.
   - [x] Update roadmap and changelog closeout notes.
-  - [ ] Comment on child issues and parent issue with verification result.
-  - [ ] Open PR to `main`.
-  - [ ] Merge after green CI and verify live docs.
+  - [x] Comment on child issues and parent issue with verification result.
+  - [x] Open PR to `main`.
+  - [x] Merge after green CI and verify live docs.
 
 Phase 3 local verification passed with:
 
@@ -196,6 +196,10 @@ Phase 3 local verification passed with:
 - `sphinx-build -b html docs _build/html -W`
 - `python -m build`
 - `twine check dist/*`
+
+Phase 3 merged to `main` through PR #27 at `230dd45`. GitHub CI passed on
+Python 3.11 and 3.12, the Docs workflow deployed successfully, and the live docs
+root and providers page returned `200` with Phase 3 provider content.
 
 ## Phase 4: Ecosystem Adapter Prototypes
 
@@ -214,8 +218,5 @@ the first public alpha release.
 
 ## Current Next Steps
 
-Phase 3 provider API, provider-aware validation/planning, providers CLI,
-workflow inspection, docs, examples, and tests are implemented and locally
-verified on `feature/p3-provider-api-planning`. The next bounded lane is P3.5
-GitHub closeout: reconcile issue comments, open a PR, merge after green CI/docs,
-and verify live docs.
+Phase 3 is merged and closed on `main`. The next bounded lane is Phase 4
+ecosystem adapter prototype planning.

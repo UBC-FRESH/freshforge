@@ -75,3 +75,7 @@ completion and GitHub issue comments.
 - Verified Phase 3 locally with editable install, `ruff check`, `pytest`,
   warning-clean Sphinx HTML build, package build, and `twine check` for the
   generated artifacts.
+- Merged Phase 3 to `main` through PR #27 at `230dd45` after CI passed on
+  Python 3.11 and 3.12; the Docs workflow deployed successfully, and live docs
+  verification returned `200` for both the docs root and providers page with
+  Phase 3 provider content present.
