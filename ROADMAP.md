@@ -301,19 +301,38 @@ the first public alpha release.
   - [x] Keep PyPI publication explicitly deferred.
   - [x] Ensure release title and tag target are documented.
 - [ ] P5.5 Phase closeout, tag, release, and verification (#40)
-  - [ ] Run local acceptance commands.
-  - [ ] Update roadmap and changelog closeout notes.
+  - [x] Run local acceptance commands.
+  - [x] Update roadmap and changelog closeout notes.
   - [ ] Open and merge PR after green CI/docs.
   - [ ] Verify live docs root, examples page, and release checklist page.
   - [ ] Create and push tag `v0.1.0a1`.
   - [ ] Verify release workflow passes.
   - [ ] Create GitHub prerelease `FreshForge 0.1.0a1` with checked artifacts.
 
+Phase 5 local verification passed with:
+
+- `python -m pip install -e .[dev]`
+- `python -m ruff check .`
+- `python -m pytest`
+- `sphinx-build -b html docs _build/html -W`
+- `python -m build`
+- `twine check dist/*`
+
+Phase 5 artifact and CLI smoke verification also passed:
+
+- inspected the sdist and confirmed both tracked example workflows are included;
+- inspected the wheel metadata and confirmed the `freshforge.providers` fixture
+  entry point;
+- `freshforge providers --json` listed `freshforge.example` and
+  `freshforge.fixture` with no diagnostics;
+- `freshforge plan examples/ecosystem_adapter_workflow.yaml --json` produced a
+  provider-aware non-executing plan using both providers.
+
 ## Current Next Steps
 
 Phase 5 docs/API status polish, examples documentation, release-artifact
-contract tests, release notes, and GitHub release checklist are implemented on
-`feature/p5-public-alpha-hardening`. The next bounded lane is P5.5 closeout:
-run full local acceptance checks, reconcile issues, open a PR, merge after green
-CI/docs, verify live docs, tag `v0.1.0a1`, verify release artifacts, and create
-the GitHub prerelease.
+contract tests, release notes, GitHub release checklist, and local verification
+are complete on `feature/p5-public-alpha-hardening`. The next bounded lane is
+P5.5 GitHub closeout: reconcile issues, open a PR, merge after green CI/docs,
+verify live docs, tag `v0.1.0a1`, verify release artifacts, and create the
+GitHub prerelease.
