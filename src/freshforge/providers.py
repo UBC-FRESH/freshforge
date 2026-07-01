@@ -5,9 +5,9 @@ from __future__ import annotations
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 from importlib import metadata as importlib_metadata
-from typing import Protocol
+from typing import Any, Protocol
 
-from freshforge.records import Diagnostic, DiagnosticSeverity, WorkflowNode
+from freshforge.records import Diagnostic, DiagnosticSeverity, ProviderRunResult, WorkflowNode
 
 PROVIDER_ENTRY_POINT_GROUP = "freshforge.providers"
 
@@ -99,7 +99,12 @@ class ProviderResolution:
 
 
 class Provider(Protocol):
-    """Non-executing provider interface."""
+    """FreshForge provider interface.
+
+    Providers must expose metadata and validation. Providers that support
+    execution may also implement ``run_node(...)``; FreshForge checks for that
+    method at runtime so existing plan-only providers remain valid.
+    """
 
     def metadata(self) -> ProviderMetadata:
         """Return provider metadata."""
@@ -112,6 +117,15 @@ class Provider(Protocol):
         location: str,
     ) -> Sequence[Diagnostic]:
         """Validate one node without executing it."""
+
+    def run_node(
+        self,
+        node: WorkflowNode,
+        node_type: NodeTypeMetadata,
+        *,
+        context: Any,
+    ) -> ProviderRunResult:
+        """Execute one node and return provider-owned outputs."""
 
 
 @dataclass

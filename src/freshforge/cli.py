@@ -8,6 +8,7 @@ import typer
 from rich.console import Console
 
 from freshforge import __version__
+from freshforge.execution import run_workflow
 from freshforge.loading import load_workflow
 from freshforge.planning import create_run_plan
 from freshforge.providers import ProviderRegistry, default_provider_registry
@@ -158,6 +159,57 @@ def plan_command(
                     f"{index}. {node.id} ({provider}.{node_type}); needs: {needs}"
                 )
     if plan.has_errors:
+        raise typer.Exit(code=1)
+
+
+@app.command(name="run")
+def run_command(
+    path: Annotated[Path, typer.Argument(help="Path to a YAML or JSON workflow spec.")],
+    json_output: Annotated[
+        bool,
+        typer.Option("--json", help="Emit deterministic JSON output."),
+    ] = False,
+    workdir: Annotated[
+        Path,
+        typer.Option(
+            "--workdir",
+            help="Directory used to resolve relative workflow artifact paths.",
+        ),
+    ] = Path("."),
+) -> None:
+    """Execute a workflow with provider-owned node implementations."""
+    spec, diagnostics = load_workflow(path)
+    if spec is None:
+        if json_output:
+            payload = {
+                "ok": False,
+                "run": None,
+                "diagnostics": [diagnostic.to_dict() for diagnostic in diagnostics],
+            }
+            console.out(json.dumps(payload, indent=2, sort_keys=True))
+        else:
+            console.print("Run failed.")
+            _print_diagnostics(diagnostics)
+        raise typer.Exit(code=1)
+
+    result = run_workflow(spec, diagnostics=diagnostics, workdir=workdir)
+    if json_output:
+        payload = {
+            "ok": result.ok,
+            "run": result.to_dict(),
+        }
+        console.out(json.dumps(payload, indent=2, sort_keys=True))
+    else:
+        if result.ok:
+            console.print(f"Run passed: workflow '{result.workflow_id}'")
+        else:
+            console.print("Run failed.")
+        for index, node in enumerate(result.nodes, start=1):
+            provider = node.provider_id or "unresolved"
+            node_type = node.node_type or "unresolved"
+            console.print(f"{index}. {node.id} ({provider}.{node_type}): {node.status.value}")
+        _print_diagnostics(result.diagnostics)
+    if not result.ok:
         raise typer.Exit(code=1)
 
 

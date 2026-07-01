@@ -99,19 +99,19 @@ Future CLI command groups should be thin wrappers over Python APIs:
    List registered providers and node types.
 
 ``run``
-   Execute a validated run plan. This remains deferred until records,
-   validation, planning, provenance, and artifact contracts are stable.
+   Execute a validated run plan through provider-owned node implementations.
 
 Current Boundary
 ----------------
 
-Phase 4 implements provisional workflow records, YAML/JSON loading, structural
+Phase 6 implements provisional workflow records, YAML/JSON loading, structural
 and provider-aware validation, explicit provider registry support, entry-point
-provider discovery, workflow inspection, and provider-aware non-executing
-planning.
+provider discovery, workflow inspection, provider-aware non-executing planning,
+and first serial local provider-owned execution.
 
-FreshForge still does not implement node execution, cache or checkpoint
-semantics, run records, artifact materialization, or real ecosystem adapters.
+FreshForge still does not implement cache or checkpoint semantics, parallel
+execution, remote execution, shell-command nodes, retries, or real ecosystem
+adapters.
 
 Phase 1 Planning Records
 ------------------------

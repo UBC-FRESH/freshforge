@@ -2,9 +2,9 @@ Providers
 =========
 
 Phase 3 introduces FreshForge's first provider API. Phase 4 adds entry-point
-discovery for provider adapters. Providers are still non-executing. They
-describe node types, validate provider-owned node configuration, and let run
-plans explain what would run before any domain tool is called.
+discovery for provider adapters. Phase 6 adds optional provider-owned node
+execution. Providers describe node types, validate provider-owned node
+configuration, and may implement ``run_node(...)`` when they can execute a node.
 
 Provider References
 -------------------
@@ -58,12 +58,26 @@ Planning remains non-executing. A run plan includes node order, provider ID,
 node type, declared dependencies, and provider availability. It does not create
 files, inspect artifacts, or execute provider code beyond validation hooks.
 
+Execution
+---------
+
+Executable providers implement ``run_node(node, node_type, context=...)`` and
+return ``ProviderRunResult``. FreshForge's serial local runner calls those hooks
+in deterministic plan order:
+
+.. code-block:: bash
+
+   freshforge run path/to/workflow.yaml --json
+
+Plan-only providers remain valid for validation and planning. When a plan-only
+provider is used with ``freshforge run``, FreshForge fails the run with
+``node.execution.unsupported``.
+
 Deferred Work
 -------------
 
-Phase 4 does not add ``freshforge run``, node execution, artifact
-materialization, caching, checkpoints, run records, or real FRESH ecosystem
-adapters.
+Phase 6 does not add caching, checkpoints, parallel execution, remote execution,
+retries, shell-command nodes, or real FRESH ecosystem adapters.
 
 Syntax Status
 -------------

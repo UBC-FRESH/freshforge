@@ -15,6 +15,14 @@ class DiagnosticSeverity(StrEnum):
     ERROR = "error"
 
 
+class RunStatus(StrEnum):
+    """Status for workflow and node execution records."""
+
+    SUCCESS = "success"
+    FAILED = "failed"
+    SKIPPED = "skipped"
+
+
 @dataclass(frozen=True)
 class Diagnostic:
     """Structured validation or planning diagnostic."""
@@ -139,6 +147,90 @@ class RunPlan:
     def to_dict(self) -> dict[str, Any]:
         return {
             "workflow_id": self.workflow_id,
+            "nodes": [node.to_dict() for node in self.nodes],
+            "diagnostics": [diagnostic.to_dict() for diagnostic in self.diagnostics],
+        }
+
+
+@dataclass(frozen=True)
+class ProviderRunResult:
+    """Provider-owned result for one executed workflow node."""
+
+    status: RunStatus
+    outputs: dict[str, Any] = field(default_factory=dict)
+    artifacts: dict[str, Any] = field(default_factory=dict)
+    diagnostics: tuple[Diagnostic, ...] = ()
+    data: dict[str, Any] = field(default_factory=dict)
+
+    @property
+    def ok(self) -> bool:
+        return self.status is RunStatus.SUCCESS and not any(
+            diagnostic.severity is DiagnosticSeverity.ERROR for diagnostic in self.diagnostics
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "status": self.status.value,
+            "outputs": self.outputs,
+            "artifacts": self.artifacts,
+            "diagnostics": [diagnostic.to_dict() for diagnostic in self.diagnostics],
+            "data": self.data,
+        }
+
+
+@dataclass(frozen=True)
+class NodeRunResult:
+    """FreshForge execution record for one workflow node."""
+
+    id: str
+    provider: str
+    provider_id: str | None
+    node_type: str | None
+    status: RunStatus
+    outputs: dict[str, Any] = field(default_factory=dict)
+    artifacts: dict[str, Any] = field(default_factory=dict)
+    diagnostics: tuple[Diagnostic, ...] = ()
+    data: dict[str, Any] = field(default_factory=dict)
+
+    @property
+    def ok(self) -> bool:
+        return self.status is RunStatus.SUCCESS and not any(
+            diagnostic.severity is DiagnosticSeverity.ERROR for diagnostic in self.diagnostics
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "id": self.id,
+            "provider": self.provider,
+            "provider_id": self.provider_id,
+            "node_type": self.node_type,
+            "status": self.status.value,
+            "outputs": self.outputs,
+            "artifacts": self.artifacts,
+            "diagnostics": [diagnostic.to_dict() for diagnostic in self.diagnostics],
+            "data": self.data,
+        }
+
+
+@dataclass(frozen=True)
+class WorkflowRunResult:
+    """FreshForge execution record for a whole workflow run."""
+
+    workflow_id: str
+    status: RunStatus
+    nodes: tuple[NodeRunResult, ...] = ()
+    diagnostics: tuple[Diagnostic, ...] = ()
+
+    @property
+    def ok(self) -> bool:
+        return self.status is RunStatus.SUCCESS and not any(
+            diagnostic.severity is DiagnosticSeverity.ERROR for diagnostic in self.diagnostics
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "workflow_id": self.workflow_id,
+            "status": self.status.value,
             "nodes": [node.to_dict() for node in self.nodes],
             "diagnostics": [diagnostic.to_dict() for diagnostic in self.diagnostics],
         }

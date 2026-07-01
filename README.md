@@ -12,10 +12,11 @@ ws3, Modelwright, Nemora, and future FRESH packages.
 FreshForge is pre-release alpha software. It implements provisional workflow
 records, YAML/JSON loading, structural and provider-aware validation, explicit
 provider registry support, Python entry-point provider discovery, workflow
-inspection, and non-executing run planning. The `0.1.0a1` release is a GitHub
-alpha release with checked artifacts, not a PyPI publication. FreshForge does
-not yet implement a stable workflow DSL, graph executor, node execution, or real
-domain adapters.
+inspection, non-executing run planning, and a first serial local runner for
+provider-owned node execution. The `0.1.0a1` release is a GitHub alpha release
+with checked artifacts, not a PyPI publication. FreshForge does not yet
+implement a stable workflow DSL, caching, checkpointing, parallel execution,
+remote execution, or real domain adapters.
 
 Documentation: https://ubc-fresh.github.io/freshforge/
 
@@ -49,6 +50,8 @@ Supported in `0.1.0a1`:
   metadata, provider-aware diagnostics, and workflow inspection;
 - Phase 4 Python entry-point provider discovery and a public-safe fixture
   adapter that proves the adapter packaging path;
+- Phase 6 serial local workflow execution for providers that implement
+  `run_node(...)`;
 - public-safe example workflow specs;
 - Sphinx documentation;
 - CI, documentation, and release-artifact workflows.
@@ -57,7 +60,7 @@ Not supported yet:
 
 - stable workflow YAML/TOML/JSON schema;
 - real FEMIC/FHOPS/ws3/Modelwright/Nemora provider adapters;
-- execution, caching, or checkpointing;
+- caching, checkpointing, parallel execution, or remote execution;
 - direct integration with FEMIC, FHOPS, ws3, Modelwright, Nemora, or GIS tools;
 - PyPI publication.
 
@@ -104,10 +107,13 @@ freshforge validate examples/stand_treatment_workflow.yaml
 freshforge validate examples/ecosystem_adapter_workflow.yaml
 freshforge plan examples/stand_treatment_workflow.yaml
 freshforge plan examples/ecosystem_adapter_workflow.yaml
+freshforge run examples/stand_treatment_workflow.yaml --json
 ```
 
 The CLI commands are thin wrappers over package APIs. They validate, inspect,
-and plan without executing workflow nodes.
+plan, and run executable provider nodes. Built-in example providers are
+plan-only, so `freshforge run` reports an unsupported-execution diagnostic for
+those examples.
 
 ## Roadmap
 
@@ -119,6 +125,7 @@ Near-term phases are tracked in `ROADMAP.md`:
 - Phase 3: node provider API and execution-planning prototype.
 - Phase 4: ecosystem adapter prototypes.
 - Phase 5: documentation, examples, and public alpha hardening.
+- Phase 6: serial local workflow run runtime.
 
 Development follows the FRESH phase/task/subtask workflow:
 
