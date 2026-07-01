@@ -146,3 +146,7 @@ completion and GitHub issue comments.
   docs, package build, and `twine check`.
 - Merged Phase 6 PR #54, verified PR checks on Python 3.11 and 3.12, confirmed
   post-merge docs deployment, and closed the Phase 6 issue set.
+- Added `planning/clews_c2020_workflow_use_cases.md` as a future-phase
+  inspiration pool for FreshForge orchestration use cases across the
+  CLEWs-C2020 forestry, agriculture, energy, water, and reporting workflow
+  space.
