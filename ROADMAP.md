@@ -14,7 +14,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P3 Node provider API and execution-planning prototype | #21 | `feature/p3-provider-api-planning` | Complete |
 | P4 Ecosystem adapter prototype | #28 | `feature/p4-ecosystem-adapter-prototype` | Complete |
 | P5 Documentation, examples, and public alpha hardening | #35 | `feature/p5-public-alpha-hardening` | Complete |
-| P6 Local workflow run runtime | #48 | `feature/p6-workflow-run-runtime` | Active |
+| P6 Local workflow run runtime | #48 | `feature/p6-workflow-run-runtime` | Complete |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -346,7 +346,7 @@ Parent issue: #48
 
 Branch: `feature/p6-workflow-run-runtime`
 
-Status: active
+Status: complete
 
 Goal: add FreshForge's first provider-native local workflow runner while keeping
 domain work inside providers.
@@ -367,10 +367,10 @@ domain work inside providers.
   - [x] Document run semantics, provider hooks, and deferred execution features.
   - [x] Test execution order, unsupported providers, failure stopping, workdir
         resolution, and CLI JSON.
-- [ ] P6.5 Verify, PR, deploy docs, and close phase (#53)
+- [x] P6.5 Verify, PR, deploy docs, and close phase (#53)
   - [x] Run local verification.
-  - [ ] Open PR and verify CI/docs.
-  - [ ] Confirm live docs after merge.
+  - [x] Open PR and verify CI/docs.
+  - [x] Confirm live docs after merge.
 
 Acceptance boundary:
 
@@ -381,9 +381,8 @@ Acceptance boundary:
 
 ## Current Next Steps
 
-Phase 6 is active on `feature/p6-workflow-run-runtime`: implement the first
-serial local workflow runner, then hand the executable-provider surface to
-Modelwright for the generated-model workflow lane.
+Phase 6 is complete: the first serial local workflow runner is merged, and the executable-provider
+surface has been handed to Modelwright for the generated-model workflow lane.
 
 Implementation evidence:
 
@@ -402,3 +401,9 @@ Local verification:
 - `.venv/bin/sphinx-build -b html docs _build/html -W` passed.
 - `.venv/bin/python -m build` passed.
 - `.venv/bin/twine check dist/*` passed.
+
+Closeout evidence:
+
+- Phase 6 PR #54 merged to `main`.
+- PR checks passed on Python 3.11 and 3.12.
+- Post-merge docs workflow passed and deployed the Phase 6 workflow-runner docs.
