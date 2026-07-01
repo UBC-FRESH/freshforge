@@ -135,3 +135,12 @@ completion and GitHub issue comments.
   examples, confirming the wheel metadata includes the `freshforge.providers`
   fixture entry point, and creating the GitHub prerelease
   `FreshForge 0.1.0a1` with the checked artifacts attached.
+- Opened Phase 6 on `feature/p6-workflow-run-runtime` with parent issue #48 and
+  child issues #49 through #53 for run records, serial local execution, CLI run
+  output, docs/tests, and closeout.
+- Added FreshForge's first provider-native serial local runner with
+  `ProviderRunResult`, per-node and workflow run records,
+  `freshforge.execution.run_workflow(...)`, work-directory-aware artifact path
+  resolution, unsupported-provider diagnostics, and `freshforge run`.
+- Verified the Phase 6 runtime locally with Ruff, pytest, warning-clean Sphinx
+  docs, package build, and `twine check`.

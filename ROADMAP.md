@@ -14,6 +14,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P3 Node provider API and execution-planning prototype | #21 | `feature/p3-provider-api-planning` | Complete |
 | P4 Ecosystem adapter prototype | #28 | `feature/p4-ecosystem-adapter-prototype` | Complete |
 | P5 Documentation, examples, and public alpha hardening | #35 | `feature/p5-public-alpha-hardening` | Complete |
+| P6 Local workflow run runtime | #48 | `feature/p6-workflow-run-runtime` | Active |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -339,9 +340,65 @@ sdist included both tracked example workflows, and the wheel metadata included
 the `freshforge.providers` fixture entry point. GitHub prerelease
 `FreshForge 0.1.0a1` was created with the checked wheel and sdist artifacts.
 
+## Phase 6: Local Workflow Run Runtime
+
+Parent issue: #48
+
+Branch: `feature/p6-workflow-run-runtime`
+
+Status: active
+
+Goal: add FreshForge's first provider-native local workflow runner while keeping
+domain work inside providers.
+
+- [x] P6.1 Add run records and executable-provider protocol (#49)
+  - [x] Add deterministic run-status and run-result records.
+  - [x] Add provider-owned `ProviderRunResult`.
+  - [x] Keep plan-only providers valid for validation and planning.
+- [x] P6.2 Add serial local workflow runner (#50)
+  - [x] Add `freshforge.execution.run_workflow(...)`.
+  - [x] Execute nodes in deterministic plan order.
+  - [x] Resolve relative artifact paths against the selected work directory.
+  - [x] Stop on unsupported or failed node execution.
+- [x] P6.3 Add CLI run command and JSON output (#51)
+  - [x] Add `freshforge run WORKFLOW --json --workdir PATH`.
+  - [x] Preserve the existing JSON envelope style.
+- [x] P6.4 Add docs, examples, and tests (#52)
+  - [x] Document run semantics, provider hooks, and deferred execution features.
+  - [x] Test execution order, unsupported providers, failure stopping, workdir
+        resolution, and CLI JSON.
+- [ ] P6.5 Verify, PR, deploy docs, and close phase (#53)
+  - [x] Run local verification.
+  - [ ] Open PR and verify CI/docs.
+  - [ ] Confirm live docs after merge.
+
+Acceptance boundary:
+
+- May claim FreshForge has a first serial local runner for executable providers.
+- Must not claim caching, checkpointing, parallel execution, remote execution,
+  retries, shell-command nodes, stable workflow schema, or real ecosystem
+  adapters.
+
 ## Current Next Steps
 
-Phase 5 is complete on `main`: the public alpha docs, examples, release
-checklist, CI/docs verification, `v0.1.0a1` tag, artifact-only release workflow,
-artifact inspection, and GitHub prerelease are closed. The next bounded lane is
-post-alpha triage and Phase 6 planning.
+Phase 6 is active on `feature/p6-workflow-run-runtime`: implement the first
+serial local workflow runner, then hand the executable-provider surface to
+Modelwright for the generated-model workflow lane.
+
+Implementation evidence:
+
+- Added run records in `freshforge.records`.
+- Added `freshforge.execution.run_workflow(...)`, `RunContext`, and
+  `artifact_paths(...)`.
+- Added `freshforge run WORKFLOW --json --workdir PATH`.
+- Added docs page `docs/workflow-runner.rst`.
+- Added tests for serial execution order, unsupported providers, failure
+  stopping, workdir resolution, and CLI JSON output.
+
+Local verification:
+
+- `.venv/bin/python -m ruff check .` passed.
+- `.venv/bin/python -m pytest` passed with 65 tests.
+- `.venv/bin/sphinx-build -b html docs _build/html -W` passed.
+- `.venv/bin/python -m build` passed.
+- `.venv/bin/twine check dist/*` passed.

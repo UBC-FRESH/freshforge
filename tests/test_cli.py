@@ -167,3 +167,13 @@ def test_cli_plan_multi_provider_json_output() -> None:
         "freshforge.example",
         "freshforge.fixture",
     }
+
+
+def test_cli_run_plan_only_provider_fails_with_json_diagnostic() -> None:
+    result = runner.invoke(app, ["run", "examples/stand_treatment_workflow.yaml", "--json"])
+
+    assert result.exit_code == 1
+    payload = json.loads(result.stdout)
+    assert payload["ok"] is False
+    assert payload["run"]["status"] == "failed"
+    assert payload["run"]["nodes"][0]["diagnostics"][0]["code"] == "node.execution.unsupported"

@@ -2,8 +2,9 @@ Workflow Records
 ================
 
 Phase 2 introduces FreshForge's first provisional workflow records. Phase 3 adds
-provider-aware validation and planning while keeping the records non-executing.
-FreshForge does not execute nodes, inspect artifacts, or call external tools.
+provider-aware validation and planning while keeping the records themselves
+declarative. Phase 6 adds serial local execution through provider-owned
+``run_node`` hooks.
 
 Minimal Shape
 -------------
@@ -74,6 +75,9 @@ run plans include provider ID, node type, declared dependencies, and provider
 availability. Planning does not execute nodes, inspect artifacts, create files,
 auto-discover providers, or call external runtimes.
 
+Execution uses the planned order but remains separate from planning. See
+:doc:`workflow-runner` for the Phase 6 runner.
+
 CLI Examples
 ------------
 
@@ -85,6 +89,7 @@ CLI Examples
    freshforge inspect examples/stand_treatment_workflow.yaml --json
    freshforge plan examples/stand_treatment_workflow.yaml
    freshforge plan examples/stand_treatment_workflow.yaml --json
+   freshforge run examples/stand_treatment_workflow.yaml --json
 
 Syntax Status
 -------------
