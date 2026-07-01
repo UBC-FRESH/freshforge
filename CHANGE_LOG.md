@@ -135,3 +135,12 @@ completion and GitHub issue comments.
   examples, confirming the wheel metadata includes the `freshforge.providers`
   fixture entry point, and creating the GitHub prerelease
   `FreshForge 0.1.0a1` with the checked artifacts attached.
+- Opened Phase 6 on `feature/p6-execution-engine` with parent issue #42 and
+  child issues #43 through #46 for execution records, provider execution hooks,
+  the `freshforge run` command, execution docs/tests, and closeout. The phase
+  keeps materialization workflows deferred to a later lane.
+- Implemented Phase 6 execution records, provider execution protocol,
+  `freshforge run`, dry-run support, JSON report output, missing-execution
+  diagnostics, execution docs, and API/CLI tests. Verified locally with
+  `ruff check .`, `pytest`, warning-clean Sphinx HTML build, `python -m build`,
+  and `twine check dist/*`.

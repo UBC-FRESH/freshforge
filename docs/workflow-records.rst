@@ -2,8 +2,9 @@ Workflow Records
 ================
 
 Phase 2 introduces FreshForge's first provisional workflow records. Phase 3 adds
-provider-aware validation and planning while keeping the records non-executing.
-FreshForge does not execute nodes, inspect artifacts, or call external tools.
+provider-aware validation and planning while keeping validation and planning
+non-executing. Phase 6 adds explicit provider-backed execution through
+``freshforge run``.
 
 Minimal Shape
 -------------
@@ -73,6 +74,14 @@ Planning produces a deterministic topological order for validated nodes. Phase 3
 run plans include provider ID, node type, declared dependencies, and provider
 availability. Planning does not execute nodes, inspect artifacts, create files,
 auto-discover providers, or call external runtimes.
+
+Execution
+---------
+
+``freshforge run`` validates and plans first, then calls provider-owned
+execution hooks in deterministic plan order. Execution reports use the same
+workflow and planned-node records plus node-level status, timing, command
+metadata, diagnostics, and declared artifacts.
 
 CLI Examples
 ------------

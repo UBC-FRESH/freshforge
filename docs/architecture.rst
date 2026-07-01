@@ -4,8 +4,9 @@ Architecture
 FreshForge is intended to become a neutral workflow core rather than a domain
 package that imports every FRESH modelling tool. Phase 1 records the first
 architecture contracts for that direction. Phase 2 adds provisional workflow
-records, Phase 3 adds provider-aware validation and planning, and Phase 4 adds
-entry-point adapter discovery without execution.
+records, Phase 3 adds provider-aware validation and planning, Phase 4 adds
+entry-point adapter discovery, and Phase 6 adds explicit provider-backed
+execution.
 
 Intended Dependency Direction
 -----------------------------
@@ -38,7 +39,7 @@ The Phase 1 vocabulary uses these terms:
 
 ``provider``
    A package-owned implementation surface that can describe and validate a node
-   type. Execution remains deferred.
+   type, and may optionally execute that node type.
 
 ``artifact``
    A materialized file, dataset, model package, report, or other durable output.
@@ -99,19 +100,18 @@ Future CLI command groups should be thin wrappers over Python APIs:
    List registered providers and node types.
 
 ``run``
-   Execute a validated run plan. This remains deferred until records,
-   validation, planning, provenance, and artifact contracts are stable.
+   Execute a validated run plan through provider-owned execution hooks.
 
 Current Boundary
 ----------------
 
-Phase 4 implements provisional workflow records, YAML/JSON loading, structural
+Phase 6 implements provisional workflow records, YAML/JSON loading, structural
 and provider-aware validation, explicit provider registry support, entry-point
-provider discovery, workflow inspection, and provider-aware non-executing
-planning.
+provider discovery, workflow inspection, provider-aware planning, and explicit
+provider-backed execution.
 
-FreshForge still does not implement node execution, cache or checkpoint
-semantics, run records, artifact materialization, or real ecosystem adapters.
+FreshForge still does not implement cache or checkpoint semantics, artifact
+materialization, parallel execution, or real ecosystem adapters.
 
 Phase 1 Planning Records
 ------------------------

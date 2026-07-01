@@ -167,3 +167,53 @@ def test_cli_plan_multi_provider_json_output() -> None:
         "freshforge.example",
         "freshforge.fixture",
     }
+
+
+def test_cli_run_dry_run_json_output(tmp_path: Path) -> None:
+    report_path = tmp_path / "run-report.json"
+
+    result = runner.invoke(
+        app,
+        [
+            "run",
+            "examples/stand_treatment_workflow.yaml",
+            "--run-id",
+            "dry-run-1",
+            "--dry-run",
+            "--json",
+            "--report",
+            str(report_path),
+        ],
+    )
+
+    assert result.exit_code == 0
+    payload = json.loads(result.stdout)
+    assert payload["ok"] is True
+    assert payload["report"]["dry_run"] is True
+    assert [node["status"] for node in payload["report"]["nodes"]] == [
+        "dry_run",
+        "dry_run",
+        "dry_run",
+    ]
+    assert json.loads(report_path.read_text(encoding="utf-8"))["run_id"] == "dry-run-1"
+
+
+def test_cli_run_reports_unsupported_provider_execution() -> None:
+    result = runner.invoke(
+        app,
+        [
+            "run",
+            "examples/stand_treatment_workflow.yaml",
+            "--run-id",
+            "run-1",
+            "--json",
+        ],
+    )
+
+    assert result.exit_code == 1
+    payload = json.loads(result.stdout)
+    assert payload["ok"] is False
+    assert {node["status"] for node in payload["report"]["nodes"]} == {"unsupported"}
+    assert "execution.provider.unsupported" in {
+        diagnostic["code"] for diagnostic in payload["report"]["diagnostics"]
+    }

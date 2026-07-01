@@ -5,8 +5,8 @@ FreshForge is workflow-as-code for open forest resources and ecosystem services
 modelling.
 
 FreshForge is currently a public-alpha package. It does not yet implement a
-stable workflow language, graph executor, real ecosystem adapters, or workflow
-execution.
+stable workflow language, real ecosystem adapters, materialization workflows, or
+stable execution semantics.
 
 Phase 2 adds provisional workflow records, YAML/JSON loading, structural
 validation diagnostics, and non-executing run planning.
@@ -22,6 +22,10 @@ ecosystem tools.
 Phase 5 hardens public documentation, examples, release notes, and artifact
 checks for the ``0.1.0a1`` GitHub alpha release.
 
+Phase 6 adds the first explicit execution command, provider execution hooks, and
+structured run records. Validation, inspection, and planning remain
+non-mutating.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents
@@ -34,5 +38,6 @@ checks for the ``0.1.0a1`` GitHub alpha release.
    examples
    providers
    adapter-discovery
+   execution
    release-checklist
    roadmap

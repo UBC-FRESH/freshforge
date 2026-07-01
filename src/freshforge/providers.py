@@ -7,7 +7,13 @@ from dataclasses import dataclass, field
 from importlib import metadata as importlib_metadata
 from typing import Protocol
 
-from freshforge.records import Diagnostic, DiagnosticSeverity, WorkflowNode
+from freshforge.records import (
+    Diagnostic,
+    DiagnosticSeverity,
+    ExecutionContext,
+    ProviderExecutionResult,
+    WorkflowNode,
+)
 
 PROVIDER_ENTRY_POINT_GROUP = "freshforge.providers"
 
@@ -112,6 +118,19 @@ class Provider(Protocol):
         location: str,
     ) -> Sequence[Diagnostic]:
         """Validate one node without executing it."""
+
+
+class ExecutableProvider(Provider, Protocol):
+    """Provider interface extension for executable workflow nodes."""
+
+    def execute_node(
+        self,
+        node: WorkflowNode,
+        node_type: NodeTypeMetadata,
+        *,
+        context: ExecutionContext,
+    ) -> ProviderExecutionResult:
+        """Execute one workflow node and return provider-owned metadata."""
 
 
 @dataclass

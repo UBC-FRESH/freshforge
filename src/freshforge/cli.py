@@ -8,6 +8,7 @@ import typer
 from rich.console import Console
 
 from freshforge import __version__
+from freshforge.execution import execute_workflow
 from freshforge.loading import load_workflow
 from freshforge.planning import create_run_plan
 from freshforge.providers import ProviderRegistry, default_provider_registry
@@ -47,7 +48,7 @@ def info() -> None:
     """Print a short package status summary."""
     console.print("FreshForge")
     console.print(f"Version: {__version__}")
-    console.print("Status: 0.1.0a1 public alpha; non-executing workflow planning.")
+    console.print("Status: 0.1.0a1 public alpha; provider-backed execution prototype.")
 
 
 @app.command(name="providers")
@@ -158,6 +159,70 @@ def plan_command(
                     f"{index}. {node.id} ({provider}.{node_type}); needs: {needs}"
                 )
     if plan.has_errors:
+        raise typer.Exit(code=1)
+
+
+@app.command(name="run")
+def run_command(
+    path: Annotated[Path, typer.Argument(help="Path to a YAML or JSON workflow spec.")],
+    run_id: Annotated[
+        str,
+        typer.Option("--run-id", help="Required run identifier for execution records."),
+    ],
+    json_output: Annotated[
+        bool,
+        typer.Option("--json", help="Emit deterministic JSON output."),
+    ] = False,
+    dry_run: Annotated[
+        bool,
+        typer.Option("--dry-run", help="Plan execution without calling providers."),
+    ] = False,
+    report: Annotated[
+        Path | None,
+        typer.Option("--report", help="Optional JSON run report path."),
+    ] = None,
+) -> None:
+    """Execute a workflow through provider hooks."""
+    spec, diagnostics = load_workflow(path)
+    if spec is None:
+        if json_output:
+            payload = {
+                "ok": False,
+                "report": None,
+                "diagnostics": [diagnostic.to_dict() for diagnostic in diagnostics],
+            }
+            console.out(json.dumps(payload, indent=2, sort_keys=True))
+        else:
+            console.print("Run failed.")
+            _print_diagnostics(diagnostics)
+        raise typer.Exit(code=1)
+
+    run_report = execute_workflow(
+        spec,
+        run_id=run_id,
+        diagnostics=diagnostics,
+        dry_run=dry_run,
+        report_path=report,
+    )
+    if json_output:
+        payload = {
+            "ok": not run_report.failed,
+            "report": run_report.to_dict(),
+        }
+        console.out(json.dumps(payload, indent=2, sort_keys=True))
+    else:
+        label = "Dry run" if dry_run else "Run"
+        status = "failed" if run_report.failed else "completed"
+        console.print(f"{label} {status}: workflow '{run_report.workflow_id}'")
+        for index, node in enumerate(run_report.nodes, start=1):
+            console.print(f"{index}. {node.id}: {node.status.value}")
+            if node.error:
+                console.print(f"   error: {node.error}")
+            _print_diagnostics(node.diagnostics)
+        _print_diagnostics(run_report.diagnostics)
+        if report is not None:
+            console.print(f"report: {report}")
+    if run_report.failed:
         raise typer.Exit(code=1)
 
 

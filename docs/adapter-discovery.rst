@@ -19,7 +19,8 @@ entry-point group:
 
 Each entry point must load to a callable factory. The factory must return an
 object that implements the FreshForge provider protocol: ``metadata()`` and
-``validate_node(...)``. FreshForge registers the returned provider by
+``validate_node(...)``. Providers may also implement ``execute_node(...)`` for
+``freshforge run``. FreshForge registers the returned provider by
 ``ProviderMetadata.id``.
 
 Discovery Diagnostics
@@ -65,7 +66,7 @@ Example
 Deferred Work
 -------------
 
-Phase 4 does not add real FEMIC, FHOPS, ws3, Modelwright, or Nemora adapters. It
-also does not add node execution, ``freshforge run``, artifact materialization,
-caching, checkpoints, or run records. FreshForge ``0.1.0a1`` keeps these
+FreshForge does not yet add real FEMIC, FHOPS, ws3, Modelwright, or Nemora
+adapters. It also does not add artifact materialization, caching, checkpoints,
+parallel execution, or retry policy. FreshForge ``0.1.0a1`` keeps these
 boundaries for the GitHub alpha release.

@@ -2,7 +2,7 @@ Examples
 ========
 
 FreshForge ships public-safe example workflow specs that exercise the current
-alpha validation, inspection, provider discovery, and non-executing planning
+alpha validation, inspection, provider discovery, planning, and dry-run
 surfaces. They are synthetic examples and do not represent real project data.
 
 Stand Treatment Workflow
@@ -21,6 +21,7 @@ three-node graph:
    freshforge validate examples/stand_treatment_workflow.yaml
    freshforge inspect examples/stand_treatment_workflow.yaml
    freshforge plan examples/stand_treatment_workflow.yaml
+   freshforge run examples/stand_treatment_workflow.yaml --run-id smoke --dry-run
 
 Ecosystem Adapter Workflow
 --------------------------
@@ -43,7 +44,8 @@ entry-point-discovered ``freshforge.fixture`` provider:
 Example Boundaries
 ------------------
 
-Examples are intentionally non-executing. FreshForge validates structure,
-provider references, provider-declared keys, and dependency order. It does not
-read datasets, inspect declared artifact files, call external tools, or create
-workflow outputs.
+The bundled examples are intentionally validate-only provider examples. They can
+be used with ``freshforge run --dry-run`` to produce execution-shaped reports,
+but real execution requires providers that implement execution hooks. FreshForge
+does not read datasets, inspect declared artifact files, or create workflow
+outputs for these examples.
