@@ -166,3 +166,7 @@ completion and GitHub issue comments.
   phases for run namespaces/workflow summaries and later scenario-grid
   expansion, keeping domain-specific Modelwright and FABLE semantics out of
   FreshForge core.
+- Expanded the CLEWs-C2020 planning note and roadmap to record the post-alpha dependency chain:
+  FreshForge Phase 7, Modelwright Phases 35 and 36, FABLE Pyculator Phase 18,
+  FreshForge Phase 8, and FABLE Pyculator Phases 19 and 20, with child issues deferred until each
+  backlog phase is activated.

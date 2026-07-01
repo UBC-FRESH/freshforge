@@ -395,6 +395,11 @@ FreshForge's next CLEWs-C2020 orchestration work remains planned as two backlog 
 - Phase 8 (#56): add generic run-matrix or scenario-grid expansion only after domain packages have
   enough real CLEWs-C2020 examples to justify the shape.
 
+No child issues are created for these backlog phases until a phase is explicitly activated for
+implementation. The coordinated downstream sequence is Modelwright Phase 35, Modelwright Phase 36,
+FABLE Pyculator Phase 18, FreshForge Phase 8, FABLE Pyculator Phase 19, and FABLE Pyculator Phase
+20.
+
 Implementation evidence:
 
 - Added run records in `freshforge.records`.
@@ -428,6 +433,11 @@ Status: planned backlog
 Goal: add run namespace support and clearer workflow-run summaries so repeated local runs can be
 compared without artifact collisions.
 
+Child issues: create only when this phase is activated.
+
+Downstream dependency: Modelwright Phase 35 and FABLE Pyculator Phase 18 should consume these
+generic summaries/namespaces rather than inventing package-local collision-avoidance conventions.
+
 Acceptance boundary:
 
 - May organize repeated run artifacts and summarize run status.
@@ -442,6 +452,11 @@ Status: planned backlog
 
 Goal: add generic workflow-template expansion across scenario grids once real CLEWs-C2020 examples
 justify the interface.
+
+Child issues: create only when this phase is activated.
+
+Dependency note: start this after FreshForge Phase 7 and after FABLE Pyculator Phase 18 provides real
+strategy-comparison examples that justify the run-matrix interface.
 
 Acceptance boundary:
 

@@ -116,6 +116,30 @@ Potential node families:
   "validated".
 - Relative artifact paths and per-run namespaces matter for long experiments with many scenarios.
 
+## Coordinated Post-Alpha Roadmap Chain
+
+The first CLEWs-C2020 workflow-automation release train is now published:
+
+- FreshForge `v0.1.0a2`: serial local workflow runner.
+- Modelwright `v0.1.0a7`: generated-model materialization and executable FreshForge provider support.
+- FABLE Pyculator `v0.1.0a2`: FABLE workflow automation helpers, scenario bundles, and validation
+  evidence packaging.
+
+The next work should proceed in dependency order:
+
+1. FreshForge Phase 7: add run namespaces and clearer workflow-run summaries.
+2. Modelwright Phase 35: expose generated-model workflow summaries and provider diagnostics.
+3. Modelwright Phase 36: extract compact validation evidence for downstream automation.
+4. FABLE Pyculator Phase 18: compare output-ref strategies using those summaries.
+5. FreshForge Phase 8: add generic run matrices after real strategy/scenario examples exist.
+6. FABLE Pyculator Phase 19: orchestrate scenario bundles through FreshForge summaries/namespaces.
+7. FABLE Pyculator Phase 20: upgrade opt-in benchmark workflows with sanitized evidence packaging.
+
+Phase 7 should precede Phase 8 because repeated strategy and scenario runs need a collision-free
+artifact namespace and compact run summary before matrix expansion multiplies local artifacts.
+FreshForge should still avoid Modelwright/FABLE domain semantics: namespaces, summaries, and later
+matrices must remain generic orchestration primitives.
+
 ## Deferred Questions
 
 - What is the smallest useful scenario-bundle schema that works across FABLE, forestry, and energy
