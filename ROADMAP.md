@@ -384,6 +384,13 @@ Acceptance boundary:
 Phase 6 is complete: the first serial local workflow runner is merged, and the executable-provider
 surface has been handed to Modelwright for the generated-model workflow lane.
 
+FreshForge's next CLEWs-C2020 orchestration work is planned as two backlog phases:
+
+- Phase 7 (#55): add run namespaces and clearer workflow-run summaries so repeated local
+  Modelwright/FABLE runs can be compared without artifact collisions.
+- Phase 8 (#56): add generic run-matrix or scenario-grid expansion only after domain packages have
+  enough real CLEWs-C2020 examples to justify the shape.
+
 Implementation evidence:
 
 - Added run records in `freshforge.records`.
@@ -407,3 +414,32 @@ Closeout evidence:
 - Phase 6 PR #54 merged to `main`.
 - PR checks passed on Python 3.11 and 3.12.
 - Post-merge docs workflow passed and deployed the Phase 6 workflow-runner docs.
+
+## Phase 7: Run Namespaces And Workflow-Run Summaries
+
+Parent issue: #55
+
+Status: planned backlog
+
+Goal: add run namespace support and clearer workflow-run summaries so repeated local runs can be
+compared without artifact collisions.
+
+Acceptance boundary:
+
+- May organize repeated run artifacts and summarize run status.
+- Must not add scenario-matrix expansion, caching, checkpointing, remote execution, retries, or
+  Modelwright/FABLE domain semantics in this phase.
+
+## Phase 8: Run Matrices And Scenario-Grid Workflow Expansion
+
+Parent issue: #56
+
+Status: planned backlog
+
+Goal: add generic workflow-template expansion across scenario grids once real CLEWs-C2020 examples
+justify the interface.
+
+Acceptance boundary:
+
+- May provide generic matrix expansion primitives.
+- Must leave scenario schemas, parameter mappings, and validation semantics in domain packages.

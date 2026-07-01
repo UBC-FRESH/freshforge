@@ -150,3 +150,7 @@ completion and GitHub issue comments.
   inspiration pool for FreshForge orchestration use cases across the
   CLEWs-C2020 forestry, agriculture, energy, water, and reporting workflow
   space.
+- Created FreshForge parent issues #55 and #56 and recorded planned roadmap
+  phases for run namespaces/workflow summaries and later scenario-grid
+  expansion, keeping domain-specific Modelwright and FABLE semantics out of
+  FreshForge core.
