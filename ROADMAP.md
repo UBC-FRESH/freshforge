@@ -388,16 +388,15 @@ surface has been handed to Modelwright for the generated-model workflow lane.
 FreshForge Phase 9 is complete: `v0.1.0a2` is tagged and published as a GitHub prerelease with
 checked workflow-built artifacts attached, while PyPI publication remains deferred.
 
-FreshForge's current CLEWs-C2020 orchestration work is Phase 7:
+FreshForge's most recent CLEWs-C2020 orchestration work is complete:
 
-- Phase 7 (#55): active on `feature/p7-run-namespaces-summaries`; adds run namespaces and clearer
-  workflow-run summaries so repeated local Modelwright/FABLE runs can be compared without artifact
-  collisions.
+- Phase 7 (#55): complete; added run namespaces and clearer workflow-run summaries so repeated local
+  Modelwright/FABLE runs can be compared without artifact collisions.
 - Phase 8 (#56): planned backlog; add generic run-matrix or scenario-grid expansion only after
   domain packages have enough real CLEWs-C2020 examples to justify the shape.
 
-Phase 7 child issues #63 through #67 are active. Child issues for Phase 8 remain deferred until that
-phase is explicitly activated. The coordinated downstream sequence is Modelwright Phase 35,
+Phase 7 child issues #63 through #67 are complete. Child issues for Phase 8 remain deferred until
+that phase is explicitly activated. The coordinated downstream sequence is Modelwright Phase 35,
 Modelwright Phase 36, FABLE Pyculator Phase 18, FreshForge Phase 8, FABLE Pyculator Phase 19, and
 FABLE Pyculator Phase 20.
 
@@ -424,9 +423,10 @@ Local verification:
 
 Closeout evidence:
 
-- Phase 6 PR #54 merged to `main`.
-- PR checks passed on Python 3.11 and 3.12.
-- Post-merge docs workflow passed and deployed the Phase 6 workflow-runner docs.
+- Phase 7 PR #68 merged to `main`.
+- PR CI run 28544860414 passed on Python 3.11 and 3.12.
+- Post-merge CI run 28544897942 passed on Python 3.11 and 3.12.
+- Post-merge Docs run 28544897990 passed and deployed GitHub Pages.
 
 ## Phase 7: Run Namespaces And Workflow-Run Summaries
 
@@ -434,29 +434,29 @@ Parent issue: #55
 
 Branch: `feature/p7-run-namespaces-summaries`
 
-Status: active
+Status: complete
 
 Goal: add run namespace support and clearer workflow-run summaries so repeated local runs can be
 compared without artifact collisions.
 
-- [ ] P7.1 Define run namespace and summary contracts. Child issue: #63.
+- [x] P7.1 Define run namespace and summary contracts. Child issue: #63.
   - [x] Define namespace validation rules.
   - [x] Add compact run summary records.
-- [ ] P7.2 Add namespaced artifact path resolution. Child issue: #64.
+- [x] P7.2 Add namespaced artifact path resolution. Child issue: #64.
   - [x] Add `run_namespace` to the run context.
   - [x] Prefix relative artifact paths with `workdir / namespace`.
   - [x] Keep absolute artifact paths unchanged.
-- [ ] P7.3 Add compact workflow-run summaries. Child issue: #65.
+- [x] P7.3 Add compact workflow-run summaries. Child issue: #65.
   - [x] Add `WorkflowRunResult.summary()`.
   - [x] Include node, diagnostic, and artifact counts.
-- [ ] P7.4 Update CLI, docs, and tests. Child issue: #66.
+- [x] P7.4 Update CLI, docs, and tests. Child issue: #66.
   - [x] Add `freshforge run --namespace`.
   - [x] Include `summary` in JSON run output.
   - [x] Update runner and record docs.
-- [ ] P7.5 Verify, PR, and close phase. Child issue: #67.
+- [x] P7.5 Verify, PR, and close phase. Child issue: #67.
   - [x] Run full local verification.
-  - [ ] Open and merge PR after CI passes.
-  - [ ] Confirm post-merge CI and Docs workflows pass.
+  - [x] Open and merge PR after CI passes.
+  - [x] Confirm post-merge CI and Docs workflows pass.
 
 Downstream dependency: Modelwright Phase 35 and FABLE Pyculator Phase 18 should consume these
 generic summaries/namespaces rather than inventing package-local collision-avoidance conventions.
@@ -478,6 +478,13 @@ Local verification:
 - `.venv/bin/freshforge run examples/stand_treatment_workflow.yaml --json --namespace smoke/demo`
   emitted `run_namespace` and `summary.run_namespace`; the run failed as expected because the sample
   provider is plan-only.
+
+Closeout evidence:
+
+- PR #68 merged to `main`.
+- PR CI run 28544860414 passed on Python 3.11 and 3.12.
+- Post-merge CI run 28544897942 passed on Python 3.11 and 3.12.
+- Post-merge Docs run 28544897990 passed and deployed GitHub Pages.
 
 ## Phase 8: Run Matrices And Scenario-Grid Workflow Expansion
 
