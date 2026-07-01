@@ -15,6 +15,16 @@ class DiagnosticSeverity(StrEnum):
     ERROR = "error"
 
 
+class NodeRunStatus(StrEnum):
+    """Status for one workflow node execution attempt."""
+
+    DRY_RUN = "dry_run"
+    OK = "ok"
+    FAILED = "failed"
+    SKIPPED = "skipped"
+    UNSUPPORTED = "unsupported"
+
+
 @dataclass(frozen=True)
 class Diagnostic:
     """Structured validation or planning diagnostic."""
@@ -142,3 +152,112 @@ class RunPlan:
             "nodes": [node.to_dict() for node in self.nodes],
             "diagnostics": [diagnostic.to_dict() for diagnostic in self.diagnostics],
         }
+
+
+@dataclass(frozen=True)
+class ExecutionContext:
+    """Provider-facing execution context for one workflow run."""
+
+    workflow_id: str
+    run_id: str
+    workflow_source_path: str | None = None
+    previous: dict[str, dict[str, Any]] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class ProviderExecutionResult:
+    """Provider-returned non-control metadata for a completed node."""
+
+    metadata: dict[str, Any] = field(default_factory=dict)
+    command: tuple[str, ...] = ()
+    diagnostics: tuple[Diagnostic, ...] = ()
+    artifacts: dict[str, Any] = field(default_factory=dict)
+
+    def to_dict(self) -> dict[str, Any]:
+        data: dict[str, Any] = {
+            "metadata": self.metadata,
+            "command": list(self.command),
+            "diagnostics": [diagnostic.to_dict() for diagnostic in self.diagnostics],
+            "artifacts": self.artifacts,
+        }
+        return data
+
+
+@dataclass(frozen=True)
+class NodeRunRecord:
+    """Execution record for one workflow node."""
+
+    id: str
+    provider: str
+    provider_id: str | None
+    node_type: str | None
+    status: NodeRunStatus
+    started_at_utc: str | None = None
+    finished_at_utc: str | None = None
+    duration_seconds: float | None = None
+    command: tuple[str, ...] = ()
+    metadata: dict[str, Any] = field(default_factory=dict)
+    artifacts: dict[str, Any] = field(default_factory=dict)
+    diagnostics: tuple[Diagnostic, ...] = ()
+    error: str | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        data: dict[str, Any] = {
+            "id": self.id,
+            "provider": self.provider,
+            "provider_id": self.provider_id,
+            "node_type": self.node_type,
+            "status": self.status.value,
+            "command": list(self.command),
+            "metadata": self.metadata,
+            "artifacts": self.artifacts,
+            "diagnostics": [diagnostic.to_dict() for diagnostic in self.diagnostics],
+        }
+        if self.started_at_utc is not None:
+            data["started_at_utc"] = self.started_at_utc
+        if self.finished_at_utc is not None:
+            data["finished_at_utc"] = self.finished_at_utc
+        if self.duration_seconds is not None:
+            data["duration_seconds"] = self.duration_seconds
+        if self.error is not None:
+            data["error"] = self.error
+        return data
+
+
+@dataclass(frozen=True)
+class WorkflowRunReport:
+    """Run-level execution record."""
+
+    workflow_id: str
+    run_id: str
+    planned_order: tuple[str, ...]
+    nodes: tuple[NodeRunRecord, ...]
+    diagnostics: tuple[Diagnostic, ...] = ()
+    started_at_utc: str | None = None
+    finished_at_utc: str | None = None
+    dry_run: bool = False
+
+    @property
+    def failed(self) -> bool:
+        return any(
+            node.status in {NodeRunStatus.FAILED, NodeRunStatus.UNSUPPORTED}
+            for node in self.nodes
+        ) or any(
+            diagnostic.severity is DiagnosticSeverity.ERROR for diagnostic in self.diagnostics
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        data: dict[str, Any] = {
+            "workflow_id": self.workflow_id,
+            "run_id": self.run_id,
+            "dry_run": self.dry_run,
+            "failed": self.failed,
+            "planned_order": list(self.planned_order),
+            "nodes": [node.to_dict() for node in self.nodes],
+            "diagnostics": [diagnostic.to_dict() for diagnostic in self.diagnostics],
+        }
+        if self.started_at_utc is not None:
+            data["started_at_utc"] = self.started_at_utc
+        if self.finished_at_utc is not None:
+            data["finished_at_utc"] = self.finished_at_utc
+        return data

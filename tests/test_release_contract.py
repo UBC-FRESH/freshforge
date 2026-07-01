@@ -37,4 +37,4 @@ def test_release_notes_document_alpha_boundaries() -> None:
 
     assert "0.1.0a1" in release_notes
     assert "not published to PyPI" in release_notes
-    assert "does not execute workflow nodes" in release_notes
+    assert "Execution is explicit, alpha, provider-owned" in release_notes

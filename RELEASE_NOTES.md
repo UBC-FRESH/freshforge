@@ -11,7 +11,7 @@ PyPI.
 - Package-backed Python project using `src/` layout and versioned package
   metadata.
 - Typer CLI with `freshforge --version`, `info`, `providers`, `validate`,
-  `inspect`, and `plan`.
+  `inspect`, `plan`, and `run`.
 - Provisional YAML/JSON workflow records for workflow metadata, nodes,
   dependencies, broad structured fields, diagnostics, and non-executing run
   plans.
@@ -23,6 +23,8 @@ PyPI.
   group.
 - Built-in public-safe `freshforge.example` provider and entry-point-discovered
   `freshforge.fixture` provider.
+- Provider execution protocol, `freshforge run`, dry-run support, and JSON run
+  reports.
 - Public-safe example workflows:
   - `examples/stand_treatment_workflow.yaml`;
   - `examples/ecosystem_adapter_workflow.yaml`.
@@ -34,10 +36,10 @@ PyPI.
 - Workflow syntax is alpha and provisional.
 - CLI JSON output is deterministic enough for tests but is not a stable external
   automation contract.
-- FreshForge does not execute workflow nodes.
-- FreshForge does not implement `freshforge run`.
-- FreshForge does not read declared datasets, inspect artifact files, create
-  workflow outputs, cache results, checkpoint runs, or write run records.
+- Execution is explicit, alpha, provider-owned, and not yet a stable automation
+  contract.
+- FreshForge does not read declared datasets, inspect artifact files, cache
+  results, checkpoint runs, or materialize workflow inputs.
 - FreshForge does not include real FEMIC, FHOPS, ws3, Modelwright, Nemora, GIS,
   optimization, or spreadsheet adapters.
 - FreshForge is not published to PyPI in this release.

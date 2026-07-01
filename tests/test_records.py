@@ -3,9 +3,12 @@
 from freshforge.records import (
     Diagnostic,
     DiagnosticSeverity,
+    NodeRunRecord,
+    NodeRunStatus,
     PlannedNode,
     RunPlan,
     WorkflowNode,
+    WorkflowRunReport,
     WorkflowSpec,
 )
 
@@ -69,4 +72,45 @@ def test_run_plan_to_dict_includes_diagnostics() -> None:
                 "location": "nodes[0]",
             }
         ],
+    }
+
+
+def test_workflow_run_report_to_dict_includes_node_records() -> None:
+    report = WorkflowRunReport(
+        workflow_id="demo",
+        run_id="run-1",
+        dry_run=True,
+        planned_order=("load",),
+        nodes=(
+            NodeRunRecord(
+                id="load",
+                provider="example.load",
+                provider_id="example",
+                node_type="load",
+                status=NodeRunStatus.DRY_RUN,
+                artifacts={"inventory": "inventory.csv"},
+            ),
+        ),
+    )
+
+    assert report.to_dict() == {
+        "workflow_id": "demo",
+        "run_id": "run-1",
+        "dry_run": True,
+        "failed": False,
+        "planned_order": ["load"],
+        "nodes": [
+            {
+                "id": "load",
+                "provider": "example.load",
+                "provider_id": "example",
+                "node_type": "load",
+                "status": "dry_run",
+                "command": [],
+                "metadata": {},
+                "artifacts": {"inventory": "inventory.csv"},
+                "diagnostics": [],
+            }
+        ],
+        "diagnostics": [],
     }

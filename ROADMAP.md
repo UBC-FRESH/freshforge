@@ -339,9 +339,47 @@ sdist included both tracked example workflows, and the wheel metadata included
 the `freshforge.providers` fixture entry point. GitHub prerelease
 `FreshForge 0.1.0a1` was created with the checked wheel and sdist artifacts.
 
+## Phase 6: Provider Execution And Run Records
+
+Parent issue: #42
+
+Branch: `feature/p6-execution-engine`
+
+Status: active
+
+Goal: add the first executable FreshForge workflow surface while preserving the
+existing validation, inspection, and planning commands.
+
+- [x] P6.1 Define execution protocol and run records (#43)
+  - [x] Add structured run and node outcome records.
+  - [x] Add a provider execution protocol extension without breaking
+        validate-only providers.
+  - [x] Add deterministic serialization tests.
+- [x] P6.2 Implement runner API and CLI command (#44)
+  - [x] Add deterministic node execution in planned order.
+  - [x] Add `freshforge run PATH --run-id RUN_ID [--json] [--dry-run] [--report PATH]`.
+  - [x] Fail before execution on load, validation, provider, or planning
+        errors.
+  - [x] Return structured diagnostics for missing execution support and failed
+        nodes.
+- [x] P6.3 Add execution docs and tests (#45)
+  - [x] Document execution semantics and alpha boundaries.
+  - [x] Add API and CLI tests for dry-run, success, failure, and missing
+        execution hooks.
+  - [x] Keep examples public-safe.
+- [ ] P6.4 Closeout execution phase (#46)
+  - [x] Run local acceptance checks.
+  - [x] Update roadmap and changelog closeout notes.
+  - [ ] Open PR and verify CI.
+  - [ ] Record release/tag follow-up for downstream consumers.
+
+Phase 6 deliberately does not add model-instance materialization workflows,
+cache/checkpoint behavior, retries, parallel execution, remote execution, or
+domain-package imports in FreshForge core. Materialization is the next separate
+workflow family after execution semantics are proven.
+
 ## Current Next Steps
 
-Phase 5 is complete on `main`: the public alpha docs, examples, release
-checklist, CI/docs verification, `v0.1.0a1` tag, artifact-only release workflow,
-artifact inspection, and GitHub prerelease are closed. The next bounded lane is
-post-alpha triage and Phase 6 planning.
+Phase 6 implementation is locally complete on `feature/p6-execution-engine`.
+The next bounded lane is to open the FreshForge PR, verify CI, and then consume
+the execution API from the FEMIC/MKRF integration branch.
