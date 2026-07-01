@@ -1,7 +1,7 @@
 Release Checklist
 =================
 
-FreshForge ``0.1.0a1`` is released as a GitHub prerelease with checked package
+FreshForge ``0.1.0a2`` is released as a GitHub prerelease with checked package
 artifacts. It is not published to PyPI.
 
 Local Verification
@@ -26,19 +26,21 @@ Inspect the release artifact contract:
   ``freshforge.fixture``;
 * ``freshforge plan examples/ecosystem_adapter_workflow.yaml --json`` resolves
   both providers.
+* ``freshforge --version`` reports ``freshforge 0.1.0a2``.
+* ``freshforge run --help`` is available.
 
 Tag And Release
 ---------------
 
-The release tag is ``v0.1.0a1`` and the GitHub release title is
-``FreshForge 0.1.0a1``.
+The release tag is ``v0.1.0a2`` and the GitHub release title is
+``FreshForge 0.1.0a2``.
 
 Closeout sequence:
 
-1. Merge the Phase 5 pull request after CI passes.
+1. Merge the Phase 9 pull request after CI passes.
 2. Verify the Docs workflow deploys successfully on ``main``.
 3. Verify the live docs root, examples page, and this release checklist page.
-4. Create and push tag ``v0.1.0a1``.
+4. Create and push tag ``v0.1.0a2``.
 5. Wait for the release-artifact workflow to pass for the tag.
 6. Download or otherwise inspect the workflow-built artifacts.
 7. Create the GitHub prerelease and attach the checked artifacts.

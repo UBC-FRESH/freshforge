@@ -1,5 +1,45 @@
 # Release Notes
 
+## 0.1.0a2
+
+FreshForge `0.1.0a2` is the local workflow runner alpha. It packages
+FreshForge's first serial local runner for provider-owned workflow nodes. It is
+distributed as a GitHub prerelease with checked source and wheel artifacts. It
+is not published to PyPI.
+
+### Implemented
+
+- Everything from `0.1.0a1`.
+- Provider-native serial local workflow execution through
+  `freshforge.execution.run_workflow(...)`.
+- `freshforge run WORKFLOW --json --workdir PATH`.
+- `ProviderRunResult`, per-node run records, workflow run records, and
+  deterministic run status serialization.
+- Work-directory-aware artifact path resolution through the run context.
+- Clear unsupported-execution diagnostics when plan-only providers are run.
+
+### Explicit Limitations
+
+- Workflow syntax and JSON output remain alpha and provisional.
+- FreshForge runs provider-owned nodes only; it does not execute arbitrary shell
+  commands or import domain packages directly.
+- FreshForge does not implement caching, checkpointing, parallel execution,
+  remote execution, retries, run namespaces, run matrices, or real ecosystem
+  adapters.
+- FreshForge is not published to PyPI in this release.
+
+### Verification
+
+The release is expected to pass:
+
+- `python -m ruff check .`
+- `python -m pytest`
+- `sphinx-build -b html docs _build/html -W`
+- `python -m build`
+- `twine check dist/*`
+- `freshforge --version`
+- `freshforge run --help`
+
 ## 0.1.0a1
 
 FreshForge `0.1.0a1` is the first public alpha release. It is distributed as a

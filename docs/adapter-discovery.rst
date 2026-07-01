@@ -65,7 +65,8 @@ Example
 Deferred Work
 -------------
 
-Phase 4 does not add real FEMIC, FHOPS, ws3, Modelwright, or Nemora adapters. It
-also does not add node execution, ``freshforge run``, artifact materialization,
-caching, checkpoints, or run records. FreshForge ``0.1.0a1`` keeps these
+Phase 4 does not add real FEMIC, FHOPS, ws3, Modelwright, or Nemora adapters.
+Phase 6 later adds provider-owned node execution through ``freshforge run``, but
+FreshForge core still does not add artifact materialization, caching,
+checkpoints, or real ecosystem adapters. FreshForge ``0.1.0a2`` keeps these
 boundaries for the GitHub alpha release.

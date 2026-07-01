@@ -1,7 +1,7 @@
 Installation
 ============
 
-FreshForge ``0.1.0a1`` is available as a GitHub prerelease artifact. It is not
+FreshForge ``0.1.0a2`` is available as a GitHub prerelease artifact. It is not
 yet published to PyPI. Install it from a local checkout or from a downloaded
 wheel artifact.
 
@@ -33,10 +33,11 @@ Smoke Check
    freshforge --version
    freshforge info
    freshforge providers
+   freshforge run --help
 
 Alpha Boundary
 --------------
 
-FreshForge ``0.1.0a1`` validates, inspects, and plans workflow specs without
-executing nodes. It does not install real FEMIC, FHOPS, ws3, Modelwright, Nemora,
-GIS, optimization, or spreadsheet runtimes.
+FreshForge ``0.1.0a2`` validates, inspects, plans, and can run workflow specs
+through provider-owned ``run_node(...)`` hooks. It does not install real FEMIC,
+FHOPS, ws3, Modelwright, Nemora, GIS, optimization, or spreadsheet runtimes.

@@ -25,6 +25,8 @@ checks for the ``0.1.0a1`` GitHub alpha release.
 Phase 6 adds the first serial local workflow runner for provider-owned node
 execution.
 
+Phase 9 packages that runner milestone as the ``0.1.0a2`` GitHub alpha release.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents
