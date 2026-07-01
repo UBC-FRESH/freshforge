@@ -13,7 +13,7 @@ FreshForge is pre-release alpha software. It implements provisional workflow
 records, YAML/JSON loading, structural and provider-aware validation, explicit
 provider registry support, Python entry-point provider discovery, workflow
 inspection, non-executing run planning, and a first serial local runner for
-provider-owned node execution. The `0.1.0a1` release is a GitHub alpha release
+provider-owned node execution. The `0.1.0a2` release is a GitHub alpha release
 with checked artifacts, not a PyPI publication. FreshForge does not yet
 implement a stable workflow DSL, caching, checkpointing, parallel execution,
 remote execution, or real domain adapters.
@@ -37,7 +37,7 @@ outputs, diagnostics, and verification records.
 
 ## Current Alpha Scope
 
-Supported in `0.1.0a1`:
+Supported in `0.1.0a2`:
 
 - Python package skeleton using `src/` layout;
 - minimal `freshforge` command-line interface;
@@ -51,7 +51,8 @@ Supported in `0.1.0a1`:
 - Phase 4 Python entry-point provider discovery and a public-safe fixture
   adapter that proves the adapter packaging path;
 - Phase 6 serial local workflow execution for providers that implement
-  `run_node(...)`;
+  `run_node(...)`, including run records and work-directory-aware artifact
+  path resolution;
 - public-safe example workflow specs;
 - Sphinx documentation;
 - CI, documentation, and release-artifact workflows.

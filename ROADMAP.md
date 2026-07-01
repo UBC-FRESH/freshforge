@@ -15,6 +15,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P4 Ecosystem adapter prototype | #28 | `feature/p4-ecosystem-adapter-prototype` | Complete |
 | P5 Documentation, examples, and public alpha hardening | #35 | `feature/p5-public-alpha-hardening` | Complete |
 | P6 Local workflow run runtime | #48 | `feature/p6-workflow-run-runtime` | Complete |
+| P9 v0.1.0a2 local workflow runner GitHub alpha release | #57 | `feature/p9-v0.1.0a2-release` | Active |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -384,7 +385,10 @@ Acceptance boundary:
 Phase 6 is complete: the first serial local workflow runner is merged, and the executable-provider
 surface has been handed to Modelwright for the generated-model workflow lane.
 
-FreshForge's next CLEWs-C2020 orchestration work is planned as two backlog phases:
+FreshForge Phase 9 is active on `feature/p9-v0.1.0a2-release`: package the Phase 6 serial local
+workflow runner as the `v0.1.0a2` GitHub alpha release while keeping PyPI publication deferred.
+
+FreshForge's next CLEWs-C2020 orchestration work remains planned as two backlog phases:
 
 - Phase 7 (#55): add run namespaces and clearer workflow-run summaries so repeated local
   Modelwright/FABLE runs can be compared without artifact collisions.
@@ -443,3 +447,45 @@ Acceptance boundary:
 
 - May provide generic matrix expansion primitives.
 - Must leave scenario schemas, parameter mappings, and validation semantics in domain packages.
+
+## Phase 9: v0.1.0a2 Local Workflow Runner GitHub Alpha Release
+
+Parent issue: #57
+
+Branch: `feature/p9-v0.1.0a2-release`
+
+Status: active
+
+Goal: publish FreshForge `v0.1.0a2` as a GitHub prerelease that marks the Phase 6 serial local
+workflow runner milestone.
+
+- [x] P9.1 Bump version and release metadata (#58)
+  - [x] Bump package and import metadata to `0.1.0a2`.
+  - [x] Update version contract tests and CLI status text.
+- [x] P9.2 Update release docs and notes (#59)
+  - [x] Update release checklist, installation docs, README, docs roadmap, and release notes.
+  - [x] Keep PyPI publication explicitly deferred.
+- [x] P9.3 Verify release artifacts and smoke tests (#60)
+  - [x] Run local quality, tests, docs, build, and twine checks.
+  - [x] Smoke-test `freshforge --version` and `freshforge run --help`.
+- [ ] P9.4 Tag GitHub prerelease and close phase (#61)
+  - [ ] Open and merge release PR after CI passes.
+  - [ ] Tag `v0.1.0a2`.
+  - [ ] Verify tag release-artifact workflow.
+  - [ ] Create GitHub prerelease with checked artifacts attached.
+
+Acceptance boundary:
+
+- May claim FreshForge has a GitHub alpha release for its first provider-native serial local runner.
+- Must not claim PyPI publication, stable workflow syntax, caching, checkpointing, parallel
+  execution, remote execution, run matrices, or real ecosystem adapters.
+
+Local verification:
+
+- `.venv/bin/python -m ruff check .` passed.
+- `.venv/bin/python -m pytest` passed with 65 tests.
+- `.venv/bin/sphinx-build -b html docs _build/html -W` passed.
+- `.venv/bin/python -m build` passed.
+- `.venv/bin/twine check dist/*` passed.
+- `.venv/bin/freshforge --version` reported `freshforge 0.1.0a2`.
+- `.venv/bin/freshforge run --help` passed.

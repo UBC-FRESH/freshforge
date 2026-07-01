@@ -48,7 +48,10 @@ def info() -> None:
     """Print a short package status summary."""
     console.print("FreshForge")
     console.print(f"Version: {__version__}")
-    console.print("Status: 0.1.0a1 public alpha; non-executing workflow planning.")
+    console.print(
+        "Status: 0.1.0a2 public alpha; "
+        "serial local workflow execution for provider-owned nodes."
+    )
 
 
 @app.command(name="providers")

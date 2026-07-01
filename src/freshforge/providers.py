@@ -278,7 +278,7 @@ class ExampleProvider:
     def metadata(self) -> ProviderMetadata:
         return ProviderMetadata(
             id="freshforge.example",
-            version="0.1.0a1",
+            version="0.1.0a2",
             name="FreshForge example provider",
             description="Non-executing example node types for public FreshForge workflows.",
             node_types=(
@@ -340,7 +340,7 @@ class FixtureProvider:
     def metadata(self) -> ProviderMetadata:
         return ProviderMetadata(
             id="freshforge.fixture",
-            version="0.1.0a1",
+            version="0.1.0a2",
             name="FreshForge fixture ecosystem adapter",
             description=(
                 "Non-executing fixture provider for adapter discovery examples."

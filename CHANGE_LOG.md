@@ -5,6 +5,14 @@ completion and GitHub issue comments.
 
 ## 2026-06-29
 
+- Opened Phase 9 on `feature/p9-v0.1.0a2-release` with parent issue #57 and child issues #58
+  through #61 to package the Phase 6 serial local workflow runner as the `v0.1.0a2` GitHub alpha
+  release while keeping PyPI publication deferred.
+- Prepared the FreshForge `0.1.0a2` release candidate by bumping package/import metadata, updating
+  CLI status text, refreshing release notes, and documenting the GitHub-prerelease boundary around
+  `freshforge run`, provider-owned `run_node(...)` hooks, run records, and deferred runtime features.
+- Verified the FreshForge `0.1.0a2` release candidate locally with Ruff, pytest, warning-clean
+  Sphinx docs, package build, `twine check`, `freshforge --version`, and `freshforge run --help`.
 - Created the Phase 0 bootstrap lane for FreshForge on
   `feature/p0-bootstrap-scaffold`, with parent issue #1 and child task issues
   #2 through #5 for governance, package skeleton, docs/automation, and closeout.
