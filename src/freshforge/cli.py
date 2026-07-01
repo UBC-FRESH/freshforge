@@ -179,6 +179,13 @@ def run_command(
             help="Directory used to resolve relative workflow artifact paths.",
         ),
     ] = Path("."),
+    namespace: Annotated[
+        str | None,
+        typer.Option(
+            "--namespace",
+            help="Relative run namespace used to isolate run artifacts.",
+        ),
+    ] = None,
 ) -> None:
     """Execute a workflow with provider-owned node implementations."""
     spec, diagnostics = load_workflow(path)
@@ -195,11 +202,18 @@ def run_command(
             _print_diagnostics(diagnostics)
         raise typer.Exit(code=1)
 
-    result = run_workflow(spec, diagnostics=diagnostics, workdir=workdir)
+    result = run_workflow(
+        spec,
+        diagnostics=diagnostics,
+        workdir=workdir,
+        run_namespace=namespace,
+    )
+    summary = result.summary()
     if json_output:
         payload = {
             "ok": result.ok,
             "run": result.to_dict(),
+            "summary": summary.to_dict(),
         }
         console.out(json.dumps(payload, indent=2, sort_keys=True))
     else:
@@ -207,6 +221,17 @@ def run_command(
             console.print(f"Run passed: workflow '{result.workflow_id}'")
         else:
             console.print("Run failed.")
+        if result.run_namespace is not None:
+            console.print(f"Namespace: {result.run_namespace}")
+        console.print(
+            "Summary: "
+            f"{summary.succeeded_count} succeeded, "
+            f"{summary.failed_count} failed, "
+            f"{summary.skipped_count} skipped; "
+            f"{summary.error_count} error(s), "
+            f"{summary.warning_count} warning(s); "
+            f"{summary.artifact_count} artifact(s)."
+        )
         for index, node in enumerate(result.nodes, start=1):
             provider = node.provider_id or "unresolved"
             node_type = node.node_type or "unresolved"

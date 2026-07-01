@@ -14,12 +14,13 @@ Near-Term Phases
 * Phase 4: ecosystem adapter prototypes.
 * Phase 5: documentation, examples, and public alpha hardening.
 * Phase 6: local workflow run runtime.
+* Phase 7: run namespaces and workflow-run summaries.
 * Phase 9: ``0.1.0a2`` GitHub alpha release.
 
 Current Edge
 ------------
 
-Phase 9 packages the Phase 6 serial local workflow runner as the ``0.1.0a2``
-GitHub alpha release. It still defers PyPI publication, stable workflow syntax,
-caching, checkpointing, parallel execution, remote execution, and real domain
-adapters.
+Phase 7 adds run namespaces and compact summaries on top of the Phase 6 serial
+local workflow runner. It still defers PyPI publication, stable workflow syntax,
+caching, checkpointing, parallel execution, remote execution, run matrices, and
+real domain adapters.

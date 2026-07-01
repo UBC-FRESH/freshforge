@@ -388,35 +388,39 @@ surface has been handed to Modelwright for the generated-model workflow lane.
 FreshForge Phase 9 is complete: `v0.1.0a2` is tagged and published as a GitHub prerelease with
 checked workflow-built artifacts attached, while PyPI publication remains deferred.
 
-FreshForge's next CLEWs-C2020 orchestration work remains planned as two backlog phases:
+FreshForge's current CLEWs-C2020 orchestration work is Phase 7:
 
-- Phase 7 (#55): add run namespaces and clearer workflow-run summaries so repeated local
-  Modelwright/FABLE runs can be compared without artifact collisions.
-- Phase 8 (#56): add generic run-matrix or scenario-grid expansion only after domain packages have
-  enough real CLEWs-C2020 examples to justify the shape.
+- Phase 7 (#55): active on `feature/p7-run-namespaces-summaries`; adds run namespaces and clearer
+  workflow-run summaries so repeated local Modelwright/FABLE runs can be compared without artifact
+  collisions.
+- Phase 8 (#56): planned backlog; add generic run-matrix or scenario-grid expansion only after
+  domain packages have enough real CLEWs-C2020 examples to justify the shape.
 
-No child issues are created for these backlog phases until a phase is explicitly activated for
-implementation. The coordinated downstream sequence is Modelwright Phase 35, Modelwright Phase 36,
-FABLE Pyculator Phase 18, FreshForge Phase 8, FABLE Pyculator Phase 19, and FABLE Pyculator Phase
-20.
+Phase 7 child issues #63 through #67 are active. Child issues for Phase 8 remain deferred until that
+phase is explicitly activated. The coordinated downstream sequence is Modelwright Phase 35,
+Modelwright Phase 36, FABLE Pyculator Phase 18, FreshForge Phase 8, FABLE Pyculator Phase 19, and
+FABLE Pyculator Phase 20.
 
 Implementation evidence:
 
-- Added run records in `freshforge.records`.
-- Added `freshforge.execution.run_workflow(...)`, `RunContext`, and
-  `artifact_paths(...)`.
-- Added `freshforge run WORKFLOW --json --workdir PATH`.
-- Added docs page `docs/workflow-runner.rst`.
-- Added tests for serial execution order, unsupported providers, failure
-  stopping, workdir resolution, and CLI JSON output.
+- Added `run_namespace` support to `freshforge.execution.run_workflow(...)` and `RunContext`.
+- Added namespace validation with `run.namespace.invalid` diagnostics before node execution.
+- Added compact `NodeRunSummary`, `WorkflowRunSummary`, and `WorkflowRunResult.summary()` records.
+- Added `freshforge run WORKFLOW --namespace NAME` and JSON `summary` output.
+- Updated workflow runner and workflow records docs.
+- Added tests for default compatibility, namespace path resolution, invalid namespaces, summaries,
+  and CLI JSON/human output.
 
 Local verification:
 
 - `.venv/bin/python -m ruff check .` passed.
-- `.venv/bin/python -m pytest` passed with 65 tests.
+- `.venv/bin/python -m pytest` passed with 73 tests.
 - `.venv/bin/sphinx-build -b html docs _build/html -W` passed.
 - `.venv/bin/python -m build` passed.
 - `.venv/bin/twine check dist/*` passed.
+- `git diff --check` passed.
+- CLI namespace smoke test passed with namespace/summary output and expected plan-only provider
+  unsupported diagnostic.
 
 Closeout evidence:
 
@@ -428,12 +432,31 @@ Closeout evidence:
 
 Parent issue: #55
 
-Status: planned backlog
+Branch: `feature/p7-run-namespaces-summaries`
+
+Status: active
 
 Goal: add run namespace support and clearer workflow-run summaries so repeated local runs can be
 compared without artifact collisions.
 
-Child issues: create only when this phase is activated.
+- [ ] P7.1 Define run namespace and summary contracts. Child issue: #63.
+  - [x] Define namespace validation rules.
+  - [x] Add compact run summary records.
+- [ ] P7.2 Add namespaced artifact path resolution. Child issue: #64.
+  - [x] Add `run_namespace` to the run context.
+  - [x] Prefix relative artifact paths with `workdir / namespace`.
+  - [x] Keep absolute artifact paths unchanged.
+- [ ] P7.3 Add compact workflow-run summaries. Child issue: #65.
+  - [x] Add `WorkflowRunResult.summary()`.
+  - [x] Include node, diagnostic, and artifact counts.
+- [ ] P7.4 Update CLI, docs, and tests. Child issue: #66.
+  - [x] Add `freshforge run --namespace`.
+  - [x] Include `summary` in JSON run output.
+  - [x] Update runner and record docs.
+- [ ] P7.5 Verify, PR, and close phase. Child issue: #67.
+  - [x] Run full local verification.
+  - [ ] Open and merge PR after CI passes.
+  - [ ] Confirm post-merge CI and Docs workflows pass.
 
 Downstream dependency: Modelwright Phase 35 and FABLE Pyculator Phase 18 should consume these
 generic summaries/namespaces rather than inventing package-local collision-avoidance conventions.
@@ -443,6 +466,18 @@ Acceptance boundary:
 - May organize repeated run artifacts and summarize run status.
 - Must not add scenario-matrix expansion, caching, checkpointing, remote execution, retries, or
   Modelwright/FABLE domain semantics in this phase.
+
+Local verification:
+
+- `.venv/bin/python -m ruff check .` passed.
+- `.venv/bin/python -m pytest` passed with 73 tests.
+- `.venv/bin/sphinx-build -b html docs _build/html -W` passed.
+- `.venv/bin/python -m build` passed.
+- `.venv/bin/twine check dist/*` passed.
+- `git diff --check` passed.
+- `.venv/bin/freshforge run examples/stand_treatment_workflow.yaml --json --namespace smoke/demo`
+  emitted `run_namespace` and `summary.run_namespace`; the run failed as expected because the sample
+  provider is plan-only.
 
 ## Phase 8: Run Matrices And Scenario-Grid Workflow Expansion
 

@@ -32,13 +32,18 @@ class RunContext:
 
     workflow_id: str
     workdir: Path
+    run_namespace: str | None = None
     completed_outputs: dict[str, dict[str, Any]] = field(default_factory=dict)
     completed_artifacts: dict[str, dict[str, Any]] = field(default_factory=dict)
 
     def resolve_path(self, value: str | Path) -> Path:
         """Resolve a workflow-declared path against the run working directory."""
         path = Path(value)
-        return path if path.is_absolute() else self.workdir / path
+        if path.is_absolute():
+            return path
+        if self.run_namespace is None:
+            return self.workdir / path
+        return self.workdir / self.run_namespace / path
 
 
 def run_workflow(
@@ -47,8 +52,18 @@ def run_workflow(
     diagnostics: Sequence[Diagnostic] | None = None,
     registry: ProviderRegistry | None = None,
     workdir: str | Path | None = None,
+    run_namespace: str | None = None,
 ) -> WorkflowRunResult:
     """Execute a workflow with provider-owned nodes in deterministic plan order."""
+    namespace_diagnostic = validate_run_namespace(run_namespace)
+    if namespace_diagnostic is not None:
+        return WorkflowRunResult(
+            workflow_id=spec.id,
+            run_namespace=run_namespace,
+            status=RunStatus.FAILED,
+            diagnostics=(namespace_diagnostic,),
+        )
+
     provider_registry, initial_diagnostics = _registry_and_diagnostics(registry, diagnostics)
     plan = create_run_plan(
         spec,
@@ -58,6 +73,7 @@ def run_workflow(
     if plan.has_errors:
         return WorkflowRunResult(
             workflow_id=spec.id,
+            run_namespace=run_namespace,
             status=RunStatus.FAILED,
             diagnostics=tuple(plan.diagnostics),
         )
@@ -65,6 +81,7 @@ def run_workflow(
     context = RunContext(
         workflow_id=spec.id,
         workdir=Path.cwd() if workdir is None else Path(workdir).resolve(),
+        run_namespace=run_namespace,
     )
     nodes_by_id = {node.id: node for node in spec.nodes}
     run_nodes: list[NodeRunResult] = []
@@ -169,6 +186,7 @@ def run_workflow(
     )
     return WorkflowRunResult(
         workflow_id=spec.id,
+        run_namespace=run_namespace,
         status=status,
         nodes=tuple(run_nodes),
         diagnostics=tuple(diagnostics_out),
@@ -225,3 +243,27 @@ def artifact_paths(node: WorkflowNode, context: RunContext) -> dict[str, Path]:
         if isinstance(value, (str, Path)):
             paths[key] = context.resolve_path(value)
     return paths
+
+
+def validate_run_namespace(run_namespace: str | None) -> Diagnostic | None:
+    """Return a diagnostic when a run namespace is invalid."""
+    if run_namespace is None:
+        return None
+    namespace = run_namespace.strip()
+    if namespace == "":
+        return _invalid_namespace_diagnostic(run_namespace)
+    path = Path(namespace)
+    if path.is_absolute() or ".." in path.parts:
+        return _invalid_namespace_diagnostic(run_namespace)
+    return None
+
+
+def _invalid_namespace_diagnostic(run_namespace: str) -> Diagnostic:
+    return Diagnostic(
+        severity=DiagnosticSeverity.ERROR,
+        code="run.namespace.invalid",
+        message=(
+            "Run namespace must be a non-empty relative path and must not contain '..'."
+        ),
+        location="run.namespace",
+    )

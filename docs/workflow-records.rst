@@ -4,7 +4,8 @@ Workflow Records
 Phase 2 introduces FreshForge's first provisional workflow records. Phase 3 adds
 provider-aware validation and planning while keeping the records themselves
 declarative. Phase 6 adds serial local execution through provider-owned
-``run_node`` hooks.
+``run_node`` hooks. Phase 7 adds optional run namespaces and compact run
+summaries.
 
 Minimal Shape
 -------------
@@ -77,6 +78,19 @@ auto-discover providers, or call external runtimes.
 
 Execution uses the planned order but remains separate from planning. See
 :doc:`workflow-runner` for the Phase 6 runner.
+
+Run Summaries
+-------------
+
+Executed workflows return a full ``WorkflowRunResult`` plus a compact
+``WorkflowRunSummary`` through ``result.summary()``. The full result keeps
+per-node outputs, artifacts, diagnostics, and provider data. The summary keeps
+the fields needed for dashboards, notebooks, and CI logs: workflow id, optional
+namespace, status, node counts, diagnostic counts, artifact count, and compact
+per-node summaries.
+
+Run namespaces are stored on the run result and summary. They are relative
+artifact prefixes, not a global run database.
 
 CLI Examples
 ------------

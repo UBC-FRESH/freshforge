@@ -176,4 +176,58 @@ def test_cli_run_plan_only_provider_fails_with_json_diagnostic() -> None:
     payload = json.loads(result.stdout)
     assert payload["ok"] is False
     assert payload["run"]["status"] == "failed"
+    assert payload["run"]["run_namespace"] is None
+    assert payload["summary"]["status"] == "failed"
     assert payload["run"]["nodes"][0]["diagnostics"][0]["code"] == "node.execution.unsupported"
+
+
+def test_cli_run_json_accepts_namespace() -> None:
+    result = runner.invoke(
+        app,
+        [
+            "run",
+            "examples/stand_treatment_workflow.yaml",
+            "--json",
+            "--namespace",
+            "demo",
+        ],
+    )
+
+    assert result.exit_code == 1
+    payload = json.loads(result.stdout)
+    assert payload["run"]["run_namespace"] == "demo"
+    assert payload["summary"]["run_namespace"] == "demo"
+
+
+def test_cli_run_human_output_includes_namespace_and_summary() -> None:
+    result = runner.invoke(
+        app,
+        [
+            "run",
+            "examples/stand_treatment_workflow.yaml",
+            "--namespace",
+            "demo",
+        ],
+    )
+
+    assert result.exit_code == 1
+    assert "Namespace: demo" in result.stdout
+    assert "Summary:" in result.stdout
+
+
+def test_cli_run_rejects_invalid_namespace() -> None:
+    result = runner.invoke(
+        app,
+        [
+            "run",
+            "examples/stand_treatment_workflow.yaml",
+            "--json",
+            "--namespace",
+            "../bad",
+        ],
+    )
+
+    assert result.exit_code == 1
+    payload = json.loads(result.stdout)
+    assert payload["run"]["diagnostics"][0]["code"] == "run.namespace.invalid"
+    assert payload["summary"]["error_count"] == 1
