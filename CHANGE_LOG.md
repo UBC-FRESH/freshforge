@@ -13,6 +13,10 @@ completion and GitHub issue comments.
   `freshforge run`, provider-owned `run_node(...)` hooks, run records, and deferred runtime features.
 - Verified the FreshForge `0.1.0a2` release candidate locally with Ruff, pytest, warning-clean
   Sphinx docs, package build, `twine check`, `freshforge --version`, and `freshforge run --help`.
+- Completed Phase 9 by merging PR #62, verifying post-merge CI and Docs workflows, tagging
+  `v0.1.0a2`, verifying the tag-triggered Release Artifacts workflow #28539893525, checking the
+  downloaded workflow-built artifacts with `twine check`, and creating the GitHub prerelease
+  `FreshForge 0.1.0a2` with the checked artifacts attached.
 - Created the Phase 0 bootstrap lane for FreshForge on
   `feature/p0-bootstrap-scaffold`, with parent issue #1 and child task issues
   #2 through #5 for governance, package skeleton, docs/automation, and closeout.

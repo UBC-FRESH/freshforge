@@ -15,7 +15,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P4 Ecosystem adapter prototype | #28 | `feature/p4-ecosystem-adapter-prototype` | Complete |
 | P5 Documentation, examples, and public alpha hardening | #35 | `feature/p5-public-alpha-hardening` | Complete |
 | P6 Local workflow run runtime | #48 | `feature/p6-workflow-run-runtime` | Complete |
-| P9 v0.1.0a2 local workflow runner GitHub alpha release | #57 | `feature/p9-v0.1.0a2-release` | Active |
+| P9 v0.1.0a2 local workflow runner GitHub alpha release | #57 | `feature/p9-v0.1.0a2-release` | Complete |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -385,8 +385,8 @@ Acceptance boundary:
 Phase 6 is complete: the first serial local workflow runner is merged, and the executable-provider
 surface has been handed to Modelwright for the generated-model workflow lane.
 
-FreshForge Phase 9 is active on `feature/p9-v0.1.0a2-release`: package the Phase 6 serial local
-workflow runner as the `v0.1.0a2` GitHub alpha release while keeping PyPI publication deferred.
+FreshForge Phase 9 is complete: `v0.1.0a2` is tagged and published as a GitHub prerelease with
+checked workflow-built artifacts attached, while PyPI publication remains deferred.
 
 FreshForge's next CLEWs-C2020 orchestration work remains planned as two backlog phases:
 
@@ -454,7 +454,7 @@ Parent issue: #57
 
 Branch: `feature/p9-v0.1.0a2-release`
 
-Status: active
+Status: complete
 
 Goal: publish FreshForge `v0.1.0a2` as a GitHub prerelease that marks the Phase 6 serial local
 workflow runner milestone.
@@ -468,11 +468,11 @@ workflow runner milestone.
 - [x] P9.3 Verify release artifacts and smoke tests (#60)
   - [x] Run local quality, tests, docs, build, and twine checks.
   - [x] Smoke-test `freshforge --version` and `freshforge run --help`.
-- [ ] P9.4 Tag GitHub prerelease and close phase (#61)
-  - [ ] Open and merge release PR after CI passes.
-  - [ ] Tag `v0.1.0a2`.
-  - [ ] Verify tag release-artifact workflow.
-  - [ ] Create GitHub prerelease with checked artifacts attached.
+- [x] P9.4 Tag GitHub prerelease and close phase (#61)
+  - [x] Open and merge release PR after CI passes.
+  - [x] Tag `v0.1.0a2`.
+  - [x] Verify tag release-artifact workflow.
+  - [x] Create GitHub prerelease with checked artifacts attached.
 
 Acceptance boundary:
 
@@ -489,3 +489,13 @@ Local verification:
 - `.venv/bin/twine check dist/*` passed.
 - `.venv/bin/freshforge --version` reported `freshforge 0.1.0a2`.
 - `.venv/bin/freshforge run --help` passed.
+
+Closeout evidence:
+
+- Phase 9 PR #62 merged to `main` at `1413609`.
+- Post-merge CI run #28539847114 passed on Python 3.11 and 3.12.
+- Post-merge Docs run #28539847111 passed and deployed.
+- Annotated tag `v0.1.0a2` was pushed.
+- Tag-triggered Release Artifacts workflow #28539893525 passed.
+- Downloaded workflow-built artifacts passed `twine check`.
+- GitHub prerelease `FreshForge 0.1.0a2` was created with the checked wheel and sdist attached.
