@@ -5,6 +5,17 @@ completion and GitHub issue comments.
 
 ## 2026-06-29
 
+- Activated Phase 7 on `feature/p7-run-namespaces-summaries`, created child issues #63 through #67
+  under parent issue #55, and scoped the phase around generic run namespaces plus compact workflow
+  summaries without adding matrices, caching, retries, remotes, or domain semantics.
+- Added optional run namespaces to FreshForge's serial local runner so repeated runs can isolate
+  relative artifacts under `workdir / namespace`, while no-namespace behavior and absolute artifact
+  paths remain unchanged.
+- Added compact `NodeRunSummary` and `WorkflowRunSummary` records plus `WorkflowRunResult.summary()`
+  so downstream tools can inspect workflow status, node counts, diagnostics, and artifacts without
+  parsing full provider payloads.
+- Updated `freshforge run` with `--namespace`, JSON summary output, and human-readable summary lines;
+  updated workflow-runner and workflow-record docs.
 - Opened Phase 9 on `feature/p9-v0.1.0a2-release` with parent issue #57 and child issues #58
   through #61 to package the Phase 6 serial local workflow runner as the `v0.1.0a2` GitHub alpha
   release while keeping PyPI publication deferred.

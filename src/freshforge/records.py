@@ -213,11 +213,78 @@ class NodeRunResult:
 
 
 @dataclass(frozen=True)
+class NodeRunSummary:
+    """Compact execution summary for one workflow node."""
+
+    id: str
+    provider_id: str | None
+    node_type: str | None
+    status: RunStatus
+    diagnostic_count: int = 0
+    error_count: int = 0
+    warning_count: int = 0
+    artifact_count: int = 0
+    artifacts: dict[str, Any] = field(default_factory=dict)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "id": self.id,
+            "provider_id": self.provider_id,
+            "node_type": self.node_type,
+            "status": self.status.value,
+            "diagnostic_count": self.diagnostic_count,
+            "error_count": self.error_count,
+            "warning_count": self.warning_count,
+            "artifact_count": self.artifact_count,
+            "artifacts": self.artifacts,
+        }
+
+
+@dataclass(frozen=True)
+class WorkflowRunSummary:
+    """Compact execution summary for a workflow run."""
+
+    workflow_id: str
+    status: RunStatus
+    run_namespace: str | None = None
+    node_count: int = 0
+    succeeded_count: int = 0
+    failed_count: int = 0
+    skipped_count: int = 0
+    diagnostic_count: int = 0
+    error_count: int = 0
+    warning_count: int = 0
+    artifact_count: int = 0
+    nodes: tuple[NodeRunSummary, ...] = ()
+
+    @property
+    def ok(self) -> bool:
+        return self.status is RunStatus.SUCCESS and self.error_count == 0
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "workflow_id": self.workflow_id,
+            "run_namespace": self.run_namespace,
+            "status": self.status.value,
+            "node_count": self.node_count,
+            "succeeded_count": self.succeeded_count,
+            "failed_count": self.failed_count,
+            "skipped_count": self.skipped_count,
+            "diagnostic_count": self.diagnostic_count,
+            "error_count": self.error_count,
+            "warning_count": self.warning_count,
+            "artifact_count": self.artifact_count,
+            "nodes": [node.to_dict() for node in self.nodes],
+        }
+
+
+@dataclass(frozen=True)
 class WorkflowRunResult:
     """FreshForge execution record for a whole workflow run."""
 
     workflow_id: str
     status: RunStatus
+    run_namespace: str | None = None
     nodes: tuple[NodeRunResult, ...] = ()
     diagnostics: tuple[Diagnostic, ...] = ()
 
@@ -230,7 +297,51 @@ class WorkflowRunResult:
     def to_dict(self) -> dict[str, Any]:
         return {
             "workflow_id": self.workflow_id,
+            "run_namespace": self.run_namespace,
             "status": self.status.value,
             "nodes": [node.to_dict() for node in self.nodes],
             "diagnostics": [diagnostic.to_dict() for diagnostic in self.diagnostics],
         }
+
+    def summary(self) -> WorkflowRunSummary:
+        """Return a compact summary of this workflow run."""
+        node_summaries = tuple(_node_run_summary(node) for node in self.nodes)
+        diagnostics = self.diagnostics
+        return WorkflowRunSummary(
+            workflow_id=self.workflow_id,
+            run_namespace=self.run_namespace,
+            status=self.status,
+            node_count=len(self.nodes),
+            succeeded_count=sum(1 for node in self.nodes if node.status is RunStatus.SUCCESS),
+            failed_count=sum(1 for node in self.nodes if node.status is RunStatus.FAILED),
+            skipped_count=sum(1 for node in self.nodes if node.status is RunStatus.SKIPPED),
+            diagnostic_count=len(diagnostics),
+            error_count=sum(
+                1 for diagnostic in diagnostics if diagnostic.severity is DiagnosticSeverity.ERROR
+            ),
+            warning_count=sum(
+                1 for diagnostic in diagnostics if diagnostic.severity is DiagnosticSeverity.WARNING
+            ),
+            artifact_count=sum(summary.artifact_count for summary in node_summaries),
+            nodes=node_summaries,
+        )
+
+
+def _node_run_summary(node: NodeRunResult) -> NodeRunSummary:
+    return NodeRunSummary(
+        id=node.id,
+        provider_id=node.provider_id,
+        node_type=node.node_type,
+        status=node.status,
+        diagnostic_count=len(node.diagnostics),
+        error_count=sum(
+            1 for diagnostic in node.diagnostics if diagnostic.severity is DiagnosticSeverity.ERROR
+        ),
+        warning_count=sum(
+            1
+            for diagnostic in node.diagnostics
+            if diagnostic.severity is DiagnosticSeverity.WARNING
+        ),
+        artifact_count=len(node.artifacts),
+        artifacts=dict(node.artifacts),
+    )
