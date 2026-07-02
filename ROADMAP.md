@@ -15,7 +15,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P4 Ecosystem adapter prototype | #28 | `feature/p4-ecosystem-adapter-prototype` | Complete |
 | P5 Documentation, examples, and public alpha hardening | #35 | `feature/p5-public-alpha-hardening` | Complete |
 | P6 Local workflow run runtime | #48 | `feature/p6-workflow-run-runtime` | Complete |
-| P8 Run matrices and scenario-grid workflow expansion | #56 | `feature/p8-run-matrices-scenario-grids` | Active |
+| P8 Run matrices and scenario-grid workflow expansion | #56 | `feature/p8-run-matrices-scenario-grids` | Complete |
 | P9 v0.1.0a2 local workflow runner GitHub alpha release | #57 | `feature/p9-v0.1.0a2-release` | Complete |
 | P10 v0.1.0a3 run namespace and summary GitHub alpha release | #69 | `feature/p10-v0.1.0a3-release` | Complete |
 
@@ -394,12 +394,11 @@ FreshForge's most recent CLEWs-C2020 orchestration work is complete:
 
 - Phase 7 (#55): complete; added run namespaces and clearer workflow-run summaries so repeated local
   Modelwright/FABLE runs can be compared without artifact collisions.
-- Phase 8 (#56): active; add generic run-matrix and scenario-grid expansion now that FABLE
+- Phase 8 (#56): complete; added generic run-matrix and scenario-grid expansion now that FABLE
   Pyculator has concrete strategy-comparison and scenario-bundle examples.
 
-Phase 7 child issues #63 through #67 are complete. Phase 8 child issues #75 through #79 are active.
-The coordinated downstream sequence is Modelwright Phase 35, Modelwright Phase 36, FABLE Pyculator
-Phase 18, FreshForge Phase 8, FABLE Pyculator Phase 19, and FABLE Pyculator Phase 20.
+Phase 7 child issues #63 through #67 and Phase 8 child issues #75 through #79 are complete. The
+coordinated downstream sequence through FABLE Pyculator Phase 20 is now implemented.
 
 Implementation evidence:
 
@@ -493,7 +492,7 @@ Parent issue: #56
 
 Branch: `feature/p8-run-matrices-scenario-grids`
 
-Status: active
+Status: complete
 
 Goal: add generic workflow-template expansion across scenario grids once real CLEWs-C2020 examples
 justify the interface.
@@ -513,10 +512,10 @@ justify the interface.
   - [x] Add public-safe matrix template and matrix example.
   - [x] Add run-matrix docs and update runner/record docs.
   - [x] Add unit and CLI coverage for matrix loading, expansion, planning, running, and diagnostics.
-- [ ] P8.5 Verify, PR, deploy docs, and close phase. Child issue: #79.
+- [x] P8.5 Verify, PR, deploy docs, and close phase. Child issue: #79.
   - [x] Run full local verification.
-  - [ ] Open and merge PR after CI passes.
-  - [ ] Confirm post-merge CI and Docs workflows pass.
+  - [x] Open and merge PR after CI passes.
+  - [x] Confirm post-merge CI and Docs workflows pass.
 
 Dependency note: start this after FreshForge Phase 7 and after FABLE Pyculator Phase 18 provides real
 strategy-comparison examples that justify the run-matrix interface.
@@ -547,6 +546,13 @@ Local verification:
 - `.venv/bin/python -m build` passed.
 - `.venv/bin/twine check dist/*` passed.
 - `git diff --check` passed.
+
+Closeout evidence:
+
+- PR #80 merged to `main` at `a14cb2f`.
+- PR CI run #28561438088 passed on Python 3.11 and 3.12.
+- Post-merge CI run #28561466037 passed on Python 3.11 and 3.12.
+- Post-merge Docs run #28561466089 passed and deployed GitHub Pages.
 
 ## Phase 9: v0.1.0a2 Local Workflow Runner GitHub Alpha Release
 
