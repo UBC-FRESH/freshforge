@@ -5,6 +5,18 @@ completion and GitHub issue comments.
 
 ## 2026-06-29
 
+- Opened Phase 12 on `feature/p12-v0.1.0a5-pypi-alpha-release` with parent issue #87 and child
+  issues #88 through #92 to publish FreshForge as a first PyPI alpha while preserving the current
+  run, namespace, summary, and matrix feature surface.
+- Prepared the FreshForge `0.1.0a5` release candidate by bumping package/import metadata, built-in
+  provider metadata versions, CLI status text, release notes, installation docs, release checklist,
+  docs roadmap, and README language from GitHub-only artifacts to PyPI alpha installation.
+- Added a tag-triggered PyPI trusted-publishing job to the release workflow using environment
+  `pypi`, while preserving checked GitHub release artifact uploads.
+- Verified the FreshForge `0.1.0a5` release candidate locally with Ruff, 90 pytest tests,
+  warning-clean Sphinx docs, package build, `twine check`, `freshforge --version`,
+  `freshforge run --help`, `freshforge matrix --help`, and `git diff --check`.
+
 - Opened Phase 10 on `feature/p10-v0.1.0a3-release` with parent issue #69 and child issues #70
   through #73 to package run namespaces and compact workflow-run summaries as the `v0.1.0a3`
   GitHub alpha release while keeping PyPI publication deferred.

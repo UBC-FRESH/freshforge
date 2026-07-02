@@ -14,9 +14,9 @@ records, YAML/JSON loading, structural and provider-aware validation, explicit
 provider registry support, Python entry-point provider discovery, workflow
 inspection, non-executing run planning, and a serial local runner for
 provider-owned node execution with run namespaces and compact summaries, and
-generic run matrices for repeated workflow-template expansion. The `0.1.0a4`
-release is a GitHub alpha release with checked artifacts, not a PyPI
-publication. FreshForge does not yet
+generic run matrices for repeated workflow-template expansion. The `0.1.0a5`
+release is the first PyPI alpha release and is also available as a GitHub
+prerelease with checked artifacts. FreshForge does not yet
 implement a stable workflow DSL, caching, checkpointing, parallel execution,
 remote execution, or real domain adapters.
 
@@ -39,7 +39,7 @@ outputs, diagnostics, and verification records.
 
 ## Current Alpha Scope
 
-Supported in `0.1.0a4`:
+Supported in `0.1.0a5`:
 
 - Python package skeleton using `src/` layout;
 - minimal `freshforge` command-line interface;
@@ -68,10 +68,13 @@ Not supported yet:
 - real FEMIC/FHOPS/ws3/Modelwright/Nemora provider adapters;
 - caching, checkpointing, parallel execution, or remote execution;
 - direct integration with FEMIC, FHOPS, ws3, Modelwright, Nemora, or GIS tools;
-- PyPI publication.
+- stable public APIs or production workflow orchestration.
 
-Release artifacts are distributed through GitHub for this alpha. PyPI
-publication is deferred to a later release phase.
+FreshForge is available from PyPI as an alpha package:
+
+```bash
+python -m pip install freshforge==0.1.0a5
+```
 
 ## Install For Development
 

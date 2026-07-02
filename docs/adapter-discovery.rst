@@ -68,5 +68,5 @@ Deferred Work
 Phase 4 does not add real FEMIC, FHOPS, ws3, Modelwright, or Nemora adapters.
 Phase 6 later adds provider-owned node execution through ``freshforge run``, but
 FreshForge core still does not add artifact materialization, caching,
-checkpoints, or real ecosystem adapters. FreshForge ``0.1.0a4`` keeps these
-boundaries for the GitHub alpha release.
+checkpoints, or real ecosystem adapters. FreshForge ``0.1.0a5`` keeps these
+boundaries for the first PyPI alpha release.

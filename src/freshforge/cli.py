@@ -57,7 +57,7 @@ def info() -> None:
     console.print("FreshForge")
     console.print(f"Version: {__version__}")
     console.print(
-        "Status: 0.1.0a4 public alpha; "
+        "Status: 0.1.0a5 public alpha; "
         "serial local workflow execution with run namespaces, summaries, and matrices."
     )
 
