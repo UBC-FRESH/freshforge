@@ -5,6 +5,9 @@ completion and GitHub issue comments.
 
 ## 2026-06-29
 
+- Closed stale pre-release Phase 6 placeholder issues #42 through #46 as superseded by the completed
+  Phase 6 implementation under #48 and later runtime/matrix release phases, and added planned Phase
+  13 (#94) to track future matrix/run-summary ergonomics only after downstream evidence exists.
 - Opened Phase 12 on `feature/p12-v0.1.0a5-pypi-alpha-release` with parent issue #87 and child
   issues #88 through #92 to publish FreshForge as a first PyPI alpha while preserving the current
   run, namespace, summary, and matrix feature surface.
