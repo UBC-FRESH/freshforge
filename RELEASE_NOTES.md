@@ -1,5 +1,40 @@
 # Release Notes
 
+## 0.1.0a5
+
+FreshForge `0.1.0a5` is the first PyPI alpha release. It packages the same
+workflow feature surface as `0.1.0a4` so FEMIC, Modelwright, FABLE Pyculator,
+and other downstream packages can depend on FreshForge through normal package
+metadata instead of GitHub-direct references.
+
+### Implemented
+
+- Everything from `0.1.0a4`.
+- PyPI trusted-publishing release workflow.
+- PyPI installation documentation for `freshforge==0.1.0a5`.
+- GitHub prerelease artifacts retained alongside PyPI publication.
+
+### Explicit Limitations
+
+- Workflow and matrix syntax remain alpha and provisional.
+- FreshForge remains a serial local runner; it does not implement caching,
+  checkpointing, parallel execution, remote execution, retries, production
+  scheduling, or real ecosystem adapters.
+- Provider APIs remain alpha and may change before a stable release.
+
+### Verification
+
+The release is expected to pass:
+
+- `python -m ruff check .`
+- `python -m pytest`
+- `sphinx-build -b html docs _build/html -W`
+- `python -m build`
+- `twine check dist/*`
+- `freshforge --version`
+- `freshforge run --help`
+- `freshforge matrix --help`
+
 ## 0.1.0a4
 
 FreshForge `0.1.0a4` is the run matrix alpha. It packages the Phase 8

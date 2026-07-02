@@ -35,6 +35,9 @@ expansion while keeping domain scenario semantics in provider packages.
 
 Phase 11 packages run matrices as the ``0.1.0a4`` GitHub alpha release.
 
+Phase 12 publishes FreshForge as the ``0.1.0a5`` PyPI alpha release so
+downstream packages can use normal optional dependency declarations.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents
