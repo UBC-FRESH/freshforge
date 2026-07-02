@@ -18,12 +18,13 @@ Near-Term Phases
 * Phase 8: run matrices and scenario-grid workflow expansion.
 * Phase 9: ``0.1.0a2`` GitHub alpha release.
 * Phase 10: ``0.1.0a3`` GitHub alpha release.
+* Phase 11: ``0.1.0a4`` GitHub alpha release.
 
 Current Edge
 ------------
 
-Phase 8 is the current implementation edge. It adds generic matrix expansion
-and serial per-case plan/run support after Phase 7 made repeated runs
+Phase 11 is the current release edge. It packages the Phase 8 generic matrix
+expansion and serial per-case plan/run support after Phase 7 made repeated runs
 namespace-safe. It still defers PyPI publication, stable workflow syntax,
 caching, checkpointing, parallel execution, remote execution, and real domain
 adapters.

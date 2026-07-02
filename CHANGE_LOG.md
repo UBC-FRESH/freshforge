@@ -214,3 +214,15 @@ completion and GitHub issue comments.
 - Completed Phase 8 by merging PR #80 at `a14cb2f`, verifying PR CI run #28561438088, verifying
   post-merge CI run #28561466037, and confirming post-merge Docs run #28561466089 deployed GitHub
   Pages.
+
+## 2026-07-02
+
+- Opened Phase 11 on `feature/p11-v0.1.0a4-release` with parent issue #81 and child issues #82
+  through #85 to package generic run matrices as the `v0.1.0a4` GitHub alpha release while keeping
+  PyPI publication deferred.
+- Prepared the FreshForge `0.1.0a4` release candidate by bumping package/import metadata, provider
+  metadata versions, CLI status text, release notes, release checklist, and public docs around
+  `freshforge matrix expand`, `freshforge matrix plan`, and `freshforge matrix run`.
+- Verified the FreshForge `0.1.0a4` release candidate locally with Ruff, 90 pytest tests,
+  warning-clean Sphinx docs, package build, `twine check`, `freshforge --version`,
+  `freshforge matrix --help`, and matrix planning against `examples/run_matrix.yaml`.
