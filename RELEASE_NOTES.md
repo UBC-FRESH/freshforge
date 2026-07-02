@@ -1,5 +1,46 @@
 # Release Notes
 
+## 0.1.0a4
+
+FreshForge `0.1.0a4` is the run matrix alpha. It packages the Phase 8
+orchestration milestone as a GitHub prerelease with checked source and wheel
+artifacts. It is not published to PyPI.
+
+### Implemented
+
+- Everything from `0.1.0a3`.
+- Generic workflow matrix records for explicit cases and Cartesian-product
+  axes.
+- Workflow-template expansion with `${matrix.*}` placeholders.
+- Default matrix case namespaces such as `matrix-id/case-id`.
+- Matrix planning and serial matrix execution APIs.
+- `freshforge matrix expand`, `freshforge matrix plan`, and
+  `freshforge matrix run` CLI commands.
+- Public-safe matrix examples for repeated workflow-template expansion.
+
+### Explicit Limitations
+
+- Workflow and matrix syntax remain alpha and provisional.
+- Matrix execution is serial.
+- FreshForge matrices do not define domain scenario semantics, parameter
+  meaning, validation meaning, or artifact interpretation.
+- FreshForge does not implement caching, checkpointing, parallel execution,
+  remote execution, retries, production scheduling, or real ecosystem adapters.
+- FreshForge is not published to PyPI in this release.
+
+### Verification
+
+The release is expected to pass:
+
+- `python -m ruff check .`
+- `python -m pytest`
+- `sphinx-build -b html docs _build/html -W`
+- `python -m build`
+- `twine check dist/*`
+- `freshforge --version`
+- `freshforge matrix --help`
+- `freshforge matrix plan examples/run_matrix.yaml --json`
+
 ## 0.1.0a3
 
 FreshForge `0.1.0a3` is the run namespace and workflow-run summary alpha. It

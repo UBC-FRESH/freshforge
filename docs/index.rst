@@ -33,6 +33,8 @@ Phase 10 packages run namespaces and compact workflow-run summaries as the
 Phase 8 on ``main`` adds generic run matrices for repeated workflow-template
 expansion while keeping domain scenario semantics in provider packages.
 
+Phase 11 packages run matrices as the ``0.1.0a4`` GitHub alpha release.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents

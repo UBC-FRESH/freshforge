@@ -18,6 +18,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P8 Run matrices and scenario-grid workflow expansion | #56 | `feature/p8-run-matrices-scenario-grids` | Complete |
 | P9 v0.1.0a2 local workflow runner GitHub alpha release | #57 | `feature/p9-v0.1.0a2-release` | Complete |
 | P10 v0.1.0a3 run namespace and summary GitHub alpha release | #69 | `feature/p10-v0.1.0a3-release` | Complete |
+| P11 v0.1.0a4 matrix runner GitHub alpha release | #81 | `feature/p11-v0.1.0a4-release` | Active |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -658,3 +659,51 @@ Closeout evidence:
 - Tag-triggered Release Artifacts workflow #28559427242 passed.
 - GitHub prerelease `FreshForge 0.1.0a3` was created with the checked wheel and sdist attached.
 - Clean tag install smoke test reported `freshforge 0.1.0a3` and `freshforge run --help` passed.
+
+## Phase 11: v0.1.0a4 Matrix Runner GitHub Alpha Release
+
+Parent issue: #81
+
+Branch: `feature/p11-v0.1.0a4-release`
+
+Status: active
+
+Goal: publish FreshForge `v0.1.0a4` as a GitHub prerelease that marks the Phase 8 generic run matrix
+milestone while keeping PyPI publication deferred.
+
+- [x] P11.1 Bump version and release metadata (#82)
+  - [x] Bump package and import metadata to `0.1.0a4`.
+  - [x] Update version contract tests, provider metadata versions, and CLI status text.
+- [x] P11.2 Update release docs, notes, and alpha boundary language (#83)
+  - [x] Update release checklist, installation docs, README, docs roadmap, and release notes.
+  - [x] Keep PyPI publication explicitly deferred.
+- [ ] P11.3 Verify artifacts, tag, and publish GitHub prerelease (#84)
+  - [x] Run local quality, tests, docs, build, and twine checks.
+  - [x] Smoke-test `freshforge --version`, `freshforge matrix --help`, and matrix planning.
+  - [ ] Tag `v0.1.0a4`.
+  - [ ] Verify tag release-artifact workflow.
+  - [ ] Create GitHub prerelease with checked artifacts attached.
+- [ ] P11.4 PR, docs deploy, and close phase (#85)
+  - [ ] Open and merge release PR after CI passes.
+  - [ ] Confirm post-merge CI and Docs workflows.
+  - [ ] Update roadmap and changelog closeout evidence.
+
+Acceptance boundary:
+
+- May claim FreshForge has a GitHub alpha release for generic run matrix expansion, planning, and
+  serial execution.
+- Must not claim PyPI publication, stable workflow or matrix syntax, caching, checkpointing,
+  parallel execution, remote execution, retries, production scheduling, or real ecosystem adapters.
+
+Local verification:
+
+- `.venv/bin/python -m pip install -e .[dev]` refreshed editable metadata for `0.1.0a4`.
+- `.venv/bin/python -m ruff check .` passed.
+- `.venv/bin/python -m pytest` passed with 90 tests.
+- `.venv/bin/sphinx-build -b html docs _build/html -W` passed.
+- `.venv/bin/python -m build` passed.
+- `.venv/bin/twine check dist/*` passed.
+- `.venv/bin/freshforge --version` reported `freshforge 0.1.0a4`.
+- `.venv/bin/freshforge matrix --help` passed.
+- `.venv/bin/freshforge matrix plan examples/run_matrix.yaml --json` passed.
+- `git diff --check` passed.
