@@ -16,7 +16,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P5 Documentation, examples, and public alpha hardening | #35 | `feature/p5-public-alpha-hardening` | Complete |
 | P6 Local workflow run runtime | #48 | `feature/p6-workflow-run-runtime` | Complete |
 | P9 v0.1.0a2 local workflow runner GitHub alpha release | #57 | `feature/p9-v0.1.0a2-release` | Complete |
-| P10 v0.1.0a3 run namespace and summary GitHub alpha release | #69 | `feature/p10-v0.1.0a3-release` | Active |
+| P10 v0.1.0a3 run namespace and summary GitHub alpha release | #69 | `feature/p10-v0.1.0a3-release` | Complete |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -564,7 +564,7 @@ Parent issue: #69
 
 Branch: `feature/p10-v0.1.0a3-release`
 
-Status: active
+Status: complete
 
 Goal: publish FreshForge `v0.1.0a3` as a GitHub prerelease that marks the Phase 7 run namespace and
 compact workflow-run summary milestone.
@@ -578,11 +578,11 @@ compact workflow-run summary milestone.
 - [x] P10.3 Verify FreshForge release artifacts and smoke tests (#72)
   - [x] Run local quality, tests, docs, build, and twine checks.
   - [x] Smoke-test `freshforge --version` and `freshforge run --help`.
-- [ ] P10.4 Tag GitHub prerelease and close phase (#73)
-  - [ ] Open and merge release PR after CI passes.
-  - [ ] Tag `v0.1.0a3`.
-  - [ ] Verify tag release-artifact workflow.
-  - [ ] Create GitHub prerelease with checked artifacts attached.
+- [x] P10.4 Tag GitHub prerelease and close phase (#73)
+  - [x] Open and merge release PR after CI passes.
+  - [x] Tag `v0.1.0a3`.
+  - [x] Verify tag release-artifact workflow.
+  - [x] Create GitHub prerelease with checked artifacts attached.
 
 Acceptance boundary:
 
@@ -600,3 +600,13 @@ Local verification:
 - `.venv/bin/twine check dist/*` passed.
 - `.venv/bin/freshforge --version` reported `freshforge 0.1.0a3`.
 - `.venv/bin/freshforge run --help` passed.
+
+Closeout evidence:
+
+- Phase 10 PR #74 merged to `main` at `4a64551`.
+- Post-merge CI run #28559392850 passed on Python 3.11 and 3.12.
+- Post-merge Docs run #28559392858 passed and deployed.
+- Annotated tag `v0.1.0a3` was pushed.
+- Tag-triggered Release Artifacts workflow #28559427242 passed.
+- GitHub prerelease `FreshForge 0.1.0a3` was created with the checked wheel and sdist attached.
+- Clean tag install smoke test reported `freshforge 0.1.0a3` and `freshforge run --help` passed.

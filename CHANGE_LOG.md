@@ -14,6 +14,10 @@ completion and GitHub issue comments.
 - Verified the FreshForge `0.1.0a3` release candidate locally with Ruff, 73 pytest tests,
   warning-clean Sphinx docs, package build, `twine check`, `freshforge --version`, and
   `freshforge run --help`.
+- Completed Phase 10 by merging PR #74, verifying post-merge CI and Docs workflows, tagging
+  `v0.1.0a3`, verifying the tag-triggered Release Artifacts workflow #28559427242, creating the
+  GitHub prerelease `FreshForge 0.1.0a3` with checked artifacts attached, and smoke-testing a clean
+  install from the tag.
 - Activated Phase 7 on `feature/p7-run-namespaces-summaries`, created child issues #63 through #67
   under parent issue #55, and scoped the phase around generic run namespaces plus compact workflow
   summaries without adding matrices, caching, retries, remotes, or domain semantics.
