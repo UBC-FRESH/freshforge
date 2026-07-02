@@ -20,6 +20,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P10 v0.1.0a3 run namespace and summary GitHub alpha release | #69 | `feature/p10-v0.1.0a3-release` | Complete |
 | P11 v0.1.0a4 matrix runner GitHub alpha release | #81 | `feature/p11-v0.1.0a4-release` | Complete |
 | P12 v0.1.0a5 PyPI alpha release | #87 | `feature/p12-v0.1.0a5-pypi-alpha-release` | Complete |
+| P13 Matrix/run-summary ergonomics from downstream evidence | #94 | TBD | Planned |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -795,3 +796,29 @@ Closeout evidence:
   <https://github.com/UBC-FRESH/freshforge/releases/tag/v0.1.0a5>.
 - Clean PyPI install smoke test installed `freshforge==0.1.0a5`, reported
   `freshforge 0.1.0a5`, and imported `freshforge.__version__ == "0.1.0a5"`.
+
+## Phase 13: Matrix/Run-Summary Ergonomics From Downstream Evidence
+
+Parent issue: #94
+
+Branch: TBD
+
+Status: planned. Child issues will be created only if downstream Modelwright, FABLE Pyculator, or
+FEMIC work exposes generic FreshForge gaps.
+
+Goal: improve FreshForge matrix and run-summary ergonomics only where real downstream
+matrix/evidence workflows show that the core API or CLI needs refinement.
+
+Planned scope:
+
+- Collect concrete friction from Modelwright matrix evidence aggregation, FABLE benchmark matrices,
+  and FEMIC workflows.
+- Add small generic ergonomics improvements if justified by downstream evidence.
+
+Out of scope:
+
+- Domain semantics.
+- Production scheduling, caching, checkpoints, retries, remote execution, or parallel execution
+  unless a later explicit phase scopes them.
+
+Dependency note: wait for downstream evidence from Modelwright Phase 38 and FABLE Pyculator Phase 25.
