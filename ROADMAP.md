@@ -15,6 +15,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P4 Ecosystem adapter prototype | #28 | `feature/p4-ecosystem-adapter-prototype` | Complete |
 | P5 Documentation, examples, and public alpha hardening | #35 | `feature/p5-public-alpha-hardening` | Complete |
 | P6 Local workflow run runtime | #48 | `feature/p6-workflow-run-runtime` | Complete |
+| P8 Run matrices and scenario-grid workflow expansion | #56 | `feature/p8-run-matrices-scenario-grids` | Active |
 | P9 v0.1.0a2 local workflow runner GitHub alpha release | #57 | `feature/p9-v0.1.0a2-release` | Complete |
 | P10 v0.1.0a3 run namespace and summary GitHub alpha release | #69 | `feature/p10-v0.1.0a3-release` | Complete |
 
@@ -393,13 +394,12 @@ FreshForge's most recent CLEWs-C2020 orchestration work is complete:
 
 - Phase 7 (#55): complete; added run namespaces and clearer workflow-run summaries so repeated local
   Modelwright/FABLE runs can be compared without artifact collisions.
-- Phase 8 (#56): planned backlog; add generic run-matrix or scenario-grid expansion only after
-  domain packages have enough real CLEWs-C2020 examples to justify the shape.
+- Phase 8 (#56): active; add generic run-matrix and scenario-grid expansion now that FABLE
+  Pyculator has concrete strategy-comparison and scenario-bundle examples.
 
-Phase 7 child issues #63 through #67 are complete. Child issues for Phase 8 remain deferred until
-that phase is explicitly activated. The coordinated downstream sequence is Modelwright Phase 35,
-Modelwright Phase 36, FABLE Pyculator Phase 18, FreshForge Phase 8, FABLE Pyculator Phase 19, and
-FABLE Pyculator Phase 20.
+Phase 7 child issues #63 through #67 are complete. Phase 8 child issues #75 through #79 are active.
+The coordinated downstream sequence is Modelwright Phase 35, Modelwright Phase 36, FABLE Pyculator
+Phase 18, FreshForge Phase 8, FABLE Pyculator Phase 19, and FABLE Pyculator Phase 20.
 
 Implementation evidence:
 
@@ -491,12 +491,32 @@ Closeout evidence:
 
 Parent issue: #56
 
-Status: planned backlog
+Branch: `feature/p8-run-matrices-scenario-grids`
+
+Status: active
 
 Goal: add generic workflow-template expansion across scenario grids once real CLEWs-C2020 examples
 justify the interface.
 
-Child issues: create only when this phase is activated.
+- [x] P8.1 Define matrix document and expansion records. Child issue: #75.
+  - [x] Add matrix specs, axes, cases, expanded cases, plan records, run records, and summaries.
+  - [x] Export public matrix APIs.
+- [x] P8.2 Add workflow-template expansion and namespace defaults. Child issue: #76.
+  - [x] Support explicit cases and Cartesian-product axes.
+  - [x] Substitute `${matrix.case_id}`, `${matrix.namespace}`, and matrix variables.
+  - [x] Default namespaces to `{matrix_id}/{case_id}` and reuse namespace validation.
+- [x] P8.3 Add matrix plan/run APIs and CLI. Child issue: #77.
+  - [x] Add `plan_workflow_matrix(...)` and `run_workflow_matrix(...)`.
+  - [x] Add `freshforge matrix expand`, `freshforge matrix plan`, and `freshforge matrix run`.
+  - [x] Keep execution serial and add opt-in `--fail-fast`.
+- [x] P8.4 Update docs, examples, and tests. Child issue: #78.
+  - [x] Add public-safe matrix template and matrix example.
+  - [x] Add run-matrix docs and update runner/record docs.
+  - [x] Add unit and CLI coverage for matrix loading, expansion, planning, running, and diagnostics.
+- [ ] P8.5 Verify, PR, deploy docs, and close phase. Child issue: #79.
+  - [x] Run full local verification.
+  - [ ] Open and merge PR after CI passes.
+  - [ ] Confirm post-merge CI and Docs workflows pass.
 
 Dependency note: start this after FreshForge Phase 7 and after FABLE Pyculator Phase 18 provides real
 strategy-comparison examples that justify the run-matrix interface.
@@ -505,6 +525,28 @@ Acceptance boundary:
 
 - May provide generic matrix expansion primitives.
 - Must leave scenario schemas, parameter mappings, and validation semantics in domain packages.
+
+Implementation evidence:
+
+- Added `freshforge.matrix` with typed matrix records and public helpers for loading, expanding,
+  planning, and serially running matrix cases.
+- Added template substitution for `${matrix.case_id}`, `${matrix.namespace}`, and explicit matrix
+  variables, with diagnostics for missing placeholders, invalid matrix shapes, invalid namespaces,
+  duplicate variables, and invalid expanded workflows.
+- Added CLI commands for `freshforge matrix expand`, `freshforge matrix plan`, and
+  `freshforge matrix run`.
+- Added public-safe `examples/run_matrix.yaml` and `examples/matrix_workflow_template.yaml`.
+- Added Sphinx documentation for run matrices and updated runner/record docs to explain the
+  one-run, namespaced-run, and matrix-run distinction.
+
+Local verification:
+
+- `.venv/bin/python -m ruff check .` passed.
+- `.venv/bin/python -m pytest` passed with 90 tests.
+- `.venv/bin/sphinx-build -b html docs _build/html -W` passed.
+- `.venv/bin/python -m build` passed.
+- `.venv/bin/twine check dist/*` passed.
+- `git diff --check` passed.
 
 ## Phase 9: v0.1.0a2 Local Workflow Runner GitHub Alpha Release
 

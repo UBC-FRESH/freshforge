@@ -81,5 +81,5 @@ Boundaries
 
 The Phase 7 runner is intentionally small. It does not add caching,
 checkpointing, parallel execution, remotes, retries, shell-command nodes, or
-domain-package imports in FreshForge core. Run matrices and scenario-grid
-expansion remain deferred to a later phase.
+domain-package imports in FreshForge core. Phase 8 builds on the runner with
+generic repeated-run matrices; see :doc:`run-matrices`.

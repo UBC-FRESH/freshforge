@@ -92,6 +92,14 @@ per-node summaries.
 Run namespaces are stored on the run result and summary. They are relative
 artifact prefixes, not a global run database.
 
+Run Matrices
+------------
+
+Phase 8 adds matrix records for repeated runs. Matrix records expand workflow
+templates into ordinary ``WorkflowSpec`` records and then reuse existing
+``RunPlan``, ``WorkflowRunResult``, and ``WorkflowRunSummary`` records for each
+case. See :doc:`run-matrices`.
+
 CLI Examples
 ------------
 

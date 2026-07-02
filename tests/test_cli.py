@@ -231,3 +231,71 @@ def test_cli_run_rejects_invalid_namespace() -> None:
     payload = json.loads(result.stdout)
     assert payload["run"]["diagnostics"][0]["code"] == "run.namespace.invalid"
     assert payload["summary"]["error_count"] == 1
+
+
+def test_cli_matrix_expand_json_output() -> None:
+    result = runner.invoke(app, ["matrix", "expand", "examples/run_matrix.yaml", "--json"])
+
+    assert result.exit_code == 0
+    payload = json.loads(result.stdout)
+    assert payload["ok"] is True
+    assert payload["matrix"]["matrix"]["id"] == "treatment_matrix_demo"
+    assert [case["case"]["id"] for case in payload["cases"]] == [
+        "strategy-baseline",
+        "strategy-thinning",
+    ]
+
+
+def test_cli_matrix_plan_json_output() -> None:
+    result = runner.invoke(app, ["matrix", "plan", "examples/run_matrix.yaml", "--json"])
+
+    assert result.exit_code == 0
+    payload = json.loads(result.stdout)
+    assert payload["ok"] is True
+    assert payload["plan"]["matrix_id"] == "treatment_matrix_demo"
+    assert [case["workflow_id"] for case in payload["plan"]["cases"]] == [
+        "matrix_strategy-baseline_demo",
+        "matrix_strategy-thinning_demo",
+    ]
+
+
+def test_cli_matrix_run_json_output() -> None:
+    result = runner.invoke(app, ["matrix", "run", "examples/run_matrix.yaml", "--json"])
+
+    assert result.exit_code == 1
+    payload = json.loads(result.stdout)
+    assert payload["ok"] is False
+    assert payload["run"]["matrix_id"] == "treatment_matrix_demo"
+    assert payload["summary"]["case_count"] == 2
+    assert payload["summary"]["failed_count"] == 2
+
+
+def test_cli_matrix_run_human_output_includes_case_counts() -> None:
+    result = runner.invoke(app, ["matrix", "run", "examples/run_matrix.yaml"])
+
+    assert result.exit_code == 1
+    assert "Matrix run failed." in result.stdout
+    assert "Summary:" in result.stdout
+    assert "strategy-baseline" in result.stdout
+    assert "strategy-thinning" in result.stdout
+
+
+def test_cli_matrix_invalid_input_exits_nonzero_with_json_diagnostic(tmp_path: Path) -> None:
+    path = tmp_path / "bad.yaml"
+    path.write_text(
+        """
+        matrix:
+          id: Bad Matrix
+          workflow_template: missing.yaml
+        cases:
+          - id: first
+        """,
+        encoding="utf-8",
+    )
+
+    result = runner.invoke(app, ["matrix", "expand", str(path), "--json"])
+
+    assert result.exit_code == 1
+    payload = json.loads(result.stdout)
+    assert payload["ok"] is False
+    assert "matrix.id.invalid" in {diagnostic["code"] for diagnostic in payload["diagnostics"]}

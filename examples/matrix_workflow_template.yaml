@@ -1,0 +1,33 @@
+workflow:
+  id: matrix_${matrix.case_id}_demo
+  name: Matrix case ${matrix.case_id}
+  description: Public-safe workflow template expanded by FreshForge matrix examples.
+nodes:
+  - id: load_inventory
+    provider: freshforge.example.load_inventory
+    outputs:
+      inventory: inventory_${matrix.case_id}
+    provenance:
+      matrix_case: ${matrix.case_id}
+      matrix_namespace: ${matrix.namespace}
+  - id: classify_fuel
+    provider: freshforge.example.classify_fuel
+    needs:
+      - load_inventory
+    inputs:
+      inventory: load_inventory.inventory
+    outputs:
+      fuel_class: fuel_class_${matrix.case_id}
+    parameters:
+      classification: ${matrix.classification}
+  - id: choose_treatment
+    provider: freshforge.example.choose_treatment
+    needs:
+      - classify_fuel
+    inputs:
+      fuel_class: classify_fuel.fuel_class
+    outputs:
+      prescription: prescription_${matrix.case_id}
+    artifacts:
+      report: reports/${matrix.case_id}/treatment-summary.json
+
