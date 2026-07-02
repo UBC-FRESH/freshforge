@@ -16,6 +16,10 @@ completion and GitHub issue comments.
 - Verified the FreshForge `0.1.0a5` release candidate locally with Ruff, 90 pytest tests,
   warning-clean Sphinx docs, package build, `twine check`, `freshforge --version`,
   `freshforge run --help`, `freshforge matrix --help`, and `git diff --check`.
+- Completed Phase 12 by merging PR #93, verifying post-merge CI and Docs workflows, tagging
+  `v0.1.0a5`, verifying tag-triggered Release Artifacts workflow #28569515221 including PyPI
+  trusted publishing, creating the GitHub prerelease `FreshForge 0.1.0a5` with checked artifacts,
+  and smoke-testing a clean PyPI install of `freshforge==0.1.0a5`.
 
 - Opened Phase 10 on `feature/p10-v0.1.0a3-release` with parent issue #69 and child issues #70
   through #73 to package run namespaces and compact workflow-run summaries as the `v0.1.0a3`

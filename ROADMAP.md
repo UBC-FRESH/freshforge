@@ -19,7 +19,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P9 v0.1.0a2 local workflow runner GitHub alpha release | #57 | `feature/p9-v0.1.0a2-release` | Complete |
 | P10 v0.1.0a3 run namespace and summary GitHub alpha release | #69 | `feature/p10-v0.1.0a3-release` | Complete |
 | P11 v0.1.0a4 matrix runner GitHub alpha release | #81 | `feature/p11-v0.1.0a4-release` | Complete |
-| P12 v0.1.0a5 PyPI alpha release | #87 | `feature/p12-v0.1.0a5-pypi-alpha-release` | Active |
+| P12 v0.1.0a5 PyPI alpha release | #87 | `feature/p12-v0.1.0a5-pypi-alpha-release` | Complete |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -726,7 +726,7 @@ Parent issue: #87
 
 Branch: `feature/p12-v0.1.0a5-pypi-alpha-release`
 
-Status: active
+Status: complete
 
 Goal: publish FreshForge `v0.1.0a5` as the first PyPI alpha release while preserving the current
 Phase 8 feature surface: validation, inspection, planning, serial local runs, run namespaces,
@@ -748,15 +748,15 @@ compact run summaries, and matrices.
   - [x] Run local quality, tests, docs, build, and twine checks.
   - [x] Smoke-test `freshforge --version`, `freshforge run --help`, and `freshforge matrix --help`.
   - [x] Run `git diff --check`.
-- [ ] P12.5 Tag, publish, verify, and close phase (#92)
-  - [ ] Open and merge release PR after CI passes.
-  - [ ] Confirm PyPI trusted publisher is configured for project `freshforge`, repository
+- [x] P12.5 Tag, publish, verify, and close phase (#92)
+  - [x] Open and merge release PR after CI passes.
+  - [x] Confirm PyPI trusted publisher is configured for project `freshforge`, repository
         `UBC-FRESH/freshforge`, workflow `release.yml`, and environment `pypi`.
-  - [ ] Tag `v0.1.0a5`.
-  - [ ] Verify tag release workflow publishes to PyPI.
-  - [ ] Create GitHub prerelease with checked artifacts attached.
-  - [ ] Verify clean PyPI install.
-  - [ ] Close child issues and parent issue.
+  - [x] Tag `v0.1.0a5`.
+  - [x] Verify tag release workflow publishes to PyPI.
+  - [x] Create GitHub prerelease with checked artifacts attached.
+  - [x] Verify clean PyPI install.
+  - [x] Close child issues and parent issue.
 
 Acceptance boundary:
 
@@ -782,3 +782,16 @@ Local verification:
 - `.venv/bin/freshforge run --help` passed.
 - `.venv/bin/freshforge matrix --help` passed.
 - `git diff --check` passed.
+
+Closeout evidence:
+
+- Phase 12 PR #93 merged to `main` at `da79968`.
+- Post-merge CI run #28569358915 passed on Python 3.11 and 3.12.
+- Post-merge Docs run #28569358928 passed and deployed.
+- Annotated tag `v0.1.0a5` was pushed.
+- Tag-triggered Release Artifacts workflow #28569515221 passed, including the PyPI trusted-publish
+  job.
+- GitHub prerelease `FreshForge 0.1.0a5` was created with checked wheel and sdist artifacts:
+  <https://github.com/UBC-FRESH/freshforge/releases/tag/v0.1.0a5>.
+- Clean PyPI install smoke test installed `freshforge==0.1.0a5`, reported
+  `freshforge 0.1.0a5`, and imported `freshforge.__version__ == "0.1.0a5"`.
