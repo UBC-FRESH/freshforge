@@ -30,6 +30,9 @@ Phase 9 packages that runner milestone as the ``0.1.0a2`` GitHub alpha release.
 Phase 10 packages run namespaces and compact workflow-run summaries as the
 ``0.1.0a3`` GitHub alpha release.
 
+Phase 8 on ``main`` adds generic run matrices for repeated workflow-template
+expansion while keeping domain scenario semantics in provider packages.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents
@@ -43,5 +46,6 @@ Phase 10 packages run namespaces and compact workflow-run summaries as the
    providers
    adapter-discovery
    workflow-runner
+   run-matrices
    release-checklist
    roadmap

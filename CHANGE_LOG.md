@@ -196,3 +196,18 @@ completion and GitHub issue comments.
   FreshForge Phase 7, Modelwright Phases 35 and 36, FABLE Pyculator Phase 18,
   FreshForge Phase 8, and FABLE Pyculator Phases 19 and 20, with child issues deferred until each
   backlog phase is activated.
+- Activated Phase 8 on `feature/p8-run-matrices-scenario-grids`, created child issues #75 through
+  #79 under parent issue #56, and scoped the phase around generic run matrices without adding domain
+  scenario semantics, caching, checkpointing, retries, parallelism, remote execution, or production
+  scheduling.
+- Added `freshforge.matrix` with typed matrix specs, axes, cases, expanded workflow cases, per-case
+  plans, matrix run results, summaries, and public helpers for loading, expanding, planning, and
+  serially running matrix cases.
+- Added `freshforge matrix expand`, `freshforge matrix plan`, and `freshforge matrix run` CLI
+  commands plus public-safe matrix examples that expand a workflow template across repeated cases
+  with deterministic run namespaces.
+- Documented run matrices in Sphinx and updated runner/record docs and the CLEWs-C2020 planning note
+  to keep FreshForge matrix expansion generic while leaving scenario meaning and result
+  interpretation in domain packages.
+- Verified the Phase 8 implementation locally with Ruff, 90 pytest tests, warning-clean Sphinx docs,
+  package build, `twine check`, and `git diff --check`.

@@ -1,0 +1,15 @@
+matrix:
+  id: treatment_matrix_demo
+  name: Treatment matrix demo
+  description: Public-safe example that expands one workflow template across two cases.
+  workflow_template: matrix_workflow_template.yaml
+axes:
+  - id: strategy
+    values:
+      - id: baseline
+        variables:
+          classification: baseline
+      - id: thinning
+        variables:
+          classification: thinning
+
