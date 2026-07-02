@@ -5,6 +5,15 @@ completion and GitHub issue comments.
 
 ## 2026-06-29
 
+- Opened Phase 10 on `feature/p10-v0.1.0a3-release` with parent issue #69 and child issues #70
+  through #73 to package run namespaces and compact workflow-run summaries as the `v0.1.0a3`
+  GitHub alpha release while keeping PyPI publication deferred.
+- Prepared the FreshForge `0.1.0a3` release candidate by bumping package/import metadata, provider
+  metadata versions, CLI status text, release notes, release checklist, and public docs around
+  namespaced local runs and compact workflow-run summaries.
+- Verified the FreshForge `0.1.0a3` release candidate locally with Ruff, 73 pytest tests,
+  warning-clean Sphinx docs, package build, `twine check`, `freshforge --version`, and
+  `freshforge run --help`.
 - Activated Phase 7 on `feature/p7-run-namespaces-summaries`, created child issues #63 through #67
   under parent issue #55, and scoped the phase around generic run namespaces plus compact workflow
   summaries without adding matrices, caching, retries, remotes, or domain semantics.
