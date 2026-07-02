@@ -226,3 +226,7 @@ completion and GitHub issue comments.
 - Verified the FreshForge `0.1.0a4` release candidate locally with Ruff, 90 pytest tests,
   warning-clean Sphinx docs, package build, `twine check`, `freshforge --version`,
   `freshforge matrix --help`, and matrix planning against `examples/run_matrix.yaml`.
+- Completed Phase 11 by merging PR #86, verifying post-merge CI and Docs workflows, tagging
+  `v0.1.0a4`, verifying the tag-triggered Release Artifacts workflow #28562704658, checking the
+  downloaded workflow-built artifacts with `twine check`, smoke-testing a clean wheel install, and
+  creating the GitHub prerelease `FreshForge 0.1.0a4` with the checked artifacts attached.

@@ -18,7 +18,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P8 Run matrices and scenario-grid workflow expansion | #56 | `feature/p8-run-matrices-scenario-grids` | Complete |
 | P9 v0.1.0a2 local workflow runner GitHub alpha release | #57 | `feature/p9-v0.1.0a2-release` | Complete |
 | P10 v0.1.0a3 run namespace and summary GitHub alpha release | #69 | `feature/p10-v0.1.0a3-release` | Complete |
-| P11 v0.1.0a4 matrix runner GitHub alpha release | #81 | `feature/p11-v0.1.0a4-release` | Active |
+| P11 v0.1.0a4 matrix runner GitHub alpha release | #81 | `feature/p11-v0.1.0a4-release` | Complete |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -666,7 +666,7 @@ Parent issue: #81
 
 Branch: `feature/p11-v0.1.0a4-release`
 
-Status: active
+Status: complete
 
 Goal: publish FreshForge `v0.1.0a4` as a GitHub prerelease that marks the Phase 8 generic run matrix
 milestone while keeping PyPI publication deferred.
@@ -677,16 +677,16 @@ milestone while keeping PyPI publication deferred.
 - [x] P11.2 Update release docs, notes, and alpha boundary language (#83)
   - [x] Update release checklist, installation docs, README, docs roadmap, and release notes.
   - [x] Keep PyPI publication explicitly deferred.
-- [ ] P11.3 Verify artifacts, tag, and publish GitHub prerelease (#84)
+- [x] P11.3 Verify artifacts, tag, and publish GitHub prerelease (#84)
   - [x] Run local quality, tests, docs, build, and twine checks.
   - [x] Smoke-test `freshforge --version`, `freshforge matrix --help`, and matrix planning.
-  - [ ] Tag `v0.1.0a4`.
-  - [ ] Verify tag release-artifact workflow.
-  - [ ] Create GitHub prerelease with checked artifacts attached.
-- [ ] P11.4 PR, docs deploy, and close phase (#85)
-  - [ ] Open and merge release PR after CI passes.
-  - [ ] Confirm post-merge CI and Docs workflows.
-  - [ ] Update roadmap and changelog closeout evidence.
+  - [x] Tag `v0.1.0a4`.
+  - [x] Verify tag release-artifact workflow.
+  - [x] Create GitHub prerelease with checked artifacts attached.
+- [x] P11.4 PR, docs deploy, and close phase (#85)
+  - [x] Open and merge release PR after CI passes.
+  - [x] Confirm post-merge CI and Docs workflows.
+  - [x] Update roadmap and changelog closeout evidence.
 
 Acceptance boundary:
 
@@ -707,3 +707,14 @@ Local verification:
 - `.venv/bin/freshforge matrix --help` passed.
 - `.venv/bin/freshforge matrix plan examples/run_matrix.yaml --json` passed.
 - `git diff --check` passed.
+
+Closeout evidence:
+
+- Phase 11 PR #86 merged to `main` at `17d6570`.
+- Post-merge CI run #28562671869 passed on Python 3.11 and 3.12.
+- Post-merge Docs run #28562671834 passed and deployed.
+- Annotated tag `v0.1.0a4` was pushed.
+- Tag-triggered Release Artifacts workflow #28562704658 passed.
+- Downloaded workflow-built artifacts passed `twine check`.
+- Clean wheel install smoke test reported `freshforge 0.1.0a4` and `freshforge matrix --help` passed.
+- GitHub prerelease `FreshForge 0.1.0a4` was created with the checked wheel and sdist attached.
