@@ -1,5 +1,46 @@
 # Release Notes
 
+## 0.1.0a3
+
+FreshForge `0.1.0a3` is the run namespace and workflow-run summary alpha. It
+packages the post-runner orchestration milestone as a GitHub prerelease with
+checked source and wheel artifacts. It is not published to PyPI.
+
+### Implemented
+
+- Everything from `0.1.0a2`.
+- Optional run namespaces for `run_workflow(...)` and `freshforge run
+  --namespace NAME`.
+- Namespace-aware relative artifact path resolution under
+  `workdir / namespace`.
+- Compact `NodeRunSummary` and `WorkflowRunSummary` records.
+- `WorkflowRunResult.summary()` for downstream tools that need status, node
+  counts, diagnostic counts, and artifact paths without parsing full run
+  payloads.
+- `freshforge run --json` output that includes both full run records and compact
+  summaries.
+
+### Explicit Limitations
+
+- Workflow syntax and JSON output remain alpha and provisional.
+- FreshForge does not implement caching, checkpointing, parallel execution,
+  remote execution, retries, run matrices, or real ecosystem adapters.
+- Run namespaces are path prefixes for local artifacts, not a global run
+  database or scheduling system.
+- FreshForge is not published to PyPI in this release.
+
+### Verification
+
+The release is expected to pass:
+
+- `python -m ruff check .`
+- `python -m pytest`
+- `sphinx-build -b html docs _build/html -W`
+- `python -m build`
+- `twine check dist/*`
+- `freshforge --version`
+- `freshforge run --help`
+
 ## 0.1.0a2
 
 FreshForge `0.1.0a2` is the local workflow runner alpha. It packages

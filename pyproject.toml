@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "freshforge"
-version = "0.1.0a2"
+version = "0.1.0a3"
 description = "Workflow-as-code for open forest resources and ecosystem services modelling."
 readme = "README.md"
 requires-python = ">=3.11"

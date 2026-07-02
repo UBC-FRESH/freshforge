@@ -16,6 +16,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P5 Documentation, examples, and public alpha hardening | #35 | `feature/p5-public-alpha-hardening` | Complete |
 | P6 Local workflow run runtime | #48 | `feature/p6-workflow-run-runtime` | Complete |
 | P9 v0.1.0a2 local workflow runner GitHub alpha release | #57 | `feature/p9-v0.1.0a2-release` | Complete |
+| P10 v0.1.0a3 run namespace and summary GitHub alpha release | #69 | `feature/p10-v0.1.0a3-release` | Active |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -556,3 +557,46 @@ Closeout evidence:
 - Tag-triggered Release Artifacts workflow #28539893525 passed.
 - Downloaded workflow-built artifacts passed `twine check`.
 - GitHub prerelease `FreshForge 0.1.0a2` was created with the checked wheel and sdist attached.
+
+## Phase 10: v0.1.0a3 Run Namespace And Summary GitHub Alpha Release
+
+Parent issue: #69
+
+Branch: `feature/p10-v0.1.0a3-release`
+
+Status: active
+
+Goal: publish FreshForge `v0.1.0a3` as a GitHub prerelease that marks the Phase 7 run namespace and
+compact workflow-run summary milestone.
+
+- [x] P10.1 Bump FreshForge version and release metadata (#70)
+  - [x] Bump package and import metadata to `0.1.0a3`.
+  - [x] Update version contract tests, provider metadata versions, and CLI status text.
+- [x] P10.2 Update FreshForge release docs and notes (#71)
+  - [x] Update release checklist, installation docs, README, docs roadmap, and release notes.
+  - [x] Keep PyPI publication explicitly deferred.
+- [x] P10.3 Verify FreshForge release artifacts and smoke tests (#72)
+  - [x] Run local quality, tests, docs, build, and twine checks.
+  - [x] Smoke-test `freshforge --version` and `freshforge run --help`.
+- [ ] P10.4 Tag GitHub prerelease and close phase (#73)
+  - [ ] Open and merge release PR after CI passes.
+  - [ ] Tag `v0.1.0a3`.
+  - [ ] Verify tag release-artifact workflow.
+  - [ ] Create GitHub prerelease with checked artifacts attached.
+
+Acceptance boundary:
+
+- May claim FreshForge has a GitHub alpha release for run namespaces and compact workflow-run
+  summaries.
+- Must not claim PyPI publication, stable workflow syntax, caching, checkpointing, parallel
+  execution, remote execution, run matrices, or real ecosystem adapters.
+
+Local verification:
+
+- `.venv/bin/python -m ruff check .` passed.
+- `.venv/bin/python -m pytest` passed with 73 tests.
+- `.venv/bin/sphinx-build -b html docs _build/html -W` passed.
+- `.venv/bin/python -m build` passed.
+- `.venv/bin/twine check dist/*` passed.
+- `.venv/bin/freshforge --version` reported `freshforge 0.1.0a3`.
+- `.venv/bin/freshforge run --help` passed.
