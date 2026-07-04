@@ -73,6 +73,24 @@ Plan-only providers remain valid for validation and planning. When a plan-only
 provider is used with ``freshforge run``, FreshForge fails the run with
 ``node.execution.unsupported``.
 
+Provider Evidence
+-----------------
+
+Providers may attach optional generic evidence records to
+``ProviderRunResult``. This convention is for lightweight validation and audit
+signals that should travel with FreshForge run results without adding domain
+semantics to core.
+
+Each evidence record has a required ``label`` and optional fields for
+``status``, ``artifact_role``, ``path``, ``uri``, ``diagnostic_code``,
+``diagnostic_location``, and ``metadata``.
+
+FreshForge treats these fields as provider-owned facts. It serializes them in
+node run results, compact run summaries, and durable evidence manifests, but it
+does not interpret labels, statuses, roles, paths, or URIs beyond preserving
+their deterministic JSON shape. Providers that do not emit evidence remain
+fully compatible.
+
 Deferred Work
 -------------
 

@@ -9,6 +9,7 @@ from freshforge.providers import NodeTypeMetadata, ProviderMetadata, ProviderReg
 from freshforge.records import (
     Diagnostic,
     DiagnosticSeverity,
+    ProviderEvidence,
     ProviderRunResult,
     RunStatus,
     WorkflowNode,
@@ -66,6 +67,16 @@ class RecordingProvider:
             status=RunStatus.SUCCESS,
             outputs={"value": node.id},
             artifacts={"report": str(paths["report"])},
+            evidence=(
+                ProviderEvidence(
+                    label="report-written",
+                    status="passed",
+                    artifact_role="report",
+                    path=str(paths["report"]),
+                    diagnostic_code="fixture.report_written",
+                    diagnostic_location=f"nodes.{node.id}",
+                ),
+            ),
         )
 
 
@@ -104,6 +115,8 @@ def test_run_workflow_executes_nodes_in_plan_order_and_resolves_workdir(tmp_path
     assert result.nodes[0].outputs == {"value": "first"}
     assert (tmp_path / "reports" / "first.json").exists()
     assert result.nodes[0].artifacts["report"] == str(tmp_path / "reports" / "first.json")
+    assert result.nodes[0].evidence[0].label == "report-written"
+    assert result.nodes[0].evidence[0].artifact_role == "report"
     assert result.run_namespace is None
     assert result.to_dict()["run_namespace"] is None
 
@@ -295,6 +308,17 @@ def test_workflow_run_summary_counts_artifacts_and_diagnostics(tmp_path: Path) -
                 "warning_count": 0,
                 "artifact_count": 1,
                 "artifacts": {"report": str(tmp_path / "reports" / "out.json")},
+                "evidence_count": 1,
+                "evidence": [
+                    {
+                        "label": "report-written",
+                        "status": "passed",
+                        "artifact_role": "report",
+                        "path": str(tmp_path / "reports" / "out.json"),
+                        "diagnostic_code": "fixture.report_written",
+                        "diagnostic_location": "nodes.write",
+                    }
+                ],
             }
         ],
     }

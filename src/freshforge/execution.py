@@ -168,6 +168,7 @@ def run_workflow(
             status=provider_result.status,
             outputs=dict(provider_result.outputs),
             artifacts=dict(provider_result.artifacts),
+            evidence=tuple(provider_result.evidence),
             diagnostics=tuple(provider_result.diagnostics),
             data=dict(provider_result.data),
         )

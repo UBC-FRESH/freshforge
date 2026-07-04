@@ -5,6 +5,8 @@ from freshforge.records import (
     DiagnosticSeverity,
     NodeRunResult,
     PlannedNode,
+    ProviderEvidence,
+    ProviderRunResult,
     RunPlan,
     RunStatus,
     WorkflowNode,
@@ -106,9 +108,45 @@ def test_workflow_run_result_to_dict_includes_namespace_and_full_nodes() -> None
                 "status": "success",
                 "outputs": {"value": "ok"},
                 "artifacts": {"report": "runs/demo/report.json"},
+                "evidence": [],
                 "diagnostics": [],
                 "data": {},
             }
         ],
         "diagnostics": [],
     }
+
+
+def test_provider_evidence_serializes_optional_generic_fields() -> None:
+    evidence = ProviderEvidence(
+        label="report-ready",
+        status="passed",
+        artifact_role="summary-report",
+        path="runs/demo/report.json",
+        uri="https://example.test/report",
+        diagnostic_code="report.ready",
+        diagnostic_location="nodes.report",
+        metadata={"format": "json"},
+    )
+
+    assert evidence.to_dict() == {
+        "label": "report-ready",
+        "status": "passed",
+        "artifact_role": "summary-report",
+        "path": "runs/demo/report.json",
+        "uri": "https://example.test/report",
+        "diagnostic_code": "report.ready",
+        "diagnostic_location": "nodes.report",
+        "metadata": {"format": "json"},
+    }
+
+
+def test_provider_run_result_serializes_optional_evidence() -> None:
+    result = ProviderRunResult(
+        status=RunStatus.SUCCESS,
+        evidence=(ProviderEvidence(label="artifact-check", status="passed"),),
+    )
+
+    assert result.to_dict()["evidence"] == [
+        {"label": "artifact-check", "status": "passed"}
+    ]

@@ -24,6 +24,38 @@ class RunStatus(StrEnum):
 
 
 @dataclass(frozen=True)
+class ProviderEvidence:
+    """Generic provider-reported evidence for one executed workflow node."""
+
+    label: str
+    status: str | None = None
+    artifact_role: str | None = None
+    path: str | None = None
+    uri: str | None = None
+    diagnostic_code: str | None = None
+    diagnostic_location: str | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def to_dict(self) -> dict[str, Any]:
+        data: dict[str, Any] = {"label": self.label}
+        if self.status is not None:
+            data["status"] = self.status
+        if self.artifact_role is not None:
+            data["artifact_role"] = self.artifact_role
+        if self.path is not None:
+            data["path"] = self.path
+        if self.uri is not None:
+            data["uri"] = self.uri
+        if self.diagnostic_code is not None:
+            data["diagnostic_code"] = self.diagnostic_code
+        if self.diagnostic_location is not None:
+            data["diagnostic_location"] = self.diagnostic_location
+        if self.metadata:
+            data["metadata"] = self.metadata
+        return data
+
+
+@dataclass(frozen=True)
 class Diagnostic:
     """Structured validation or planning diagnostic."""
 
@@ -159,6 +191,7 @@ class ProviderRunResult:
     status: RunStatus
     outputs: dict[str, Any] = field(default_factory=dict)
     artifacts: dict[str, Any] = field(default_factory=dict)
+    evidence: tuple[ProviderEvidence, ...] = ()
     diagnostics: tuple[Diagnostic, ...] = ()
     data: dict[str, Any] = field(default_factory=dict)
 
@@ -173,6 +206,7 @@ class ProviderRunResult:
             "status": self.status.value,
             "outputs": self.outputs,
             "artifacts": self.artifacts,
+            "evidence": [evidence.to_dict() for evidence in self.evidence],
             "diagnostics": [diagnostic.to_dict() for diagnostic in self.diagnostics],
             "data": self.data,
         }
@@ -189,6 +223,7 @@ class NodeRunResult:
     status: RunStatus
     outputs: dict[str, Any] = field(default_factory=dict)
     artifacts: dict[str, Any] = field(default_factory=dict)
+    evidence: tuple[ProviderEvidence, ...] = ()
     diagnostics: tuple[Diagnostic, ...] = ()
     data: dict[str, Any] = field(default_factory=dict)
 
@@ -207,6 +242,7 @@ class NodeRunResult:
             "status": self.status.value,
             "outputs": self.outputs,
             "artifacts": self.artifacts,
+            "evidence": [evidence.to_dict() for evidence in self.evidence],
             "diagnostics": [diagnostic.to_dict() for diagnostic in self.diagnostics],
             "data": self.data,
         }
@@ -225,6 +261,8 @@ class NodeRunSummary:
     warning_count: int = 0
     artifact_count: int = 0
     artifacts: dict[str, Any] = field(default_factory=dict)
+    evidence_count: int = 0
+    evidence: tuple[dict[str, Any], ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -237,6 +275,8 @@ class NodeRunSummary:
             "warning_count": self.warning_count,
             "artifact_count": self.artifact_count,
             "artifacts": self.artifacts,
+            "evidence_count": self.evidence_count,
+            "evidence": list(self.evidence),
         }
 
 
@@ -344,4 +384,6 @@ def _node_run_summary(node: NodeRunResult) -> NodeRunSummary:
         ),
         artifact_count=len(node.artifacts),
         artifacts=dict(node.artifacts),
+        evidence_count=len(node.evidence),
+        evidence=tuple(evidence.to_dict() for evidence in node.evidence),
     )

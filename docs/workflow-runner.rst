@@ -76,6 +76,12 @@ diagnostic counts, artifact count, and per-node compact summaries. Full outputs,
 artifacts, diagnostics, and provider data remain available in the full run
 record.
 
+If providers emit optional provider evidence records, FreshForge includes those
+records in full node run results and includes evidence counts plus compact
+evidence entries in per-node summaries. Evidence records are generic: they can
+describe artifact roles, validation status, evidence labels, paths or URIs, and
+diagnostic links, but FreshForge core does not interpret those fields.
+
 For downstream tools that only need the compact record, use ``--summary``:
 
 .. code-block:: bash

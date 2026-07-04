@@ -289,3 +289,8 @@ completion and GitHub issue comments.
 - Verified the P15 implementation with Ruff, 94 pytest tests, warning-clean Sphinx docs, package
   build, `twine check`, `git diff --check`, and direct `--evidence` smoke tests against public
   examples.
+- Activated Phase 16 on benchmark branch `benchmark/p16-direct-supervisor` with parent issue #113
+  and child issues #114 through #117 as the direct-supervisor baseline lane for Agent Workbench P50.
+- Added the first P16 implementation slice: generic optional provider evidence records, evidence
+  serialization through provider and node run results, compact summaries, workflow evidence
+  manifests, focused tests, and provider/runner documentation.
