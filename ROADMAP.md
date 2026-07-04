@@ -20,7 +20,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P10 v0.1.0a3 run namespace and summary GitHub alpha release | #69 | `feature/p10-v0.1.0a3-release` | Complete |
 | P11 v0.1.0a4 matrix runner GitHub alpha release | #81 | `feature/p11-v0.1.0a4-release` | Complete |
 | P12 v0.1.0a5 PyPI alpha release | #87 | `feature/p12-v0.1.0a5-pypi-alpha-release` | Complete |
-| P13 Matrix/run-summary ergonomics from downstream evidence | #94 | TBD | Planned |
+| P13 Matrix/run-summary ergonomics from downstream evidence | #94 | `feature/p13-summary-output-ergonomics` | Complete |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -801,24 +801,52 @@ Closeout evidence:
 
 Parent issue: #94
 
-Branch: TBD
+Branch: `feature/p13-summary-output-ergonomics`
 
-Status: planned. Child issues will be created only if downstream Modelwright, FABLE Pyculator, or
-FEMIC work exposes generic FreshForge gaps.
+Status: complete.
 
 Goal: improve FreshForge matrix and run-summary ergonomics only where real downstream
 matrix/evidence workflows show that the core API or CLI needs refinement.
 
+Supervisor decision:
+
+The Agent Workbench P13 proposal pilot did not justify a broad downstream-evidence phase. It did
+justify one small generic CLI affordance that exposes existing compact summary records directly for
+downstream automation: `--summary` output for `freshforge run` and `freshforge matrix run`.
+
 Planned scope:
 
-- Collect concrete friction from Modelwright matrix evidence aggregation, FABLE benchmark matrices,
-  and FEMIC workflows.
-- Add small generic ergonomics improvements if justified by downstream evidence.
+- Add `freshforge run --summary`.
+- Add `freshforge matrix run --summary`.
+- Preserve existing `--json` and human output behavior.
+- Update tests, docs, roadmap, changelog, and sanitized planning notes.
 
 Out of scope:
 
 - Domain semantics.
+- Summary schema redesign beyond exposing existing summary records.
 - Production scheduling, caching, checkpoints, retries, remote execution, or parallel execution
   unless a later explicit phase scopes them.
 
-Dependency note: wait for downstream evidence from Modelwright Phase 38 and FABLE Pyculator Phase 25.
+Tasks:
+
+- [x] P13.1 Summary-only CLI output (#96)
+  - [x] Implement `freshforge run --summary`.
+  - [x] Implement `freshforge matrix run --summary`.
+  - [x] Add CLI regression tests for summary-only output.
+  - [x] Verify existing JSON behavior remains compatible.
+- [x] P13.2 Summary ergonomics docs and planning sync (#97)
+  - [x] Update docs for single-run and matrix-run summary output.
+  - [x] Add sanitized planning note.
+  - [x] Synchronize roadmap and changelog entries.
+- [x] P13.3 Verification, PR, and closeout (#98)
+  - [x] Run standard verification.
+  - [x] Open and merge PR.
+  - [x] Verify issue #94 closes after merge.
+
+Acceptance criteria:
+
+- `freshforge run --summary` emits deterministic compact summary JSON.
+- `freshforge matrix run --summary` emits deterministic compact matrix summary JSON.
+- Existing `--json` output remains compatible.
+- Raw Agent Workbench worker transcripts remain ignored local evidence.

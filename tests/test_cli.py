@@ -200,6 +200,39 @@ def test_cli_run_json_accepts_namespace() -> None:
     assert payload["summary"]["run_namespace"] == "demo"
 
 
+def test_cli_run_summary_outputs_compact_summary_only() -> None:
+    result = runner.invoke(
+        app,
+        [
+            "run",
+            "examples/stand_treatment_workflow.yaml",
+            "--summary",
+            "--namespace",
+            "demo",
+        ],
+    )
+
+    assert result.exit_code == 1
+    payload = json.loads(result.stdout)
+    assert set(payload) == {
+        "artifact_count",
+        "diagnostic_count",
+        "error_count",
+        "failed_count",
+        "node_count",
+        "nodes",
+        "run_namespace",
+        "skipped_count",
+        "status",
+        "succeeded_count",
+        "warning_count",
+        "workflow_id",
+    }
+    assert payload["workflow_id"] == "stand_treatment_demo"
+    assert payload["run_namespace"] == "demo"
+    assert payload["status"] == "failed"
+
+
 def test_cli_run_human_output_includes_namespace_and_summary() -> None:
     result = runner.invoke(
         app,
@@ -269,6 +302,28 @@ def test_cli_matrix_run_json_output() -> None:
     assert payload["run"]["matrix_id"] == "treatment_matrix_demo"
     assert payload["summary"]["case_count"] == 2
     assert payload["summary"]["failed_count"] == 2
+
+
+def test_cli_matrix_run_summary_outputs_compact_summary_only() -> None:
+    result = runner.invoke(app, ["matrix", "run", "examples/run_matrix.yaml", "--summary"])
+
+    assert result.exit_code == 1
+    payload = json.loads(result.stdout)
+    assert set(payload) == {
+        "case_count",
+        "cases",
+        "diagnostic_count",
+        "error_count",
+        "failed_count",
+        "matrix_id",
+        "skipped_count",
+        "status",
+        "succeeded_count",
+        "warning_count",
+    }
+    assert payload["matrix_id"] == "treatment_matrix_demo"
+    assert payload["case_count"] == 2
+    assert payload["failed_count"] == 2
 
 
 def test_cli_matrix_run_human_output_includes_case_counts() -> None:

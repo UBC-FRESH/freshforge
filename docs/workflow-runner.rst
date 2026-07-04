@@ -76,6 +76,15 @@ diagnostic counts, artifact count, and per-node compact summaries. Full outputs,
 artifacts, diagnostics, and provider data remain available in the full run
 record.
 
+For downstream tools that only need the compact record, use ``--summary``:
+
+.. code-block:: bash
+
+   freshforge run examples/stand_treatment_workflow.yaml --summary
+
+This emits the same deterministic summary object that appears under
+``summary`` in ``--json`` output, without the full run record.
+
 Boundaries
 ----------
 

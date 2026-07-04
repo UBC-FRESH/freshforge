@@ -180,6 +180,10 @@ def run_command(
         bool,
         typer.Option("--json", help="Emit deterministic JSON output."),
     ] = False,
+    summary_output: Annotated[
+        bool,
+        typer.Option("--summary", help="Emit only the compact run summary as JSON."),
+    ] = False,
     workdir: Annotated[
         Path,
         typer.Option(
@@ -198,7 +202,7 @@ def run_command(
     """Execute a workflow with provider-owned node implementations."""
     spec, diagnostics = load_workflow(path)
     if spec is None:
-        if json_output:
+        if json_output or summary_output:
             payload = {
                 "ok": False,
                 "run": None,
@@ -217,7 +221,9 @@ def run_command(
         run_namespace=namespace,
     )
     summary = result.summary()
-    if json_output:
+    if summary_output:
+        console.out(json.dumps(summary.to_dict(), indent=2, sort_keys=True))
+    elif json_output:
         payload = {
             "ok": result.ok,
             "run": result.to_dict(),
@@ -333,6 +339,10 @@ def matrix_run_command(
         bool,
         typer.Option("--json", help="Emit deterministic JSON output."),
     ] = False,
+    summary_output: Annotated[
+        bool,
+        typer.Option("--summary", help="Emit only the compact matrix run summary as JSON."),
+    ] = False,
     workdir: Annotated[
         Path,
         typer.Option(
@@ -348,7 +358,11 @@ def matrix_run_command(
     """Execute every workflow case in a matrix serially."""
     matrix, diagnostics = load_workflow_matrix(path)
     if matrix is None:
-        _print_matrix_load_failure("Matrix run failed.", diagnostics, json_output)
+        _print_matrix_load_failure(
+            "Matrix run failed.",
+            diagnostics,
+            json_output or summary_output,
+        )
         raise typer.Exit(code=1)
 
     result = run_workflow_matrix(
@@ -358,7 +372,9 @@ def matrix_run_command(
         fail_fast=fail_fast,
     )
     summary = result.summary()
-    if json_output:
+    if summary_output:
+        console.out(json.dumps(summary.to_dict(), indent=2, sort_keys=True))
+    elif json_output:
         payload = {
             "ok": result.ok,
             "run": result.to_dict(),
