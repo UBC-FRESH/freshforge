@@ -21,8 +21,8 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P11 v0.1.0a4 matrix runner GitHub alpha release | #81 | `feature/p11-v0.1.0a4-release` | Complete |
 | P12 v0.1.0a5 PyPI alpha release | #87 | `feature/p12-v0.1.0a5-pypi-alpha-release` | Complete |
 | P13 Matrix/run-summary ergonomics from downstream evidence | #94 | `feature/p13-summary-output-ergonomics` | Complete |
-| P14 Downstream evidence intake and compatibility map | #100 | `feature/p14-downstream-evidence-map` | Active |
-| P15 Durable run and matrix evidence manifests | TBD | `feature/p15-run-evidence-manifests` | Planned |
+| P14 Downstream evidence intake and compatibility map | #100 | `feature/p14-downstream-evidence-map` | Complete |
+| P15 Durable run and matrix evidence manifests | #106 | `feature/p15-run-evidence-manifests` | Complete |
 | P16 Provider result and validation evidence conventions | TBD | `feature/p16-provider-evidence-conventions` | Planned |
 | P17 Matrix aggregation and comparison exports | TBD | `feature/p17-matrix-evidence-exports` | Planned |
 | P18 v0.1.0a6 evidence-orchestration PyPI alpha release | TBD | `feature/p18-v0.1.0a6-release` | Planned |
@@ -392,10 +392,9 @@ Acceptance boundary:
 
 ## Current Next Steps
 
-Phase 14 is active on `feature/p14-downstream-evidence-map` with parent issue #100 and child issues
-#101, #104, #102, and #103. The current leading edge is planning-only: activate the P14-P18
-evidence-orchestration tranche, map downstream evidence to ownership boundaries, and decide whether
-P15 should implement durable run and matrix evidence manifests.
+Phase 15 is complete on `feature/p15-run-evidence-manifests` with parent issue #106 and child
+issues #107 through #111. The current leading edge after P15 merges is Phase 16: define optional
+provider result and validation evidence conventions on top of the durable manifest substrate.
 
 FreshForge should not add speculative execution features in this tranche. Caching, checkpointing,
 remotes, retries, parallel execution, production scheduling, and real ecosystem adapters remain
@@ -871,7 +870,7 @@ Parent issue: #100
 
 Branch: `feature/p14-downstream-evidence-map`
 
-Status: active.
+Status: complete.
 
 Goal: decide the next FreshForge-owned contract from concrete downstream evidence, not speculation.
 P14 activates the P14-P18 evidence-orchestration roadmap tranche while keeping implementation work
@@ -897,7 +896,7 @@ Tasks:
   - [x] Add P14-P18 roadmap sections.
   - [x] Update current next-step language so the leading edge is P14.
   - [x] Append a matching changelog entry.
-- [ ] P14.4 Verification, PR, and closeout (#103)
+- [x] P14.4 Verification, PR, and closeout (#103)
   - [x] Run `git diff --check`.
   - [x] Inspect changed Markdown files.
   - [x] Confirm changed tracked files are planning surfaces only.
@@ -922,15 +921,16 @@ Local verification:
 
 Closeout evidence:
 
-- P14 PR #105 opened from `feature/p14-downstream-evidence-map` to `main`.
+- P14 PR #105 merged to `main` at `e11e473`.
+- Parent issue #100 closed after the merge.
 
 ## Phase 15: Durable Run And Matrix Evidence Manifests
 
-Parent issue: TBD
+Parent issue: #106
 
 Branch: `feature/p15-run-evidence-manifests`
 
-Status: planned.
+Status: complete.
 
 Goal: let users persist a complete, auditable run or matrix evidence record instead of scraping CLI
 output.
@@ -951,6 +951,54 @@ Out of scope:
 - Caching, checkpointing, resumability, artifact materialization, or validation of artifact
   contents.
 - Provider evidence conventions beyond the minimum needed to serialize current run results.
+
+Tasks:
+
+- [x] P15.1 Agent Workbench manifest-contract proposal pilot (#107)
+  - [x] Scaffold proposal-only worker tickets under ignored `tmp/agent_workbench/p15/`.
+  - [x] Run Agent Workbench proposal evaluations.
+  - [x] Validate, render, and synthesize evidence summaries.
+  - [x] Record sanitized supervisor decision and lightweight delegation accounting.
+  - [x] Decide the exact P15 implementation contract.
+- [x] P15.2 Evidence manifest records and serializers (#108)
+  - [x] Add deterministic evidence manifest serializers.
+  - [x] Cover single-run and matrix-run manifest shapes.
+  - [x] Add tests for deterministic JSON output.
+- [x] P15.3 CLI evidence output for run and matrix run (#109)
+  - [x] Add `freshforge run WORKFLOW --evidence PATH`.
+  - [x] Add `freshforge matrix run MATRIX --evidence PATH`.
+  - [x] Preserve existing `--json`, `--summary`, and human output behavior.
+  - [x] Add CLI regression tests.
+- [x] P15.4 Documentation, tests, and compatibility checks (#110)
+  - [x] Update workflow-runner and matrix docs.
+  - [x] Document manifest boundaries and non-goals.
+  - [x] Keep docs warning-clean.
+- [x] P15.5 Verification, PR, and closeout (#111)
+  - [x] Run the standard FreshForge verification suite.
+  - [x] Run direct `--evidence` smoke tests.
+  - [x] Update roadmap and changelog closeout entries.
+  - [x] Open the P15 PR.
+
+Acceptance criteria:
+
+- `freshforge run WORKFLOW --evidence PATH` writes a deterministic JSON evidence manifest.
+- `freshforge matrix run MATRIX --evidence PATH` writes a deterministic JSON evidence manifest.
+- Existing `--json`, `--summary`, and human output behavior remains compatible.
+- Manifest contents include source metadata, FreshForge version, run or matrix summary, diagnostics,
+  provider IDs, workdir, namespaces, and declared artifact paths or status.
+- Agent Workbench proposal artifacts remain ignored local evidence; only sanitized supervisor
+  decisions are promoted.
+
+Local verification:
+
+- `.venv\Scripts\python.exe -m ruff check .` passed.
+- `.venv\Scripts\python.exe -m pytest` passed with 94 tests.
+- `.venv\Scripts\sphinx-build.exe -b html docs _build/html -W` passed.
+- `.venv\Scripts\python.exe -m build` passed.
+- `.venv\Scripts\python.exe -m twine check dist\*` passed.
+- `git diff --check` passed.
+- Direct `freshforge run --evidence ... --json` smoke wrote a workflow evidence manifest.
+- Direct `freshforge matrix run --evidence ... --summary` smoke wrote a matrix evidence manifest.
 
 ## Phase 16: Provider Result And Validation Evidence Conventions
 

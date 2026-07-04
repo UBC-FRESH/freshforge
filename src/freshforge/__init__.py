@@ -1,5 +1,12 @@
 """FreshForge package."""
 
+from freshforge.evidence import (
+    MATRIX_RUN_EVIDENCE_VERSION,
+    WORKFLOW_RUN_EVIDENCE_VERSION,
+    matrix_run_evidence_manifest,
+    workflow_run_evidence_manifest,
+    write_evidence_manifest,
+)
 from freshforge.matrix import (
     ExpandedWorkflowCase,
     MatrixAxis,
@@ -51,6 +58,7 @@ __all__ = [
     "MatrixAxis",
     "MatrixAxisValue",
     "MatrixCase",
+    "MATRIX_RUN_EVIDENCE_VERSION",
     "NodeTypeMetadata",
     "NodeRunResult",
     "NodeRunSummary",
@@ -72,11 +80,15 @@ __all__ = [
     "WorkflowRunResult",
     "WorkflowRunSummary",
     "WorkflowSpec",
+    "WORKFLOW_RUN_EVIDENCE_VERSION",
     "__version__",
     "discover_entry_point_providers",
     "expand_workflow_matrix",
     "fixture_provider_factory",
     "load_workflow_matrix",
+    "matrix_run_evidence_manifest",
     "plan_workflow_matrix",
     "run_workflow_matrix",
+    "workflow_run_evidence_manifest",
+    "write_evidence_manifest",
 ]

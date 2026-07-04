@@ -233,6 +233,37 @@ def test_cli_run_summary_outputs_compact_summary_only() -> None:
     assert payload["status"] == "failed"
 
 
+def test_cli_run_writes_evidence_manifest(tmp_path: Path) -> None:
+    evidence_path = tmp_path / "evidence" / "run.json"
+    result = runner.invoke(
+        app,
+        [
+            "run",
+            "examples/stand_treatment_workflow.yaml",
+            "--evidence",
+            str(evidence_path),
+            "--namespace",
+            "demo",
+        ],
+    )
+
+    assert result.exit_code == 1
+    assert evidence_path.exists()
+    payload = json.loads(evidence_path.read_text(encoding="utf-8"))
+    assert payload["manifest_version"] == "freshforge.workflow-run-evidence.v1"
+    assert payload["freshforge_version"] == __version__
+    assert payload["source"] == {
+        "path": "examples/stand_treatment_workflow.yaml",
+        "type": "workflow",
+    }
+    assert payload["workdir"] == "."
+    assert payload["workflow_id"] == "stand_treatment_demo"
+    assert payload["run_namespace"] == "demo"
+    assert payload["status"] == "failed"
+    assert payload["summary"]["run_namespace"] == "demo"
+    assert payload["run"]["nodes"][0]["diagnostics"][0]["code"] == "node.execution.unsupported"
+
+
 def test_cli_run_human_output_includes_namespace_and_summary() -> None:
     result = runner.invoke(
         app,
@@ -324,6 +355,41 @@ def test_cli_matrix_run_summary_outputs_compact_summary_only() -> None:
     assert payload["matrix_id"] == "treatment_matrix_demo"
     assert payload["case_count"] == 2
     assert payload["failed_count"] == 2
+
+
+def test_cli_matrix_run_writes_evidence_manifest(tmp_path: Path) -> None:
+    evidence_path = tmp_path / "evidence" / "matrix.json"
+    result = runner.invoke(
+        app,
+        [
+            "matrix",
+            "run",
+            "examples/run_matrix.yaml",
+            "--evidence",
+            str(evidence_path),
+        ],
+    )
+
+    assert result.exit_code == 1
+    assert evidence_path.exists()
+    payload = json.loads(evidence_path.read_text(encoding="utf-8"))
+    assert payload["manifest_version"] == "freshforge.matrix-run-evidence.v1"
+    assert payload["freshforge_version"] == __version__
+    assert payload["source"] == {
+        "path": "examples/run_matrix.yaml",
+        "type": "matrix",
+    }
+    assert payload["workdir"] == "."
+    assert payload["matrix_id"] == "treatment_matrix_demo"
+    assert payload["status"] == "failed"
+    assert payload["summary"]["case_count"] == 2
+    assert [case["case_id"] for case in payload["run"]["cases"]] == [
+        "strategy-baseline",
+        "strategy-thinning",
+    ]
+    assert payload["run"]["cases"][0]["run"]["run_namespace"] == (
+        "treatment_matrix_demo/strategy-baseline"
+    )
 
 
 def test_cli_matrix_run_human_output_includes_case_counts() -> None:

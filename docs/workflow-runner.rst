@@ -85,6 +85,26 @@ For downstream tools that only need the compact record, use ``--summary``:
 This emits the same deterministic summary object that appears under
 ``summary`` in ``--json`` output, without the full run record.
 
+Evidence Manifests
+------------------
+
+Use ``--evidence`` to write a durable JSON evidence manifest while preserving
+the normal command output mode:
+
+.. code-block:: bash
+
+   freshforge run examples/stand_treatment_workflow.yaml --workdir tmp/runs --evidence tmp/run-evidence.json
+
+The manifest records the FreshForge version, workflow source path, work
+directory, optional run namespace, workflow id, run status, compact summary,
+full run record, and top-level diagnostics. Failed runs can still write
+evidence manifests, which lets downstream tools audit why a workflow did not
+complete.
+
+Evidence manifests are a persistence contract, not a new execution engine. They
+do not add caching, checkpointing, retries, remotes, parallel execution, artifact
+content validation, or provider-specific evidence semantics.
+
 Boundaries
 ----------
 

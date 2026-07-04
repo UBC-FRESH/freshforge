@@ -8,6 +8,11 @@ import typer
 from rich.console import Console
 
 from freshforge import __version__
+from freshforge.evidence import (
+    matrix_run_evidence_manifest,
+    workflow_run_evidence_manifest,
+    write_evidence_manifest,
+)
 from freshforge.execution import run_workflow
 from freshforge.loading import load_workflow
 from freshforge.matrix import (
@@ -198,6 +203,10 @@ def run_command(
             help="Relative run namespace used to isolate run artifacts.",
         ),
     ] = None,
+    evidence_path: Annotated[
+        Path | None,
+        typer.Option("--evidence", help="Write a durable run evidence manifest to PATH."),
+    ] = None,
 ) -> None:
     """Execute a workflow with provider-owned node implementations."""
     spec, diagnostics = load_workflow(path)
@@ -221,6 +230,16 @@ def run_command(
         run_namespace=namespace,
     )
     summary = result.summary()
+    if evidence_path is not None:
+        _write_evidence_or_exit(
+            evidence_path,
+            workflow_run_evidence_manifest(
+                source_path=path,
+                workdir=workdir,
+                result=result,
+                freshforge_version=__version__,
+            ),
+        )
     if summary_output:
         console.out(json.dumps(summary.to_dict(), indent=2, sort_keys=True))
     elif json_output:
@@ -354,6 +373,10 @@ def matrix_run_command(
         bool,
         typer.Option("--fail-fast", help="Stop after the first failed matrix case."),
     ] = False,
+    evidence_path: Annotated[
+        Path | None,
+        typer.Option("--evidence", help="Write a durable matrix evidence manifest to PATH."),
+    ] = None,
 ) -> None:
     """Execute every workflow case in a matrix serially."""
     matrix, diagnostics = load_workflow_matrix(path)
@@ -372,6 +395,16 @@ def matrix_run_command(
         fail_fast=fail_fast,
     )
     summary = result.summary()
+    if evidence_path is not None:
+        _write_evidence_or_exit(
+            evidence_path,
+            matrix_run_evidence_manifest(
+                source_path=path,
+                workdir=workdir,
+                result=result,
+                freshforge_version=__version__,
+            ),
+        )
     if summary_output:
         console.out(json.dumps(summary.to_dict(), indent=2, sort_keys=True))
     elif json_output:
@@ -463,7 +496,17 @@ def _print_diagnostics(diagnostics: list[Diagnostic] | tuple[Diagnostic, ...]) -
         location = f" [{diagnostic.location}]" if diagnostic.location else ""
         console.print(
             f"- {diagnostic.severity.value}: {diagnostic.code}{location}: {diagnostic.message}"
-    )
+        )
+
+
+def _write_evidence_or_exit(path: Path, manifest: dict[str, object]) -> None:
+    try:
+        write_evidence_manifest(path, manifest)
+    except OSError as exc:
+        raise typer.BadParameter(
+            f"could not write evidence manifest '{path}': {exc}",
+            param_hint="--evidence",
+        ) from exc
 
 
 def _print_matrix_load_failure(
