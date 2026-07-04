@@ -73,6 +73,22 @@ Plan-only providers remain valid for validation and planning. When a plan-only
 provider is used with ``freshforge run``, FreshForge fails the run with
 ``node.execution.unsupported``.
 
+Provider Evidence
+-----------------
+
+Providers may attach optional generic evidence mappings to
+``ProviderRunResult``. This convention is for lightweight validation and audit
+signals that should travel with FreshForge run results without adding domain
+semantics to core.
+
+FreshForge treats the mapping as provider-owned JSON-compatible data. Suggested
+entries include labels, roles, statuses, paths or URIs, and provider metadata,
+but FreshForge does not interpret those fields beyond preserving their
+deterministic JSON shape in node run results, compact summaries, and durable
+evidence manifests.
+
+Providers that do not emit evidence remain fully compatible.
+
 Deferred Work
 -------------
 

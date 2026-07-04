@@ -66,6 +66,13 @@ class RecordingProvider:
             status=RunStatus.SUCCESS,
             outputs={"value": node.id},
             artifacts={"report": str(paths["report"])},
+            evidence={
+                "freshforge.dev/evidence/report": {
+                    "label": "report-written",
+                    "role": "artifact",
+                    "path": str(paths["report"]),
+                }
+            },
         )
 
 
@@ -104,6 +111,7 @@ def test_run_workflow_executes_nodes_in_plan_order_and_resolves_workdir(tmp_path
     assert result.nodes[0].outputs == {"value": "first"}
     assert (tmp_path / "reports" / "first.json").exists()
     assert result.nodes[0].artifacts["report"] == str(tmp_path / "reports" / "first.json")
+    assert result.nodes[0].evidence["freshforge.dev/evidence/report"]["label"] == "report-written"
     assert result.run_namespace is None
     assert result.to_dict()["run_namespace"] is None
 
@@ -295,6 +303,14 @@ def test_workflow_run_summary_counts_artifacts_and_diagnostics(tmp_path: Path) -
                 "warning_count": 0,
                 "artifact_count": 1,
                 "artifacts": {"report": str(tmp_path / "reports" / "out.json")},
+                "evidence_count": 1,
+                "evidence": {
+                    "freshforge.dev/evidence/report": {
+                        "label": "report-written",
+                        "role": "artifact",
+                        "path": str(tmp_path / "reports" / "out.json"),
+                    }
+                },
             }
         ],
     }
