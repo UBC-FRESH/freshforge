@@ -102,6 +102,26 @@ For downstream tools that only need the compact matrix summary, use
 This emits the same deterministic matrix summary object that appears under
 ``summary`` in ``--json`` output, without the full per-case run payload.
 
+Evidence Manifests
+------------------
+
+Use ``--evidence`` to write a durable matrix-run evidence manifest:
+
+.. code-block:: bash
+
+   freshforge matrix run examples/run_matrix.yaml --workdir tmp/matrix-runs --evidence tmp/matrix-evidence.json
+
+The manifest records the FreshForge version, matrix source path, work directory,
+matrix id, matrix status, compact matrix summary, full matrix run record, and
+top-level diagnostics. Per-case evidence remains in deterministic case order and
+includes each case id, namespace, case diagnostics, run record, and compact run
+summary when a case run exists.
+
+The matrix evidence manifest is intentionally generic. It does not interpret
+case variables, add statistical comparison, validate artifact contents, or
+export case tables. Later phases may build provider evidence conventions and
+matrix export helpers on top of this durable manifest contract.
+
 Boundaries
 ----------
 

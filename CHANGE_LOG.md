@@ -270,3 +270,22 @@ completion and GitHub issue comments.
 - Updated `ROADMAP.md` to mark P14 active and record planned P15-P18 phases for durable evidence
   manifests, provider evidence conventions, matrix evidence exports, and the `v0.1.0a6`
   evidence-orchestration PyPI alpha release.
+- Completed Phase 14 by merging PR #105 at `e11e473` and closing parent issue #100.
+- Activated Phase 15 on `feature/p15-run-evidence-manifests` with parent issue #106 and child
+  issues #107 through #111 to implement durable run and matrix evidence manifests.
+- Scoped P15.1 as an Agent Workbench proposal-assist and delegation-accounting pilot before
+  supervisor-owned implementation of `freshforge run --evidence` and
+  `freshforge matrix run --evidence`.
+- Ran the P15.1 Agent Workbench pilot with three proposal-only
+  `qwen3-coder-next:latest` tickets, validated the evidence summaries, synthesized a supervisor
+  decision packet, and promoted only sanitized conclusions into
+  `planning/phase15_agent_workbench_pilot.md`.
+- Added `freshforge.evidence` helpers for deterministic workflow-run and matrix-run evidence
+  manifests.
+- Added optional `--evidence PATH` output to `freshforge run` and `freshforge matrix run`, while
+  preserving existing `--json`, `--summary`, and human output behavior.
+- Updated workflow-runner and matrix documentation for evidence manifests and added CLI regression
+  tests for single-run and matrix-run evidence output.
+- Verified the P15 implementation with Ruff, 94 pytest tests, warning-clean Sphinx docs, package
+  build, `twine check`, `git diff --check`, and direct `--evidence` smoke tests against public
+  examples.
