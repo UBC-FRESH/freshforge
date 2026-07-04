@@ -902,7 +902,7 @@ Tasks:
   - [x] Inspect changed Markdown files.
   - [x] Confirm changed tracked files are planning surfaces only.
   - [x] Commit the P14 planning update.
-  - [ ] Open the P14 PR.
+  - [x] Open the P14 PR.
 
 Acceptance boundary:
 
@@ -910,6 +910,19 @@ Acceptance boundary:
 - Must not implement FreshForge feature code or change public APIs.
 - Must not add domain semantics, real ecosystem adapters, caching, checkpointing, remotes, retries,
   parallel execution, production scheduling, or release tagging.
+
+Local verification:
+
+- `git diff --check` passed.
+- `.venv\Scripts\python.exe -m ruff check .` passed.
+- `.venv\Scripts\python.exe -m pytest` passed with 92 tests.
+- `.venv\Scripts\sphinx-build.exe -b html docs _build/html -W` passed.
+- `.venv\Scripts\python.exe -m build` passed.
+- `.venv\Scripts\twine.exe check dist\*` passed.
+
+Closeout evidence:
+
+- P14 PR #105 opened from `feature/p14-downstream-evidence-map` to `main`.
 
 ## Phase 15: Durable Run And Matrix Evidence Manifests
 
