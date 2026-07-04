@@ -21,6 +21,11 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P11 v0.1.0a4 matrix runner GitHub alpha release | #81 | `feature/p11-v0.1.0a4-release` | Complete |
 | P12 v0.1.0a5 PyPI alpha release | #87 | `feature/p12-v0.1.0a5-pypi-alpha-release` | Complete |
 | P13 Matrix/run-summary ergonomics from downstream evidence | #94 | `feature/p13-summary-output-ergonomics` | Complete |
+| P14 Downstream evidence intake and compatibility map | #100 | `feature/p14-downstream-evidence-map` | Active |
+| P15 Durable run and matrix evidence manifests | TBD | `feature/p15-run-evidence-manifests` | Planned |
+| P16 Provider result and validation evidence conventions | TBD | `feature/p16-provider-evidence-conventions` | Planned |
+| P17 Matrix aggregation and comparison exports | TBD | `feature/p17-matrix-evidence-exports` | Planned |
+| P18 v0.1.0a6 evidence-orchestration PyPI alpha release | TBD | `feature/p18-v0.1.0a6-release` | Planned |
 
 ## Phase 0: Bootstrap Scaffold
 
@@ -386,6 +391,15 @@ Acceptance boundary:
   adapters.
 
 ## Current Next Steps
+
+Phase 14 is active on `feature/p14-downstream-evidence-map` with parent issue #100 and child issues
+#101, #104, #102, and #103. The current leading edge is planning-only: activate the P14-P18
+evidence-orchestration tranche, map downstream evidence to ownership boundaries, and decide whether
+P15 should implement durable run and matrix evidence manifests.
+
+FreshForge should not add speculative execution features in this tranche. Caching, checkpointing,
+remotes, retries, parallel execution, production scheduling, and real ecosystem adapters remain
+deferred until durable evidence manifests and provider evidence conventions are scoped and verified.
 
 Phase 6 is complete: the first serial local workflow runner is merged, and the executable-provider
 surface has been handed to Modelwright for the generated-model workflow lane.
@@ -850,3 +864,160 @@ Acceptance criteria:
 - `freshforge matrix run --summary` emits deterministic compact matrix summary JSON.
 - Existing `--json` output remains compatible.
 - Raw Agent Workbench worker transcripts remain ignored local evidence.
+
+## Phase 14: Downstream Evidence Intake And Compatibility Map
+
+Parent issue: #100
+
+Branch: `feature/p14-downstream-evidence-map`
+
+Status: active.
+
+Goal: decide the next FreshForge-owned contract from concrete downstream evidence, not speculation.
+P14 activates the P14-P18 evidence-orchestration roadmap tranche while keeping implementation work
+deferred to later phases.
+
+Planning note: `planning/p14_p18_evidence_orchestration_plan.md`
+
+Tasks:
+
+- [x] P14.1 Downstream evidence intake (#101)
+  - [x] Name the downstream evidence sources used for P14.
+  - [x] Summarize observed friction in public-safe language.
+  - [x] Distinguish observed evidence from hypothesized future friction.
+  - [x] Record remaining evidence gaps explicitly.
+- [x] P14.2 Compatibility map and ownership classification (#104)
+  - [x] Classify friction as FreshForge core, provider/domain package, Agent Workbench/supervision,
+        or deferred execution-system concern.
+  - [x] Identify current FreshForge APIs and CLI outputs that are already sufficient.
+  - [x] Identify outputs that create avoidable downstream parsing or supervision overhead.
+  - [x] Record whether P15 should implement durable evidence manifests.
+- [x] P14.3 Roadmap tranche and planning sync (#102)
+  - [x] Add P14-P18 to the roadmap issue tracker map.
+  - [x] Add P14-P18 roadmap sections.
+  - [x] Update current next-step language so the leading edge is P14.
+  - [x] Append a matching changelog entry.
+- [ ] P14.4 Verification, PR, and closeout (#103)
+  - [x] Run `git diff --check`.
+  - [x] Inspect changed Markdown files.
+  - [x] Confirm changed tracked files are planning surfaces only.
+  - [x] Commit the P14 planning update.
+  - [x] Open the P14 PR.
+
+Acceptance boundary:
+
+- May update planning, roadmap, changelog, and issue surfaces.
+- Must not implement FreshForge feature code or change public APIs.
+- Must not add domain semantics, real ecosystem adapters, caching, checkpointing, remotes, retries,
+  parallel execution, production scheduling, or release tagging.
+
+Local verification:
+
+- `git diff --check` passed.
+- `.venv\Scripts\python.exe -m ruff check .` passed.
+- `.venv\Scripts\python.exe -m pytest` passed with 92 tests.
+- `.venv\Scripts\sphinx-build.exe -b html docs _build/html -W` passed.
+- `.venv\Scripts\python.exe -m build` passed.
+- `.venv\Scripts\twine.exe check dist\*` passed.
+
+Closeout evidence:
+
+- P14 PR #105 opened from `feature/p14-downstream-evidence-map` to `main`.
+
+## Phase 15: Durable Run And Matrix Evidence Manifests
+
+Parent issue: TBD
+
+Branch: `feature/p15-run-evidence-manifests`
+
+Status: planned.
+
+Goal: let users persist a complete, auditable run or matrix evidence record instead of scraping CLI
+output.
+
+Planned scope:
+
+- Add optional deterministic JSON manifest writing for `freshforge run`.
+- Add optional deterministic JSON manifest writing for `freshforge matrix run`.
+- Include FreshForge version, workflow or matrix source, run namespace, workdir, provider metadata,
+  compact summary, diagnostics, declared artifact paths, and per-node or per-case status.
+- Add CLI options:
+  - `freshforge run WORKFLOW --evidence PATH`
+  - `freshforge matrix run MATRIX --evidence PATH`
+- Preserve existing `--json`, `--summary`, and human output behavior.
+
+Out of scope:
+
+- Caching, checkpointing, resumability, artifact materialization, or validation of artifact
+  contents.
+- Provider evidence conventions beyond the minimum needed to serialize current run results.
+
+## Phase 16: Provider Result And Validation Evidence Conventions
+
+Parent issue: TBD
+
+Branch: `feature/p16-provider-evidence-conventions`
+
+Status: planned.
+
+Goal: define a small optional convention for providers to report validation and evidence without
+embedding domain semantics in FreshForge.
+
+Planned scope:
+
+- Extend provider result documentation and records with optional generic evidence fields.
+- Support provider-reported evidence such as artifact role, validation status, evidence label,
+  evidence path or URI, and diagnostic links by code/location.
+- Update fixture provider examples so downstream packages can copy the convention.
+- Preserve compatibility for providers that do not emit evidence fields.
+
+Out of scope:
+
+- Modelwright, FABLE, FEMIC, forestry, energy, or Agent Workbench semantic interpretation.
+- Required provider evidence fields.
+
+## Phase 17: Matrix Aggregation And Comparison Exports
+
+Parent issue: TBD
+
+Branch: `feature/p17-matrix-evidence-exports`
+
+Status: planned.
+
+Goal: make matrix evidence easier to consume in notebooks, CI, and supervision packets without
+rerunning workflows.
+
+Planned scope:
+
+- Add export helpers for matrix evidence manifests.
+- Add CLI export surfaces for compact machine-readable case tables.
+- Prefer JSONL and CSV exports for case ID, namespace, status, error/warning counts, artifact count,
+  provider IDs, and optional provider evidence labels/statuses.
+- Preserve deterministic case ordering.
+
+Out of scope:
+
+- Statistical comparison, plotting, notebook execution, domain interpretation, or workflow reruns.
+
+## Phase 18: v0.1.0a6 Evidence-Orchestration PyPI Alpha Release
+
+Parent issue: TBD
+
+Branch: `feature/p18-v0.1.0a6-release`
+
+Status: planned.
+
+Goal: publish FreshForge `v0.1.0a6` as the evidence-orchestration PyPI alpha release after P15-P17.
+
+Planned scope:
+
+- Bump package and import metadata to `0.1.0a6`.
+- Update README, docs, release notes, release checklist, roadmap docs, and release-contract tests.
+- Verify package artifacts and CLI smoke tests for evidence manifests and matrix exports.
+- Tag and publish through the existing trusted-publishing workflow.
+- Create the GitHub prerelease with checked artifacts attached.
+
+Acceptance boundary:
+
+- May claim evidence manifests and matrix evidence exports only after P15-P17 have merged.
+- Must keep workflow syntax and provider APIs labeled alpha.
