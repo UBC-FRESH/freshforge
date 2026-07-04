@@ -5,6 +5,7 @@ from freshforge.records import (
     DiagnosticSeverity,
     NodeRunResult,
     PlannedNode,
+    ProviderRunResult,
     RunPlan,
     RunStatus,
     WorkflowNode,
@@ -106,9 +107,29 @@ def test_workflow_run_result_to_dict_includes_namespace_and_full_nodes() -> None
                 "status": "success",
                 "outputs": {"value": "ok"},
                 "artifacts": {"report": "runs/demo/report.json"},
+                "evidence": {},
                 "diagnostics": [],
                 "data": {},
             }
         ],
         "diagnostics": [],
+    }
+
+
+def test_provider_run_result_serializes_optional_evidence_mapping() -> None:
+    result = ProviderRunResult(
+        status=RunStatus.SUCCESS,
+        evidence={
+            "freshforge.dev/evidence/validation": {
+                "label": "artifact-check",
+                "status": "passed",
+            }
+        },
+    )
+
+    assert result.to_dict()["evidence"] == {
+        "freshforge.dev/evidence/validation": {
+            "label": "artifact-check",
+            "status": "passed",
+        }
     }

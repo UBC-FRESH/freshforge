@@ -23,7 +23,7 @@ synchronized with GitHub issues, planning notes, pull requests, and
 | P13 Matrix/run-summary ergonomics from downstream evidence | #94 | `feature/p13-summary-output-ergonomics` | Complete |
 | P14 Downstream evidence intake and compatibility map | #100 | `feature/p14-downstream-evidence-map` | Complete |
 | P15 Durable run and matrix evidence manifests | #106 | `feature/p15-run-evidence-manifests` | Complete |
-| P16 Provider result and validation evidence conventions | TBD | `feature/p16-provider-evidence-conventions` | Planned |
+| P16 Provider result and validation evidence conventions | #113 | `benchmark/p16-agent-workbench-delegated` | Active |
 | P17 Matrix aggregation and comparison exports | TBD | `feature/p17-matrix-evidence-exports` | Planned |
 | P18 v0.1.0a6 evidence-orchestration PyPI alpha release | TBD | `feature/p18-v0.1.0a6-release` | Planned |
 
@@ -1002,11 +1002,11 @@ Local verification:
 
 ## Phase 16: Provider Result And Validation Evidence Conventions
 
-Parent issue: TBD
+Parent issue: #113
 
-Branch: `feature/p16-provider-evidence-conventions`
+Branch: `benchmark/p16-agent-workbench-delegated`
 
-Status: planned.
+Status: active.
 
 Goal: define a small optional convention for providers to report validation and evidence without
 embedding domain semantics in FreshForge.
@@ -1018,6 +1018,23 @@ Planned scope:
   evidence path or URI, and diagnostic links by code/location.
 - Update fixture provider examples so downstream packages can copy the convention.
 - Preserve compatibility for providers that do not emit evidence fields.
+
+Tasks:
+
+- [ ] P16.1 Provider evidence record contract (#114)
+  - [x] Use delegated worker proposals to choose an optional evidence mapping.
+  - [x] Add deterministic serialization tests.
+- [ ] P16.2 Provider run-result integration (#115)
+  - [x] Thread optional evidence mappings through provider and node run results.
+  - [x] Include evidence mappings in compact node summaries and evidence manifests.
+- [ ] P16.3 Fixture examples and documentation (#116)
+  - [x] Document provider evidence mapping conventions.
+  - [x] Review whether a tracked fixture file is needed after maintainer feedback.
+  - [x] Keep the P16 fixture as docs plus tests for now; defer tracked example
+        payload files until a downstream provider needs one.
+- [ ] P16.4 Verification and benchmark evidence capture (#117)
+  - [x] Run standard FreshForge verification.
+  - [ ] Record Agent Workbench P50 delegated-lane benchmark evidence.
 
 Out of scope:
 

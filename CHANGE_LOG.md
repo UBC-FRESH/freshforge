@@ -289,3 +289,14 @@ completion and GitHub issue comments.
 - Verified the P15 implementation with Ruff, 94 pytest tests, warning-clean Sphinx docs, package
   build, `twine check`, `git diff --check`, and direct `--evidence` smoke tests against public
   examples.
+- Activated Phase 16 on benchmark branch `benchmark/p16-agent-workbench-delegated` with parent
+  issue #113 and child issues #114 through #117 as the delegated Agent Workbench lane for P50.
+- Ran two proposal-only `qwen3-coder-next:latest` worker tickets under ignored
+  `tmp/agent_workbench/p16/` paths.
+- Added the delegated P16 implementation slice: optional provider evidence mappings, evidence
+  serialization through provider and node run results, compact summaries, workflow evidence
+  manifests, focused tests, and provider/runner documentation.
+- Strengthened the delegated P16 mapping convention after Agent Workbench P50 worker diff review:
+  documented recommended evidence mapping keys and fields, verified arbitrary provider metadata
+  and URIs are preserved, and deferred a tracked example payload until downstream provider usage
+  justifies one.
