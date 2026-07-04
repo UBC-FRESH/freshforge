@@ -249,3 +249,16 @@ completion and GitHub issue comments.
   `v0.1.0a4`, verifying the tag-triggered Release Artifacts workflow #28562704658, checking the
   downloaded workflow-built artifacts with `twine check`, smoke-testing a clean wheel install, and
   creating the GitHub prerelease `FreshForge 0.1.0a4` with the checked artifacts attached.
+
+## 2026-07-04
+
+- Activated Phase 13 on `feature/p13-summary-output-ergonomics` after an Agent Workbench
+  proposal-assist pilot against issue #94. The pilot kept worker authority proposal-only under
+  ignored `tmp/agent_workbench/p13/` artifacts and used supervisor review to reject unsupported
+  worker claims.
+- Scoped Phase 13 to a narrow generic ergonomics slice: expose existing compact summary records with
+  `freshforge run --summary` and `freshforge matrix run --summary`, while preserving existing
+  `--json` and human output behavior.
+- Added child issues #96 through #98 for summary-only CLI output, docs/planning sync, and closeout.
+- Verified the Phase 13 slice with Ruff, 92 pytest tests, warning-clean Sphinx docs, package build,
+  `twine check`, `git diff --check`, and direct `--summary` CLI smokes against the public examples.

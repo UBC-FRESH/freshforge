@@ -92,6 +92,16 @@ Use ``--fail-fast`` to stop after the first failed case. Without
 ``--fail-fast``, FreshForge attempts every case and reports a combined matrix
 summary.
 
+For downstream tools that only need the compact matrix summary, use
+``--summary``:
+
+.. code-block:: bash
+
+   freshforge matrix run examples/run_matrix.yaml --workdir tmp/matrix-runs --summary
+
+This emits the same deterministic matrix summary object that appears under
+``summary`` in ``--json`` output, without the full per-case run payload.
+
 Boundaries
 ----------
 
