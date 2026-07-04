@@ -24,6 +24,8 @@ def test_workflow_evidence_manifest_includes_provider_evidence_mapping() -> None
                         "role": "summary-report",
                         "status": "passed",
                         "path": "runs/demo/report.json",
+                        "uri": "urn:example:run:demo:report",
+                        "metadata": {"provider": "example.report"},
                     }
                 },
             ),
@@ -39,6 +41,12 @@ def test_workflow_evidence_manifest_includes_provider_evidence_mapping() -> None
 
     node = manifest["run"]["nodes"][0]
     assert node["evidence"]["freshforge.dev/evidence/report"]["label"] == "report-valid"
+    assert node["evidence"]["freshforge.dev/evidence/report"]["uri"] == (
+        "urn:example:run:demo:report"
+    )
+    assert node["evidence"]["freshforge.dev/evidence/report"]["metadata"] == {
+        "provider": "example.report"
+    }
     summary_node = manifest["summary"]["nodes"][0]
     assert summary_node["evidence_count"] == 1
     assert summary_node["evidence"]["freshforge.dev/evidence/report"]["status"] == "passed"

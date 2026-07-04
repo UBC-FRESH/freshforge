@@ -1029,9 +1029,11 @@ Tasks:
   - [x] Include evidence mappings in compact node summaries and evidence manifests.
 - [ ] P16.3 Fixture examples and documentation (#116)
   - [x] Document provider evidence mapping conventions.
-  - [ ] Review whether a tracked fixture file is needed after maintainer feedback.
+  - [x] Review whether a tracked fixture file is needed after maintainer feedback.
+  - [x] Keep the P16 fixture as docs plus tests for now; defer tracked example
+        payload files until a downstream provider needs one.
 - [ ] P16.4 Verification and benchmark evidence capture (#117)
-  - [ ] Run standard FreshForge verification.
+  - [x] Run standard FreshForge verification.
   - [ ] Record Agent Workbench P50 delegated-lane benchmark evidence.
 
 Out of scope:

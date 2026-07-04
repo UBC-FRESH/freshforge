@@ -82,6 +82,11 @@ evidence mappings in per-node summaries. Evidence remains provider-owned data:
 FreshForge core serializes it but does not interpret validation labels, artifact
 roles, paths, URIs, or scientific meaning.
 
+This means the summary is suitable for dashboards or matrix comparison tools
+that need to know whether evidence exists, while the full run record and
+evidence manifest retain the complete provider-owned mapping for downstream
+validation.
+
 For downstream tools that only need the compact record, use ``--summary``:
 
 .. code-block:: bash

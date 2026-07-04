@@ -296,3 +296,7 @@ completion and GitHub issue comments.
 - Added the delegated P16 implementation slice: optional provider evidence mappings, evidence
   serialization through provider and node run results, compact summaries, workflow evidence
   manifests, focused tests, and provider/runner documentation.
+- Strengthened the delegated P16 mapping convention after Agent Workbench P50 worker diff review:
+  documented recommended evidence mapping keys and fields, verified arbitrary provider metadata
+  and URIs are preserved, and deferred a tracked example payload until downstream provider usage
+  justifies one.
