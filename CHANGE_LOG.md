@@ -262,3 +262,11 @@ completion and GitHub issue comments.
 - Added child issues #96 through #98 for summary-only CLI output, docs/planning sync, and closeout.
 - Verified the Phase 13 slice with Ruff, 92 pytest tests, warning-clean Sphinx docs, package build,
   `twine check`, `git diff --check`, and direct `--summary` CLI smokes against the public examples.
+- Activated Phase 14 on `feature/p14-downstream-evidence-map` with parent issue #100 and child
+  issues #101, #104, #102, and #103 to plan the P14-P18 evidence-orchestration tranche.
+- Added `planning/p14_p18_evidence_orchestration_plan.md` to classify downstream friction from
+  Modelwright, FABLE Pyculator, FEMIC, and Agent Workbench into FreshForge core,
+  provider/domain-package, supervision, and deferred execution-system ownership boundaries.
+- Updated `ROADMAP.md` to mark P14 active and record planned P15-P18 phases for durable evidence
+  manifests, provider evidence conventions, matrix evidence exports, and the `v0.1.0a6`
+  evidence-orchestration PyPI alpha release.
