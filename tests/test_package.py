@@ -6,7 +6,7 @@ import freshforge
 
 
 def test_version_is_exposed() -> None:
-    assert freshforge.__version__ == "0.1.0a5"
+    assert freshforge.__version__ == "0.1.0a6"
 
 
 def test_package_metadata_matches_version() -> None:

@@ -1,5 +1,28 @@
 # Release Notes
 
+## 0.1.0a6
+
+FreshForge `0.1.0a6` is an incremental PyPI alpha that packages the durable
+evidence manifests added after `0.1.0a5` so downstream packages (for example
+`fresh-fuchs`) can depend on the evidence API through normal package
+metadata.
+
+### Implemented
+
+- Everything from `0.1.0a5`.
+- Durable evidence manifests: `freshforge.evidence`
+  (`workflow_run_evidence_manifest`, `matrix_run_evidence_manifest`,
+  `write_evidence_manifest`, and the `*.v1` manifest versions).
+- Summary-only run output (P13).
+
+### Explicit Limitations
+
+- Workflow and matrix syntax remain alpha and provisional.
+- FreshForge remains a serial local runner; it does not implement caching,
+  checkpointing, parallel execution, remote execution, retries, production
+  scheduling, or real ecosystem adapters.
+- Provider APIs remain alpha and may change before a stable release.
+
 ## 0.1.0a5
 
 FreshForge `0.1.0a5` is the first PyPI alpha release. It packages the same
